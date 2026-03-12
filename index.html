@@ -1,0 +1,1094 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Álbum Vintage Profesional</title>
+    <style>
+        /* ==================== RESET & BASE ==================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --beige-light: #f5e6d3;
+            --beige-medium: #e8d5c4;
+            --beige-dark: #d4c4b0;
+            --lilac-light: #e6d9f0;
+            --lilac-medium: #c69fc6;
+            --lilac-dark: #8b6f9e;
+            --lilac-darker: #6b5b6e;
+            --text-primary: #5a4a42;
+            --shadow-color: rgba(139, 111, 158, 0.3);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            background: linear-gradient(135deg, var(--beige-light) 0%, var(--beige-medium) 50%, var(--lilac-light) 100%);
+            background-attachment: fixed;
+            color: var(--text-primary);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* ==================== DECORATIVE ELEMENTS ==================== */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 20% 30%, rgba(198, 159, 198, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(245, 230, 211, 0.2) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* ==================== HEADER ==================== */
+        .header {
+            position: relative;
+            text-align: center;
+            padding: 100px 20px 80px;
+            background: linear-gradient(180deg, rgba(198, 159, 198, 0.3) 0%, transparent 100%);
+            z-index: 1;
+        }
+
+        .header::before {
+            content: '✦';
+            position: absolute;
+            top: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 3em;
+            color: var(--lilac-medium);
+            opacity: 0.4;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .header h1 {
+            font-size: clamp(2.5em, 8vw, 4.5em);
+            color: var(--lilac-dark);
+            text-shadow: 3px 3px 8px rgba(0,0,0,0.1);
+            letter-spacing: 5px;
+            margin-bottom: 15px;
+            font-weight: 400;
+            text-transform: uppercase;
+            position: relative;
+            animation: fadeInDown 1.2s ease-out;
+        }
+
+        .header p {
+            font-size: clamp(1em, 3vw, 1.4em);
+            color: var(--lilac-darker);
+            font-style: italic;
+            font-weight: 300;
+            letter-spacing: 2px;
+            animation: fadeInUp 1.4s ease-out;
+        }
+
+        .header-decoration {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            margin-top: 30px;
+            opacity: 0;
+            animation: fadeIn 2s ease-out 0.5s forwards;
+        }
+
+        .header-decoration::before,
+        .header-decoration::after {
+            content: '';
+            width: 100px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--lilac-medium), transparent);
+        }
+
+        .header-decoration span {
+            color: var(--lilac-medium);
+            font-size: 1.5em;
+        }
+
+        /* ==================== CONTAINER ==================== */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 60px 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ==================== TITULO REUTILIZABLE ==================== */
+        .section-title {
+            text-align: center;
+            margin: 100px 0 80px;
+            position: relative;
+            opacity: 0;
+            transform: scale(0.9);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .section-title.visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .section-title h2 {
+            font-size: clamp(2em, 5vw, 3em);
+            color: var(--lilac-dark);
+            display: inline-block;
+            padding: 25px 50px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.8), rgba(230, 217, 240, 0.6));
+            border-radius: 20px;
+            box-shadow: 
+                0 8px 30px var(--shadow-color),
+                inset 0 1px 0 rgba(255,255,255,0.8);
+            border: 3px solid var(--lilac-medium);
+            position: relative;
+            font-weight: 400;
+            letter-spacing: 3px;
+            text-transform: capitalize;
+        }
+
+        .section-title h2::before,
+        .section-title h2::after {
+            content: '✦';
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.2em;
+            color: var(--lilac-medium);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .section-title h2::before {
+            left: 15px;
+        }
+
+        .section-title h2::after {
+            right: 15px;
+        }
+
+        .section-title::before,
+        .section-title::after {
+            content: '❋';
+            position: absolute;
+            font-size: 2.5em;
+            color: var(--lilac-medium);
+            top: 50%;
+            transform: translateY(-50%);
+            opacity: 0.5;
+        }
+
+        .section-title::before {
+            left: 5%;
+            animation: rotateClockwise 10s linear infinite;
+        }
+
+        .section-title::after {
+            right: 5%;
+            animation: rotateCounterClockwise 10s linear infinite;
+        }
+        /* ========== FIN TITULO REUTILIZABLE ========== */
+
+        /* ==================== PHOTO GRID ==================== */
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 60px 40px;
+            margin-bottom: 80px;
+            padding: 0 20px;
+        }
+
+        /* ==================== PHOTO ITEMS CON ANIMACIONES LATERALES ==================== */
+        .photo-item {
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.9), rgba(245, 230, 211, 0.8));
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 
+                0 10px 40px rgba(0,0,0,0.12),
+                0 2px 10px rgba(139, 111, 158, 0.15);
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            opacity: 0;
+            transform: translateX(-100px);
+        }
+
+        /* Animación desde la IZQUIERDA */
+        .photo-item.from-left {
+            animation: slideInFromLeft 1s ease-out forwards;
+        }
+
+        /* Animación desde la DERECHA */
+        .photo-item.from-right {
+            animation: slideInFromRight 1s ease-out forwards;
+        }
+
+        .photo-item.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .photo-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 15px;
+            background: linear-gradient(135deg, var(--lilac-light) 0%, transparent 100%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            pointer-events: none;
+        }
+
+        .photo-item:hover {
+            transform: translateY(-15px) scale(1.03);
+            box-shadow: 
+                0 20px 60px rgba(0,0,0,0.2),
+                0 5px 20px var(--shadow-color);
+        }
+
+        .photo-item:hover::before {
+            opacity: 0.3;
+        }
+
+        /* ==================== PHOTO WRAPPER ==================== */
+        .photo-wrapper {
+            position: relative;
+            width: 100%;
+            padding-top: 100%;
+            overflow: hidden;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--beige-light), var(--beige-medium));
+            border: 4px solid var(--lilac-medium);
+            box-shadow: inset 0 2px 10px rgba(0,0,0,0.05);
+            cursor: pointer;
+        }
+
+        .photo-wrapper::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(180deg, 
+                transparent 0%, 
+                transparent 50%, 
+                rgba(139, 111, 158, 0.1) 100%);
+            pointer-events: none;
+        }
+
+        .photo-wrapper img,
+        .photo-wrapper video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            filter: brightness(1) contrast(1.05) saturate(0.95);
+        }
+
+        .photo-item:hover .photo-wrapper img,
+        .photo-item:hover .photo-wrapper video {
+            transform: scale(1.15) rotate(2deg);
+            filter: brightness(1.05) contrast(1.1) saturate(1);
+        }
+
+        /* ==================== VIDEO BADGE ==================== */
+        .video-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(139, 111, 158, 0.95);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: bold;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            animation: pulseBadge 2s ease-in-out infinite;
+        }
+
+        .video-badge::before {
+            content: '▶';
+            font-size: 1.2em;
+        }
+
+        /* ==================== CLICK INDICATOR ==================== */
+        .photo-wrapper::before {
+            content: '🔍';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            font-size: 3em;
+            z-index: 3;
+            opacity: 0;
+            transition: all 0.3s ease;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        }
+
+        .photo-item:hover .photo-wrapper::before {
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 0.9;
+        }
+
+        /* ==================== PHOTO CAPTION ==================== */
+        .photo-caption {
+            margin-top: 25px;
+            text-align: center;
+            font-size: clamp(1em, 2.5vw, 1.2em);
+            color: var(--lilac-darker);
+            font-style: italic;
+            line-height: 1.8;
+            padding: 0 15px;
+            position: relative;
+            font-weight: 300;
+        }
+
+        .photo-caption::before {
+            content: '"';
+            position: absolute;
+            left: 0;
+            top: -10px;
+            font-size: 3em;
+            color: var(--lilac-medium);
+            opacity: 0.3;
+            font-family: 'Georgia', serif;
+        }
+
+        .photo-caption::after {
+            content: '"';
+            position: absolute;
+            right: 0;
+            bottom: -20px;
+            font-size: 3em;
+            color: var(--lilac-medium);
+            opacity: 0.3;
+            font-family: 'Georgia', serif;
+        }
+
+        /* ==================== LIGHTBOX MODAL ==================== */
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .lightbox.active {
+            display: flex;
+        }
+
+        .lightbox-content {
+            max-width: 90%;
+            max-height: 85vh;
+            position: relative;
+            animation: zoomIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .lightbox-media {
+            max-width: 100%;
+            max-height: 75vh;
+            display: block;
+            margin: 0 auto;
+            border-radius: 10px;
+            box-shadow: 0 10px 50px rgba(198, 159, 198, 0.5);
+            border: 3px solid var(--lilac-medium);
+        }
+
+        .lightbox-caption {
+            background: linear-gradient(135deg, rgba(245, 230, 211, 0.95), rgba(230, 217, 240, 0.95));
+            padding: 25px 40px;
+            margin-top: 20px;
+            border-radius: 15px;
+            text-align: center;
+            font-size: 1.3em;
+            color: var(--lilac-darker);
+            font-style: italic;
+            font-family: 'Georgia', serif;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+            border: 2px solid var(--lilac-medium);
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            font-size: 3em;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+            z-index: 10000;
+        }
+
+        .lightbox-close:hover {
+            color: var(--lilac-medium);
+            transform: rotate(90deg) scale(1.2);
+        }
+
+        /* ==================== FOOTER ==================== */
+        .footer {
+            text-align: center;
+            padding: 60px 20px;
+            background: linear-gradient(0deg, rgba(198, 159, 198, 0.3) 0%, transparent 100%);
+            margin-top: 100px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .footer p {
+            color: var(--lilac-dark);
+            font-size: clamp(1em, 2.5vw, 1.3em);
+            letter-spacing: 2px;
+            font-weight: 300;
+        }
+
+        .footer::before {
+            content: '✦';
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 2em;
+            color: var(--lilac-medium);
+            opacity: 0.4;
+            animation: float 3s ease-in-out infinite reverse;
+        }
+
+        /* ==================== ANIMATIONS ==================== */
+        @keyframes slideInFromLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-120px) rotate(-5deg);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0) rotate(0deg);
+            }
+        }
+
+        @keyframes slideInFromRight {
+            from {
+                opacity: 0;
+                transform: translateX(120px) rotate(5deg);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0) rotate(0deg);
+            }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes zoomIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateX(-50%) translateY(0);
+            }
+            50% {
+                transform: translateX(-50%) translateY(-20px);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 0.5;
+                transform: translateY(-50%) scale(1);
+            }
+            50% {
+                opacity: 1;
+                transform: translateY(-50%) scale(1.2);
+            }
+        }
+
+        @keyframes pulseBadge {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+        }
+
+        @keyframes rotateClockwise {
+            from {
+                transform: translateY(-50%) rotate(0deg);
+            }
+            to {
+                transform: translateY(-50%) rotate(360deg);
+            }
+        }
+
+        @keyframes rotateCounterClockwise {
+            from {
+                transform: translateY(-50%) rotate(0deg);
+            }
+            to {
+                transform: translateY(-50%) rotate(-360deg);
+            }
+        }
+
+        /* ==================== DELAYS PARA ANIMACIONES ==================== */
+        .photo-item:nth-child(1) { animation-delay: 0.1s; }
+        .photo-item:nth-child(2) { animation-delay: 0.2s; }
+        .photo-item:nth-child(3) { animation-delay: 0.3s; }
+        .photo-item:nth-child(4) { animation-delay: 0.4s; }
+        .photo-item:nth-child(5) { animation-delay: 0.5s; }
+        .photo-item:nth-child(6) { animation-delay: 0.6s; }
+        .photo-item:nth-child(7) { animation-delay: 0.1s; }
+        .photo-item:nth-child(8) { animation-delay: 0.2s; }
+
+        /* ==================== RESPONSIVE DESIGN ==================== */
+        @media (max-width: 1024px) {
+            .photo-grid {
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+                gap: 50px 30px;
+            }
+
+            .section-title::before,
+            .section-title::after {
+                display: none;
+            }
+
+            .lightbox-content {
+                max-width: 95%;
+            }
+
+            .lightbox-caption {
+                font-size: 1.1em;
+                padding: 20px 30px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                padding: 70px 15px 50px;
+            }
+
+            .header h1 {
+                letter-spacing: 3px;
+            }
+
+            .header-decoration::before,
+            .header-decoration::after {
+                width: 60px;
+            }
+
+            .container {
+                padding: 40px 15px;
+            }
+
+            .section-title {
+                margin: 70px 0 50px;
+            }
+
+            .section-title h2 {
+                padding: 20px 35px;
+                letter-spacing: 2px;
+            }
+
+            .photo-grid {
+                grid-template-columns: 1fr;
+                gap: 40px;
+                padding: 0 10px;
+            }
+
+            .photo-item {
+                padding: 20px;
+            }
+
+            .photo-caption {
+                margin-top: 20px;
+            }
+
+            /* En móvil, todas las fotos vienen desde la izquierda para consistencia */
+            .photo-item.from-right {
+                animation: slideInFromLeft 1s ease-out forwards;
+            }
+
+            .lightbox-close {
+                top: 10px;
+                right: 15px;
+                font-size: 2.5em;
+            }
+
+            .lightbox-media {
+                max-height: 60vh;
+            }
+
+            .lightbox-caption {
+                font-size: 1em;
+                padding: 15px 20px;
+            }
+
+            .video-badge {
+                padding: 6px 12px;
+                font-size: 0.8em;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header {
+                padding: 50px 10px 40px;
+            }
+
+            .header h1 {
+                letter-spacing: 2px;
+            }
+
+            .header-decoration {
+                gap: 10px;
+                margin-top: 20px;
+            }
+
+            .section-title {
+                margin: 50px 0 40px;
+            }
+
+            .section-title h2 {
+                padding: 15px 25px;
+                font-size: 1.5em;
+            }
+
+            .section-title h2::before,
+            .section-title h2::after {
+                font-size: 1em;
+                left: 8px;
+            }
+
+            .section-title h2::after {
+                right: 8px;
+            }
+
+            .photo-grid {
+                gap: 30px;
+            }
+
+            .photo-item {
+                padding: 15px;
+            }
+
+            .photo-wrapper {
+                border-width: 3px;
+            }
+
+            .lightbox-media {
+                max-height: 50vh;
+            }
+
+            .lightbox-caption {
+                font-size: 0.9em;
+                padding: 12px 15px;
+            }
+        }
+
+        /* ==================== PRINT STYLES ==================== */
+        @media print {
+            body {
+                background: white;
+            }
+
+            .photo-item {
+                page-break-inside: avoid;
+                box-shadow: none;
+            }
+
+            .lightbox {
+                display: none !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- LIGHTBOX MODAL -->
+    <div class="lightbox" id="lightbox">
+        <span class="lightbox-close" onclick="closeLightbox()">×</span>
+        <div class="lightbox-content">
+            <img id="lightbox-img" class="lightbox-media" style="display: none;" alt="Imagen ampliada">
+            <video id="lightbox-video" class="lightbox-media" style="display: none;" controls></video>
+            <div class="lightbox-caption" id="lightbox-caption"></div>
+        </div>
+    </div>
+
+    <!-- HEADER -->
+    <div class="header">
+        <h1>Fototeca 2025 - 2026</h1>
+        <p>Instantes capturados en el tiempo</p>
+        <div class="header-decoration">
+            <span>✦</span>
+        </div>
+    </div>
+
+    <!-- CONTAINER PRINCIPAL -->
+    <div class="container">
+        
+        <!-- ========== TITULO REUTILIZABLE ========== -->
+        <div class="section-title">
+            <h2>Primavera de Ensueño</h2>
+        </div>
+        <!-- ========================================== -->
+
+        <div class="photo-grid">
+            <div class="photo-item from-left">
+                <div class="photo-wrapper" onclick="openLightbox('imagen1.jpg', 'Escribe aquí tu frase para la foto 1', 'image')">
+                    <!-- COLOCA AQUÍ LA EXTENSIÓN DE TU FOTO: imagen1.jpg -->
+                    <img src="imagen1.jpg" alt="Foto 1">
+                </div>
+                <p class="photo-caption">Escribe aquí tu frase para la foto 1</p>
+            </div>
+
+            <div class="photo-item from-right">
+                <div class="photo-wrapper" onclick="openLightbox('video1.mp4', 'Escribe aquí tu frase para el video 1', 'video')">
+                    <!-- COLOCA AQUÍ LA EXTENSIÓN DE TU VIDEO: video1.mp4 -->
+                    <video src="video1.mp4" muted loop autoplay></video>
+                    <span class="video-badge">VIDEO</span>
+                </div>
+                <p class="photo-caption">Escribe aquí tu frase para el video 1</p>
+            </div>
+
+            <div class="photo-item from-left">
+                <div class="photo-wrapper" onclick="openLightbox('imagen3.jpg', 'Escribe aquí tu frase para la foto 3', 'image')">
+                    <!-- COLOCA AQUÍ LA EXTENSIÓN DE TU FOTO: imagen3.jpg -->
+                    <img src="imagen3.jpg" alt="Foto 3">
+                </div>
+                <p class="photo-caption">Escribe aquí tu frase para la foto 3</p>
+            </div>
+
+            <div class="photo-item from-right">
+                <div class="photo-wrapper" onclick="openLightbox('imagen4.jpg', 'Escribe aquí tu frase para la foto 4', 'image')">
+                    <!-- COLOCA AQUÍ LA EXTENSIÓN DE TU FOTO: imagen4.jpg -->
+                    <img src="imagen4.jpg" alt="Foto 4">
+                </div>
+                <p class="photo-caption">Escribe aquí tu frase para la foto 4</p>
+            </div>
+
+            <div class="photo-item from-left">
+                <div class="photo-wrapper" onclick="openLightbox('video2.mp4', 'Escribe aquí tu frase para el video 2', 'video')">
+                    <!-- COLOCA AQUÍ LA EXTENSIÓN DE TU VIDEO: video2.mp4 -->
+                    <video src="video2.mp4" muted loop autoplay></video>
+                    <span class="video-badge">VIDEO</span>
+                </div>
+                <p class="photo-caption">Escribe aquí tu frase para el video 2</p>
+            </div>
+
+            <div class="photo-item from-right">
+                <div class="photo-wrapper" onclick="openLightbox('imagen6.jpg', 'Escribe aquí tu frase para la foto 6', 'image')">
+                    <!-- COLOCA AQUÍ LA EXTENSIÓN DE TU FOTO: imagen6.jpg -->
+                    <img src="imagen6.jpg" alt="Foto 6">
+                </div>
+                <p class="photo-caption">Escribe aquí tu frase para la foto 6</p>
+            </div>
+        </div>
+
+        <!-- ========== TITULO REUTILIZABLE ========== -->
+        <div class="section-title">
+            <h2>Verano Radiante</h2>
+        </div>
+        <!-- ========================================== -->
+
+        <div class="photo-grid">
+            <div class="photo-item from-left">
+                <div class="photo-wrapper" onclick="openLightbox('imagen7.jpg', 'Escribe aquí tu frase para la foto 7', 'image')">
+                    <!-- COLOCA AQUÍ LA EXTENSIÓN DE TU FOTO: imagen7.jpg -->
+                    <img src="imagen7.jpg" alt="Foto 7">
+                </div>
+                <p class="photo-caption">Escribe aquí tu frase para la foto 7</p>
+            </div>
+
+            <div class="photo-item from-right">
+                <div class="photo-wrapper" onclick="openLightbox('video3.mp4', 'Escribe aquí tu frase para el video 3', 'video')">
+                    <!-- COLOCA AQUÍ LA EXTENSIÓN DE TU VIDEO: video3.mp4 -->
+                    <video src="video3.mp4" muted loop autoplay></video>
+                    <span class="video-badge">VIDEO</span>
+                </div>
+                <p class="photo-caption">Escribe aquí tu frase para el video 3</p>
+            </div>
+
+            <div class="photo-item from-left">
+                <div class="photo-wrapper" onclick="openLightbox('imagen9.jpg', 'Escribe aquí tu frase para la foto 9', 'image')">
+                    <!-- COLOCA AQUÍ LA EXTENSIÓN DE TU FOTO: imagen9.jpg -->
+                    <img src="imagen9.jpg" alt="Foto 9">
+                </div>
+                <p class="photo-caption">Escribe aquí tu frase para la foto 9</p>
+            </div>
+
+            <div class="photo-item from-right">
+                <div class="photo-wrapper" onclick="openLightbox('imagen10.jpg', 'Escribe aquí tu frase para la foto 10', 'image')">
+                    <!-- COLOCA AQUÍ LA EXTENSIÓN DE TU FOTO: imagen10.jpg -->
+                    <img src="imagen10.jpg" alt="Foto 10">
+                </div>
+                <p class="photo-caption">Escribe aquí tu frase para la foto 10</p>
+            </div>
+
+            <div class="photo-item from-left">
+                <div class="photo-wrapper" onclick="openLightbox('video4.mp4', 'Escribe aquí tu frase para el video 4', 'video')">
+                    <!-- COLOCA AQUÍ LA EXTENSIÓN DE TU VIDEO: video4.mp4 -->
+                    <video src="video4.mp4" muted loop autoplay></video>
+                    <span class="video-badge">VIDEO</span>
+                </div>
+                <p class="photo-caption">Escribe aquí tu frase para el video 4</p>
+            </div>
+        </div>
+
+        <!-- ========== TITULO REUTILIZABLE ========== -->
+        <div class="section-title">
+            <h2>Otoño Dorado</h2>
+        </div>
+        <!-- ========================================== -->
+
+        <div class="photo-grid">
+            <div class="photo-item from-right">
+                <div class="photo-wrapper" onclick="openLightbox('imagen12.jpg', 'Escribe aquí tu frase para la foto 12', 'image')">
+                    <!-- COLOCA AQUÍ LA EXTENSIÓN DE TU FOTO: imagen12.jpg -->
+                    <img src="imagen12.jpg" alt="Foto 12">
+                </div>
+                <p class="photo-caption">Escribe aquí tu frase para la foto 12</p>
+            </div>
+
+            <div class="photo-item from-left">
+                <div class="photo-wrapper" onclick="openLightbox('imagen13.jpg', 'Escribe aquí tu frase para la foto 13', 'image')">
+                    <!-- COLOCA AQUÍ LA EXTENSIÓN DE TU FOTO: imagen13.jpg -->
+                    <img src="imagen13.jpg" alt="Foto 13">
+                </div>
+                <p class="photo-caption">Escribe aquí tu frase para la foto 13</p>
+            </div>
+
+            <div class="photo-item from-right">
+                <div class="photo-wrapper" onclick="openLightbox('video5.mp4', 'Escribe aquí tu frase para el video 5', 'video')">
+                    <!-- COLOCA AQUÍ LA EXTENSIÓN DE TU VIDEO: video5.mp4 -->
+                    <video src="video5.mp4" muted loop autoplay></video>
+                    <span class="video-badge">VIDEO</span>
+                </div>
+                <p class="photo-caption">Escribe aquí tu frase para el video 5</p>
+            </div>
+
+            <div class="photo-item from-left">
+                <div class="photo-wrapper" onclick="openLightbox('imagen15.jpg', 'Escribe aquí tu frase para la foto 15', 'image')">
+                    <!-- COLOCA AQUÍ LA EXTENSIÓN DE TU FOTO: imagen15.jpg -->
+                    <img src="imagen15.jpg" alt="Foto 15">
+                </div>
+                <p class="photo-caption">Escribe aquí tu frase para la foto 15</p>
+            </div>
+
+            <div class="photo-item from-right">
+                <div class="photo-wrapper" onclick="openLightbox('imagen16.jpg', 'Escribe aquí tu frase para la foto 16', 'image')">
+                    <!-- COLOCA AQUÍ LA EXTENSIÓN DE TU FOTO: imagen16.jpg -->
+                    <img src="imagen16.jpg" alt="Foto 16">
+                </div>
+                <p class="photo-caption">Escribe aquí tu frase para la foto 16</p>
+            </div>
+
+            <div class="photo-item from-left">
+                <div class="photo-wrapper" onclick="openLightbox('video6.mp4', 'Escribe aquí tu frase para el video 6', 'video')">
+                    <!-- COLOCA AQUÍ LA EXTENSIÓN DE TU VIDEO: video6.mp4 -->
+                    <video src="video6.mp4" muted loop autoplay></video>
+                    <span class="video-badge">VIDEO</span>
+                </div>
+                <p class="photo-caption">Escribe aquí tu frase para el video 6</p>
+            </div>
+        </div>
+
+        <!-- ========== TITULO REUTILIZABLE ========== -->
+        <div class="section-title">
+            <h2>Invierno Mágico</h2>
+        </div>
+        <!-- ========================================== -->
+
+        <div class="photo-grid">
+            <div class="photo-item from-right">
+                <div class="photo-wrapper" onclick="openLightbox('imagen18.jpg', 'Escribe aquí tu frase para la foto 18', 'image')">
+                    <!-- COLOCA AQUÍ LA EXTENSIÓN DE TU FOTO: imagen18.jpg -->
+                    <img src="imagen18.jpg" alt="Foto 18">
+                </div>
+                <p class="photo-caption">Escribe aquí tu frase para la foto 18</p>
+            </div>
+
+            <div class="photo-item from-left">
+                <div class="photo-wrapper" onclick="openLightbox('imagen19.jpg', 'Escribe aquí tu frase para la foto 19', 'image')">
+                    <!-- COLOCA AQUÍ LA EXTENSIÓN DE TU FOTO: imagen19.jpg -->
+                    <img src="imagen19.jpg" alt="Foto 19">
+                </div>
+                <p class="photo-caption">Escribe aquí tu frase para la foto 19</p>
+            </div>
+
+            <div class="photo-item from-right">
+                <div class="photo-wrapper" onclick="openLightbox('imagen20.jpg', 'Escribe aquí tu frase para la foto 20', 'image')">
+                    <!-- COLOCA AQUÍ LA EXTENSIÓN DE TU FOTO: imagen20.jpg -->
+                    <img src="imagen20.jpg" alt="Foto 20">
+                </div>
+                <p class="photo-caption">Escribe aquí tu frase para la foto 20</p>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- FOOTER -->
+    <div class="footer">
+        <p>✦ Recuerdos eternos en papel vintage ✦</p>
+    </div>
+
+    <!-- JAVASCRIPT PARA ANIMACIONES Y LIGHTBOX -->
+    <script>
+        // Intersection Observer para detectar cuando los elementos entran en viewport
+        const observerOptions = {
+            threshold: 0.15,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        // Observar todos los elementos que necesitan animación
+        document.addEventListener('DOMContentLoaded', () => {
+            const photoItems = document.querySelectorAll('.photo-item');
+            const sectionTitles = document.querySelectorAll('.section-title');
+
+            photoItems.forEach(item => observer.observe(item));
+            sectionTitles.forEach(title => observer.observe(title));
+        });
+
+        // Smooth scroll mejorado
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Funciones del Lightbox
+        function openLightbox(src, caption, type) {
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImg = document.getElementById('lightbox-img');
+            const lightboxVideo = document.getElementById('lightbox-video');
+            const lightboxCaption = document.getElementById('lightbox-caption');
+
+            // Pausar todos los videos de las miniaturas
+            document.querySelectorAll('.photo-wrapper video').forEach(video => {
+                video.pause();
+            });
+
+            if (type === 'image') {
+                lightboxImg.src = src;
+                lightboxImg.style.display = 'block';
+                lightboxVideo.style.display = 'none';
+                lightboxVideo.pause();
+            } else if (type === 'video') {
+                lightboxVideo.src = src;
+                lightboxVideo.style.display = 'block';
+                lightboxImg.style.display = 'none';
+                lightboxVideo.play();
+            }
+
+            lightboxCaption.textContent = caption;
+            lightbox.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            const lightbox = document.getElementById('lightbox');
+            const lightboxVideo = document.getElementById('lightbox-video');
+            
+            lightbox.classList.remove('active');
+            lightboxVideo.pause();
+            document.body.style.overflow = 'auto';
+
+            // Reanudar videos de miniaturas
+            document.querySelectorAll('.photo-wrapper video').forEach(video => {
+                video.play();
+            });
+        }
+
+        // Cerrar lightbox con tecla ESC
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeLightbox();
+            }
+        });
+
+        // Cerrar lightbox al hacer click fuera del contenido
+        document.getElementById('lightbox').addEventListener('click', (e) => {
+            if (e.target.id === 'lightbox') {
+                closeLightbox();
+            }
+        });
+    </script>
+
+</body>
+</html>
