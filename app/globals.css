@@ -1,0 +1,52 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+}
+
+body {
+  @apply bg-amber-50 text-slate-800;
+  background-image: radial-gradient(circle at 15% 10%, #fff7e6, #f7efe2 40%, #f3e7d3 100%);
+}
+
+body.night {
+  color-scheme: dark;
+  @apply bg-slate-950 text-slate-100;
+  background-image: radial-gradient(circle at 20% 10%, #1d2d55, #0c1530 45%, #050912 100%);
+}
+
+.card {
+  @apply relative rounded-2xl border border-amber-200/80 bg-white/80 p-4 shadow-card backdrop-blur;
+}
+
+body.night .card {
+  @apply border-slate-700 bg-slate-900/70;
+}
+
+.stars {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  animation: twinkle 6s ease-in-out infinite alternate;
+  background-image:
+    radial-gradient(2px 2px at 10% 20%, rgba(255,255,255,.8), transparent),
+    radial-gradient(1.5px 1.5px at 25% 80%, rgba(255,255,255,.7), transparent),
+    radial-gradient(1.8px 1.8px at 40% 30%, rgba(255,255,255,.65), transparent),
+    radial-gradient(1.7px 1.7px at 65% 75%, rgba(255,255,255,.8), transparent),
+    radial-gradient(1.6px 1.6px at 82% 26%, rgba(255,255,255,.75), transparent),
+    radial-gradient(2px 2px at 93% 60%, rgba(255,255,255,.65), transparent);
+}
+
+@keyframes twinkle {
+  0% {
+    opacity: 0.45;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0.9;
+    transform: scale(1.02);
+  }
+}
