@@ -60,8 +60,12 @@ SMTP_FROM="Lelita Photlibrary <no-reply@tu-dominio.com>"
 
 ### Instalar dependencia en tu entorno
 
-MONGODB_URI=mongodb+srv://<user>:<pass>@<cluster>/<db>?retryWrites=true&w=majority
+MONGODB_DATA_API_URL=https://data.mongodb-api.com/app/<app-id>/endpoint/data/v1
+MONGODB_DATA_API_KEY=<tu_data_api_key>
+MONGODB_DATA_SOURCE=Cluster0
 MONGODB_DB=lelita
+MONGODB_COLLECTION=app_state
+MONGODB_STATE_ID=singleton
 
 CLOUDINARY_CLOUD_NAME=tu_cloud_name
 CLOUDINARY_API_KEY=tu_api_key
@@ -150,12 +154,13 @@ Colección sugerida `media`:
 4. Verifica en logs de Vercel las API routes de subida/listado.
 5. Ejecuta prueba final: subir imagen + subir video + recargar + abrir desde otro dispositivo.
 
-### 6) Migración desde estado local actual
+### 6) Persistencia de estado en MongoDB Atlas
 
-Actualmente el proyecto guarda estado en `data/state.json` (MVP). Para producción:
-- mover lecturas/escrituras de `app/api/app/route.ts` a MongoDB,
-- reemplazar URLs manuales por subida real a Cloudinary,
-- mantener este JSON solo para desarrollo o eliminarlo al terminar la migración.
+Ahora el backend persiste `users`, `resetCodes`, `phrase`, `theme`, `media`, `letters` y `chat` en **MongoDB Atlas Data API** (colección `app_state`, documento `singleton`).
+
+- Ya no se depende de escritura en archivos locales para producción en Vercel.
+- `data/state.json` se usa únicamente como semilla inicial si el documento aún no existe.
+- Cloudinary sigue manejando almacenamiento de archivos (imágenes/videos).
 
 ## Producción
 
@@ -164,4 +169,4 @@ npm run build
 npm run start
 ```
 
-> Persistencia actual: `data/state.json` (MVP). Para producción real multiusuario, migrar a DB + auth/sesiones robustas.
+> Persistencia en producción: MongoDB Atlas Data API + Cloudinary.
