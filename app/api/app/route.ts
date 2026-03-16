@@ -123,6 +123,34 @@ const createCloudinarySignature = (folder: string, timestamp: number, apiSecret:
   return crypto.createHash('sha1').update(`${paramsToSign}${apiSecret}`).digest('hex');
 };
 
+const uploadDataUrlToCloudinary = async (fileDataUrl: string, resourceType: CloudinaryResourceType, folder: string) => {
+  const { cloudName, apiKey, apiSecret } = getCloudinaryConfig();
+  const timestamp = Math.floor(Date.now() / 1000);
+  const signature = createCloudinarySignature(folder, timestamp, apiSecret);
+
+  const form = new FormData();
+  form.append('file', fileDataUrl);
+  form.append('api_key', apiKey);
+  form.append('timestamp', String(timestamp));
+  form.append('folder', folder);
+  form.append('signature', signature);
+
+  const res = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/${resourceType}/upload`, {
+    method: 'POST',
+    body: form
+  });
+
+  const data = (await res.json()) as { secure_url?: string; format?: string; error?: { message?: string } };
+  if (!res.ok || !data.secure_url || data.error?.message) {
+    throw new Error(data.error?.message || 'Error subiendo archivo a Cloudinary.');
+  }
+
+  return {
+    url: data.secure_url,
+    type: data.format ? `${resourceType}/${data.format}` : `${resourceType}/*`
+  };
+};
+
 export async function GET() {
   const state = await getState();
   return NextResponse.json(state);
@@ -212,6 +240,23 @@ export async function POST(req: NextRequest) {
             signature,
             resourceType
           };
+        }
+
+
+        // Compatibilidad con clientes antiguos que enviaban base64 al backend.
+        case 'uploadFile': {
+          const fileDataUrl = String(payload.fileDataUrl || '');
+          const mediaType = String(payload.mediaType || 'image/jpeg');
+          const context = payload.context === 'chat' ? 'chat' : 'media';
+
+          if (!fileDataUrl.startsWith('data:')) throw new Error('Archivo inválido. Debes subir un archivo local.');
+
+          const resourceType: CloudinaryResourceType = mediaType.startsWith('video') ? 'video' : 'image';
+          const { baseFolder } = getCloudinaryConfig();
+          const folder = `${baseFolder}/${context}`;
+          const uploaded = await uploadDataUrlToCloudinary(fileDataUrl, resourceType, folder);
+
+          return { ok: true, url: uploaded.url, type: mediaType || uploaded.type };
         }
 
         case 'addMedia': {

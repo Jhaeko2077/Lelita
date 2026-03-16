@@ -120,6 +120,7 @@ RESET_EMAIL_WEBHOOK_URL=https://tu-webhook.com/reset
 
 - En **Feed** y **Chat** ahora eliges archivo local desde `<input type="file">`.
 - El frontend pide una firma al backend con `createCloudinarySignature` y luego sube el archivo binario directo a Cloudinary.
+- Se mantiene compatibilidad con clientes antiguos vía acción `uploadFile` (base64) en backend, pero la ruta recomendada es subida binaria directa.
 - El backend firma la subida con `CLOUDINARY_API_SECRET` y guarda en carpetas:
   - `CLOUDINARY_UPLOAD_FOLDER/media`
   - `CLOUDINARY_UPLOAD_FOLDER/chat`

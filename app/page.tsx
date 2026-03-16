@@ -73,6 +73,7 @@ export default function Home() {
   };
 
   const uploadLocalFile = async (file: File, context: 'media' | 'chat', mediaType: string) => {
+    // Flujo recomendado: pedir firma al backend y subir binario directo a Cloudinary.
     const sign = await api('createCloudinarySignature', { context, mediaType });
 
     const cloudName = String(sign.cloudName);
