@@ -11,11 +11,12 @@ Aplicación romántica hecha con **Next.js + React + Tailwind + Framer Motion**,
   - años/meses/días.
 - Cartita editable **Frase de hoy** con abrir/cerrar al click.
 - Feed de fotos/videos con **scroll infinito**, estilo collage/diario con tarjetas inclinadas.
+- Feed permite subir archivos locales (imagen/video) y los envía a Cloudinary desde backend.
 - Buscador por descripción en el feed.
 - Edición de descripción por autor.
 - **Lightbox** con navegación siguiente/anterior para media grande + descripción.
 - Cartas secretas separadas para Jeicob y Lelita, con control de edición por autor.
-- Chat al final con texto + imagen/video (URL).
+- Chat al final con texto + imagen/video subiendo archivo local.
 - Modo día/noche con estrellas animadas.
 - QR para abrir en móvil.
 - Mensajes visuales de éxito/error para mejor UX.
@@ -29,28 +30,36 @@ npm run dev
 
 Abrir: `http://localhost:3000`
 
-## Webhook opcional para recuperación por email
+## Recuperación de contraseña por correo (Nodemailer)
 
-Si defines la variable de entorno:
+La API ahora soporta envío real de código de recuperación por SMTP usando Nodemailer desde `app/api/app/route.ts`.
+
+### Variables de entorno para SMTP (`.env.local`)
 
 ```bash
-RESET_EMAIL_WEBHOOK_URL=https://tu-webhook.com/reset
+SMTP_HOST=smtp.gmail.com
+SMTP_PORT=587
+SMTP_SECURE=false
+SMTP_USER=tu_cuenta_smtp
+SMTP_PASS=tu_password_o_app_password
+SMTP_FROM="Lelita Photlibrary <no-reply@tu-dominio.com>"
 ```
 
-al solicitar recuperación, la API enviará `POST` con `{ email, code, subject }`.
+> Si SMTP no está configurado, la API hace fallback a `RESET_EMAIL_WEBHOOK_URL` (si existe). Si tampoco hay webhook, devuelve el código en modo debug para pruebas locales.
 
+### Flujo de funcionamiento
 
-## Conexión recomendada: MongoDB + Cloudinary + Vercel
+1. Frontend llama `requestReset` con el email.
+2. Backend genera código de 6 dígitos con expiración de 10 minutos y lo guarda en `state.resetCodes`.
+3. Backend intenta enviar el código en este orden:
+   - SMTP con Nodemailer (`delivery: "smtp"`)
+   - Webhook (`delivery: "webhook"`)
+   - Debug local (`delivery: "debug"`)
+4. Frontend llama `confirmReset` con `email`, `code` y `newPassword`.
+5. Backend valida código/expiración, cambia contraseña y elimina el reset token.
 
-Para que las fotos y videos **no se pierdan** y siempre carguen de forma confiable:
+### Instalar dependencia en tu entorno
 
-1. **MongoDB Atlas**: guarda solo metadatos (autor, descripción, fechas, `public_id`, tipo MIME, URLs).
-2. **Cloudinary**: guarda el archivo real (imagen/video) y entrega CDN optimizada.
-3. **Vercel**: ejecuta el frontend + API routes, leyendo credenciales por variables de entorno.
-
-### 1) Variables de entorno (`.env.local`)
-
-```bash
 MONGODB_URI=mongodb+srv://<user>:<pass>@<cluster>/<db>?retryWrites=true&w=majority
 MONGODB_DB=lelita
 
@@ -58,11 +67,34 @@ CLOUDINARY_CLOUD_NAME=tu_cloud_name
 CLOUDINARY_API_KEY=tu_api_key
 CLOUDINARY_API_SECRET=tu_api_secret
 
-# opcional para recovery por email
+# email recovery por SMTP
+SMTP_HOST=smtp.gmail.com
+SMTP_PORT=587
+SMTP_SECURE=false
+SMTP_USER=tu_cuenta_smtp
+SMTP_PASS=tu_password_o_app_password
+SMTP_FROM="Lelita Photlibrary <no-reply@tu-dominio.com>"
+
+# opcional fallback por webhook
 RESET_EMAIL_WEBHOOK_URL=https://tu-webhook.com/reset
 ```
 
 > En Vercel agrega las mismas variables en **Project Settings → Environment Variables** para Preview/Production.
+
+### 1.1) Subida local de imagen/video a Cloudinary (sin pegar URL)
+
+- En **Feed** y **Chat** ahora eliges archivo local desde `<input type="file">`.
+- El frontend convierte el archivo a Data URL y llama a la acción `uploadFile` en `/api/app`.
+- El backend firma la subida con `CLOUDINARY_API_SECRET` y guarda en carpetas:
+  - `CLOUDINARY_UPLOAD_FOLDER/media`
+  - `CLOUDINARY_UPLOAD_FOLDER/chat`
+- Cloudinary retorna `secure_url`; luego esa URL se guarda en el estado (`media` o `chat`).
+
+Variable opcional:
+
+```bash
+CLOUDINARY_UPLOAD_FOLDER=lelita
+```
 
 ### 2) Modelo de datos recomendado en MongoDB
 
