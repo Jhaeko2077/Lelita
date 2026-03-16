@@ -4,15 +4,101 @@ import { Letter } from '@/lib/types';
 
 const uid = () => Math.random().toString(36).slice(2, 10);
 
+type SendMailOptions = {
+  to: string;
+  subject: string;
+  text: string;
+  html: string;
+};
+
+type MailTransporter = {
+  sendMail: (options: {
+    from: string;
+    to: string;
+    subject: string;
+    text: string;
+    html: string;
+  }) => Promise<unknown>;
+};
+
+let transporter: MailTransporter | null = null;
+
+const getTransporter = (): MailTransporter => {
+  if (transporter) return transporter;
+
+  const host = process.env.SMTP_HOST;
+  const port = Number(process.env.SMTP_PORT || 587);
+  const user = process.env.SMTP_USER;
+  const pass = process.env.SMTP_PASS;
+
+  if (!host || !user || !pass) {
+    throw new Error('Faltan variables SMTP_HOST, SMTP_USER o SMTP_PASS para enviar email.');
+  }
+
+  const secure = String(process.env.SMTP_SECURE || 'false') === 'true' || port === 465;
+
+  try {
+    const req = eval('require') as NodeRequire;
+    const nodemailer = req('nodemailer') as {
+      createTransport: (cfg: {
+        host: string;
+        port: number;
+        secure: boolean;
+        auth: { user: string; pass: string };
+      }) => MailTransporter;
+    };
+
+    transporter = nodemailer.createTransport({
+      host,
+      port,
+      secure,
+      auth: { user, pass }
+    });
+
+    return transporter;
+  } catch {
+    throw new Error('No se encontró "nodemailer". Instálalo con: npm install nodemailer');
+  }
+};
+
+const maybeSendResetEmail = async (email: string, code: string) => {
+  const from = process.env.SMTP_FROM;
+
+  if (!from || !process.env.SMTP_HOST || !process.env.SMTP_USER || !process.env.SMTP_PASS) return false;
+
+  const message: SendMailOptions = {
+    to: email,
+    subject: 'Código de recuperación - Lelita Photlibrary',
+    text: `Tu código de recuperación es: ${code}. Expira en 10 minutos.`,
+    html: `<p>Tu código de recuperación es: <strong>${code}</strong>.</p><p>Expira en <strong>10 minutos</strong>.</p>`
+  };
+
+  const emailTransport = getTransporter();
+  await emailTransport.sendMail({ from, ...message });
+  return true;
+};
+
 const maybeSendResetWebhook = async (email: string, code: string) => {
   const url = process.env.RESET_EMAIL_WEBHOOK_URL;
-  if (!url) return;
+  if (!url) return false;
 
   await fetch(url, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ email, code, subject: 'Código de recuperación' })
   });
+
+  return true;
+};
+
+const sendResetCode = async (email: string, code: string) => {
+  const sentByEmail = await maybeSendResetEmail(email, code);
+  if (sentByEmail) return 'smtp';
+
+  const sentByWebhook = await maybeSendResetWebhook(email, code);
+  if (sentByWebhook) return 'webhook';
+
+  return 'debug';
 };
 
 export async function GET() {
@@ -50,8 +136,15 @@ export async function POST(req: NextRequest) {
           if (!entry) throw new Error('Email no encontrado.');
           const code = String(Math.floor(100000 + Math.random() * 900000));
           state.resetCodes[email] = { code, expires: Date.now() + 10 * 60 * 1000 };
-          await maybeSendResetWebhook(email, code);
-          return { ok: true, code };
+
+          const delivery = await sendResetCode(email, code);
+          const isProd = process.env.NODE_ENV === 'production';
+
+          return {
+            ok: true,
+            delivery,
+            code: isProd && delivery !== 'debug' ? undefined : code
+          };
         }
 
         case 'confirmReset': {
