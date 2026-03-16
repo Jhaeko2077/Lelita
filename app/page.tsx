@@ -81,14 +81,17 @@ export default function Home() {
   }, [state.theme]);
 
   useEffect(() => {
+    const filteredLength = state.media.filter((item) => item.description.toLowerCase().includes(mediaFilter.toLowerCase())).length;
+
     const onScroll = () => {
       if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 300) {
-        setVisibleCount((v) => Math.min(v + 4, filteredMedia.length));
+        setVisibleCount((v) => Math.min(v + 4, filteredLength));
       }
     };
+
     window.addEventListener('scroll', onScroll);
     return () => window.removeEventListener('scroll', onScroll);
-  }, [filteredMedia.length]);
+  }, [state.media, mediaFilter]);
 
   useEffect(() => {
     const timer = setInterval(() => setCounterNow(Date.now()), 1000 * 30);
