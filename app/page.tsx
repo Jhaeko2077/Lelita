@@ -37,9 +37,11 @@ export default function Home() {
   const [state, setState] = useState<AppState>(initial);
   const [user, setUser] = useState('');
   const [auth, setAuth] = useState({ username: 'jeicob', email: '', password: '' });
-  const [media, setMedia] = useState({ url: '', type: 'image/jpeg', description: '' });
+  const [media, setMedia] = useState({ type: 'image/jpeg', description: '' });
+  const [mediaFile, setMediaFile] = useState<File | null>(null);
   const [letter, setLetter] = useState({ title: '', text: '', to: 'lelita' as 'jeicob' | 'lelita' });
-  const [chat, setChat] = useState({ text: '', mediaUrl: '', mediaType: 'image/jpeg' });
+  const [chat, setChat] = useState({ text: '', mediaType: 'image/jpeg' });
+  const [chatFile, setChatFile] = useState<File | null>(null);
   const [resetOpen, setResetOpen] = useState(false);
   const [phraseOpen, setPhraseOpen] = useState(true);
   const [reset, setReset] = useState({ email: '', code: '', newPassword: '', debugCode: '' });
@@ -49,6 +51,11 @@ export default function Home() {
   const [lightboxId, setLightboxId] = useState<string | null>(null);
   const [mediaFilter, setMediaFilter] = useState('');
   const [counterNow, setCounterNow] = useState(Date.now());
+
+  const filteredMedia = useMemo(
+    () => state.media.filter((item) => item.description.toLowerCase().includes(mediaFilter.toLowerCase())),
+    [state.media, mediaFilter]
+  );
 
   const refresh = async () => {
     const res = await fetch('/api/app', { cache: 'no-store' });
@@ -65,6 +72,37 @@ export default function Home() {
     }
   };
 
+  const uploadLocalFile = async (file: File, context: 'media' | 'chat', mediaType: string) => {
+    const sign = await api('createCloudinarySignature', { context, mediaType });
+
+    const cloudName = String(sign.cloudName);
+    const apiKey = String(sign.apiKey);
+    const timestamp = Number(sign.timestamp);
+    const folder = String(sign.folder);
+    const signature = String(sign.signature);
+    const resourceType = String(sign.resourceType || (mediaType.startsWith('video') ? 'video' : 'image'));
+
+    const form = new FormData();
+    form.append('file', file);
+    form.append('api_key', apiKey);
+    form.append('timestamp', String(timestamp));
+    form.append('folder', folder);
+    form.append('signature', signature);
+
+    const res = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/${resourceType}/upload`, {
+      method: 'POST',
+      body: form
+    });
+
+    const data = await res.json();
+    if (!res.ok || data.error?.message || !data.secure_url) {
+      throw new Error(data.error?.message || 'No se pudo subir el archivo a Cloudinary.');
+    }
+
+    const uploadedType = String(file.type || data.resource_type || mediaType || 'image/jpeg');
+    return { url: String(data.secure_url), type: uploadedType };
+  };
+
   useEffect(() => {
     refresh();
     const savedUser = window.localStorage.getItem('lelita_session_user');
@@ -76,14 +114,17 @@ export default function Home() {
   }, [state.theme]);
 
   useEffect(() => {
+    const filteredLength = state.media.filter((item) => item.description.toLowerCase().includes(mediaFilter.toLowerCase())).length;
+
     const onScroll = () => {
       if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 300) {
-        setVisibleCount((v) => Math.min(v + 4, filteredMedia.length));
+        setVisibleCount((v) => Math.min(v + 4, filteredLength));
       }
     };
+
     window.addEventListener('scroll', onScroll);
     return () => window.removeEventListener('scroll', onScroll);
-  }, [filteredMedia.length]);
+  }, [state.media, mediaFilter]);
 
   useEffect(() => {
     const timer = setInterval(() => setCounterNow(Date.now()), 1000 * 30);
@@ -123,11 +164,6 @@ export default function Home() {
     const target = typeof window !== 'undefined' ? window.location.href : 'http://localhost:3000';
     return `https://quickchart.io/qr?size=170&text=${encodeURIComponent(target)}`;
   }, []);
-
-  const filteredMedia = useMemo(
-    () => state.media.filter((item) => item.description.toLowerCase().includes(mediaFilter.toLowerCase())),
-    [state.media, mediaFilter]
-  );
 
   const visibleMedia = filteredMedia.slice(0, visibleCount);
 
@@ -282,14 +318,29 @@ export default function Home() {
             onSubmit={(e) => {
               e.preventDefault();
               safeRun(async () => {
-                await api('addMedia', { ...media, author: user });
-                setMedia({ url: '', type: 'image/jpeg', description: '' });
+                if (!mediaFile) throw new Error('Selecciona una imagen o video local.');
+                const uploaded = await uploadLocalFile(mediaFile, 'media', media.type);
+                await api('addMedia', { url: uploaded.url, type: uploaded.type, description: media.description, author: user });
+                setMedia({ type: 'image/jpeg', description: '' });
+                setMediaFile(null);
                 await refresh();
               }, 'Recuerdo publicado 📸');
             }}
             className="space-y-2"
           >
-            <input placeholder="URL imagen/video" className="w-full rounded-lg border p-2" value={media.url} onChange={(e) => setMedia({ ...media, url: e.target.value })} />
+            <input
+              key={mediaFile ? mediaFile.name : 'media-empty'}
+              type="file"
+              name="mediaFile"
+              accept="image/*,video/*"
+              className="w-full rounded-lg border p-2"
+              onChange={(e) => {
+                const file = e.target.files?.[0] || null;
+                setMediaFile(file);
+                if (file?.type) setMedia({ ...media, type: file.type });
+              }}
+            />
+            {mediaFile && <p className="text-xs text-slate-500">Archivo seleccionado: {mediaFile.name}</p>}
             <select className="w-full rounded-lg border p-2" value={media.type} onChange={(e) => setMedia({ ...media, type: e.target.value })}>
               <option value="image/jpeg">Imagen</option>
               <option value="video/mp4">Video</option>
@@ -423,14 +474,36 @@ export default function Home() {
           onSubmit={(e) => {
             e.preventDefault();
             safeRun(async () => {
-              await api('addChat', { text: chat.text, mediaUrl: chat.mediaUrl, mediaType: chat.mediaType, author: user });
-              setChat({ text: '', mediaUrl: '', mediaType: 'image/jpeg' });
+              let mediaUrl = '';
+              let mediaType = chat.mediaType;
+
+              if (chatFile) {
+                const uploaded = await uploadLocalFile(chatFile, 'chat', chat.mediaType);
+                mediaUrl = uploaded.url;
+                mediaType = uploaded.type;
+              }
+
+              await api('addChat', { text: chat.text, mediaUrl, mediaType, author: user });
+              setChat({ text: '', mediaType: 'image/jpeg' });
+              setChatFile(null);
               await refresh();
             }, 'Mensaje enviado 💬');
           }}
         >
           <input className="rounded-lg border p-2" placeholder="Escribe un mensaje" value={chat.text} onChange={(e) => setChat({ ...chat, text: e.target.value })} />
-          <input className="rounded-lg border p-2" placeholder="URL imagen/video" value={chat.mediaUrl} onChange={(e) => setChat({ ...chat, mediaUrl: e.target.value })} />
+          <input
+            key={chatFile ? chatFile.name : 'chat-empty'}
+            type="file"
+            name="chatFile"
+            accept="image/*,video/*"
+            className="rounded-lg border p-2"
+            onChange={(e) => {
+              const file = e.target.files?.[0] || null;
+              setChatFile(file);
+              if (file?.type) setChat({ ...chat, mediaType: file.type });
+            }}
+          />
+          {chatFile && <p className="text-xs text-slate-500 md:col-span-4">Archivo adjunto: {chatFile.name}</p>}
           <select className="rounded-lg border p-2" value={chat.mediaType} onChange={(e) => setChat({ ...chat, mediaType: e.target.value })}>
             <option value="image/jpeg">Imagen</option>
             <option value="video/mp4">Video</option>
