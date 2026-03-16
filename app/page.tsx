@@ -50,6 +50,11 @@ export default function Home() {
   const [mediaFilter, setMediaFilter] = useState('');
   const [counterNow, setCounterNow] = useState(Date.now());
 
+  const filteredMedia = useMemo(
+    () => state.media.filter((item) => item.description.toLowerCase().includes(mediaFilter.toLowerCase())),
+    [state.media, mediaFilter]
+  );
+
   const refresh = async () => {
     const res = await fetch('/api/app', { cache: 'no-store' });
     setState(await res.json());
@@ -123,11 +128,6 @@ export default function Home() {
     const target = typeof window !== 'undefined' ? window.location.href : 'http://localhost:3000';
     return `https://quickchart.io/qr?size=170&text=${encodeURIComponent(target)}`;
   }, []);
-
-  const filteredMedia = useMemo(
-    () => state.media.filter((item) => item.description.toLowerCase().includes(mediaFilter.toLowerCase())),
-    [state.media, mediaFilter]
-  );
 
   const visibleMedia = filteredMedia.slice(0, visibleCount);
 
