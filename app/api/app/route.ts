@@ -100,9 +100,7 @@ const sendResetCode = async (email: string, code: string) => {
   if (sentByWebhook) return 'webhook';
 
   return 'debug';
-<<<<<<< codex/fix-referenceerror-for-filteredmedia-3xwnl0
 };
-
 
 type CloudinaryResourceType = 'image' | 'video';
 
@@ -145,8 +143,6 @@ const uploadToCloudinary = async (fileDataUrl: string, resourceType: CloudinaryR
   }
 
   return data;
-=======
->>>>>>> master
 };
 
 export async function GET() {
