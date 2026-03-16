@@ -1,3 +1,4 @@
+import crypto from 'crypto';
 import { NextRequest, NextResponse } from 'next/server';
 import { getState, withState } from '@/lib/store';
 import { Letter } from '@/lib/types';
@@ -99,6 +100,53 @@ const sendResetCode = async (email: string, code: string) => {
   if (sentByWebhook) return 'webhook';
 
   return 'debug';
+<<<<<<< codex/fix-referenceerror-for-filteredmedia-3xwnl0
+};
+
+
+type CloudinaryResourceType = 'image' | 'video';
+
+type CloudinaryUploadResult = {
+  secure_url: string;
+  resource_type: CloudinaryResourceType;
+  format?: string;
+};
+
+const uploadToCloudinary = async (fileDataUrl: string, resourceType: CloudinaryResourceType, folderSuffix: 'media' | 'chat'): Promise<CloudinaryUploadResult> => {
+  const cloudName = process.env.CLOUDINARY_CLOUD_NAME;
+  const apiKey = process.env.CLOUDINARY_API_KEY;
+  const apiSecret = process.env.CLOUDINARY_API_SECRET;
+  const baseFolder = process.env.CLOUDINARY_UPLOAD_FOLDER || 'lelita';
+
+  if (!cloudName || !apiKey || !apiSecret) {
+    throw new Error('Faltan CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY o CLOUDINARY_API_SECRET.');
+  }
+
+  const timestamp = Math.floor(Date.now() / 1000);
+  const folder = `${baseFolder}/${folderSuffix}`;
+  const paramsToSign = `folder=${folder}&timestamp=${timestamp}`;
+  const signature = crypto.createHash('sha1').update(`${paramsToSign}${apiSecret}`).digest('hex');
+
+  const form = new FormData();
+  form.append('file', fileDataUrl);
+  form.append('api_key', apiKey);
+  form.append('timestamp', String(timestamp));
+  form.append('folder', folder);
+  form.append('signature', signature);
+
+  const res = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/${resourceType}/upload`, {
+    method: 'POST',
+    body: form
+  });
+
+  const data = (await res.json()) as CloudinaryUploadResult & { error?: { message?: string } };
+  if (!res.ok || data.error?.message || !data.secure_url) {
+    throw new Error(data.error?.message || 'Error subiendo archivo a Cloudinary.');
+  }
+
+  return data;
+=======
+>>>>>>> master
 };
 
 export async function GET() {
@@ -168,6 +216,23 @@ export async function POST(req: NextRequest) {
         case 'setTheme': {
           state.theme = payload.theme === 'night' ? 'night' : 'day';
           return { ok: true };
+        }
+
+
+        case 'uploadFile': {
+          const fileDataUrl = String(payload.fileDataUrl || '');
+          const mediaType = String(payload.mediaType || 'image/jpeg');
+          const context = payload.context === 'chat' ? 'chat' : 'media';
+
+          if (!fileDataUrl.startsWith('data:')) {
+            throw new Error('Archivo inválido. Debes subir un archivo local.');
+          }
+
+          const resourceType: CloudinaryResourceType = mediaType.startsWith('video') ? 'video' : 'image';
+          const uploaded = await uploadToCloudinary(fileDataUrl, resourceType, context);
+          const resolvedType = uploaded.format ? `${resourceType}/${uploaded.format}` : mediaType;
+
+          return { ok: true, url: uploaded.secure_url, type: resolvedType };
         }
 
         case 'addMedia': {

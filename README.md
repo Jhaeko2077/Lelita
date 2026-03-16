@@ -11,11 +11,12 @@ Aplicación romántica hecha con **Next.js + React + Tailwind + Framer Motion**,
   - años/meses/días.
 - Cartita editable **Frase de hoy** con abrir/cerrar al click.
 - Feed de fotos/videos con **scroll infinito**, estilo collage/diario con tarjetas inclinadas.
+- Feed permite subir archivos locales (imagen/video) y los envía a Cloudinary desde backend.
 - Buscador por descripción en el feed.
 - Edición de descripción por autor.
 - **Lightbox** con navegación siguiente/anterior para media grande + descripción.
 - Cartas secretas separadas para Jeicob y Lelita, con control de edición por autor.
-- Chat al final con texto + imagen/video (URL).
+- Chat al final con texto + imagen/video subiendo archivo local.
 - Modo día/noche con estrellas animadas.
 - QR para abrir en móvil.
 - Mensajes visuales de éxito/error para mejor UX.
@@ -59,40 +60,6 @@ SMTP_FROM="Lelita Photlibrary <no-reply@tu-dominio.com>"
 
 ### Instalar dependencia en tu entorno
 
-```bash
-npm install nodemailer
-```
-
-> En este entorno de ejecución puede estar bloqueado el acceso al registry; en tu máquina local sí debes instalarlo para usar SMTP real.
-
-### Probar localmente
-
-1. Configura `.env.local` con SMTP.
-2. Ejecuta `npm run dev`.
-3. Crea/login de usuario con email real.
-4. Pulsa **Recuperar contraseña → Enviar código**.
-5. Verifica que llegue el correo.
-6. Ingresa código + nueva contraseña y confirma.
-
-### Despliegue en producción (Vercel)
-
-1. En **Project Settings → Environment Variables** agrega `SMTP_HOST`, `SMTP_PORT`, `SMTP_SECURE`, `SMTP_USER`, `SMTP_PASS`, `SMTP_FROM`.
-2. Haz deploy.
-3. Revisa logs de la API route `/api/app` para validar envío.
-4. Usa proveedor SMTP transaccional (Resend SMTP, SendGrid, Mailgun, Postmark, SES, etc.) para mayor entregabilidad.
-5. En producción evita exponer el código de recuperación por UI (la API ya lo oculta cuando `NODE_ENV=production` y el delivery no es debug).
-
-## Conexión recomendada: MongoDB + Cloudinary + Vercel
-
-Para que las fotos y videos **no se pierdan** y siempre carguen de forma confiable:
-
-1. **MongoDB Atlas**: guarda solo metadatos (autor, descripción, fechas, `public_id`, tipo MIME, URLs).
-2. **Cloudinary**: guarda el archivo real (imagen/video) y entrega CDN optimizada.
-3. **Vercel**: ejecuta el frontend + API routes, leyendo credenciales por variables de entorno.
-
-### 1) Variables de entorno (`.env.local`)
-
-```bash
 MONGODB_URI=mongodb+srv://<user>:<pass>@<cluster>/<db>?retryWrites=true&w=majority
 MONGODB_DB=lelita
 
@@ -114,6 +81,24 @@ RESET_EMAIL_WEBHOOK_URL=https://tu-webhook.com/reset
 
 > En Vercel agrega las mismas variables en **Project Settings → Environment Variables** para Preview/Production.
 
+<<<<<<< codex/fix-referenceerror-for-filteredmedia-3xwnl0
+
+### 1.1) Subida local de imagen/video a Cloudinary (sin pegar URL)
+
+- En **Feed** y **Chat** ahora eliges archivo local desde `<input type="file">`.
+- El frontend convierte el archivo a Data URL y llama a la acción `uploadFile` en `/api/app`.
+- El backend firma la subida con `CLOUDINARY_API_SECRET` y guarda en carpetas:
+  - `CLOUDINARY_UPLOAD_FOLDER/media`
+  - `CLOUDINARY_UPLOAD_FOLDER/chat`
+- Cloudinary retorna `secure_url`; luego esa URL se guarda en el estado (`media` o `chat`).
+
+Variable opcional:
+
+```bash
+CLOUDINARY_UPLOAD_FOLDER=lelita
+```
+
+=======
 ### 2) Modelo de datos recomendado en MongoDB
 
 Colección sugerida `media`:
@@ -200,6 +185,7 @@ RESET_EMAIL_WEBHOOK_URL=https://tu-webhook.com/reset
 
 > En Vercel agrega las mismas variables en **Project Settings → Environment Variables** para Preview/Production.
 
+>>>>>>> master
 ### 2) Modelo de datos recomendado en MongoDB
 
 Colección sugerida `media`:
