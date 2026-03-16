@@ -1,5 +1,10 @@
 {
-  "users": {},
+  "users": {
+    "jeicob": {
+      "email": "kuongjeicob@gmail.com",
+      "password": "23456"
+    }
+  },
   "resetCodes": {},
   "phrase": "Cada día contigo es una historia hermosa.",
   "theme": "day",
