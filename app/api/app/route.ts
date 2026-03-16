@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getState, withState } from '@/lib/store';
+import { Letter } from '@/lib/types';
 
 const uid = () => Math.random().toString(36).slice(2, 10);
 
@@ -108,7 +109,7 @@ export async function POST(req: NextRequest) {
           const author = String(payload.author || '');
           const to = payload.to === 'jeicob' ? 'jeicob' : 'lelita';
           if (!title || !text || !author) throw new Error('Completa título, texto y autor.');
-          const letter = { id: uid(), createdAt: Date.now(), title, text, author, to };
+          const letter: Letter = { id: uid(), createdAt: Date.now(), title, text, author, to };
           state.letters.unshift(letter);
           return { ok: true, letter };
         }

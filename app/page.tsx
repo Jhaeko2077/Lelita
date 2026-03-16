@@ -50,6 +50,11 @@ export default function Home() {
   const [mediaFilter, setMediaFilter] = useState('');
   const [counterNow, setCounterNow] = useState(Date.now());
 
+  const filteredMedia = useMemo(
+    () => state.media.filter((item) => item.description.toLowerCase().includes(mediaFilter.toLowerCase())),
+    [state.media, mediaFilter]
+  );
+
   const refresh = async () => {
     const res = await fetch('/api/app', { cache: 'no-store' });
     setState(await res.json());
@@ -76,14 +81,17 @@ export default function Home() {
   }, [state.theme]);
 
   useEffect(() => {
+    const filteredLength = state.media.filter((item) => item.description.toLowerCase().includes(mediaFilter.toLowerCase())).length;
+
     const onScroll = () => {
       if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 300) {
-        setVisibleCount((v) => Math.min(v + 4, filteredMedia.length));
+        setVisibleCount((v) => Math.min(v + 4, filteredLength));
       }
     };
+
     window.addEventListener('scroll', onScroll);
     return () => window.removeEventListener('scroll', onScroll);
-  }, [filteredMedia.length]);
+  }, [state.media, mediaFilter]);
 
   useEffect(() => {
     const timer = setInterval(() => setCounterNow(Date.now()), 1000 * 30);
@@ -123,11 +131,6 @@ export default function Home() {
     const target = typeof window !== 'undefined' ? window.location.href : 'http://localhost:3000';
     return `https://quickchart.io/qr?size=170&text=${encodeURIComponent(target)}`;
   }, []);
-
-  const filteredMedia = useMemo(
-    () => state.media.filter((item) => item.description.toLowerCase().includes(mediaFilter.toLowerCase())),
-    [state.media, mediaFilter]
-  );
 
   const visibleMedia = filteredMedia.slice(0, visibleCount);
 

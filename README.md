@@ -39,6 +39,92 @@ RESET_EMAIL_WEBHOOK_URL=https://tu-webhook.com/reset
 
 al solicitar recuperación, la API enviará `POST` con `{ email, code, subject }`.
 
+
+## Conexión recomendada: MongoDB + Cloudinary + Vercel
+
+Para que las fotos y videos **no se pierdan** y siempre carguen de forma confiable:
+
+1. **MongoDB Atlas**: guarda solo metadatos (autor, descripción, fechas, `public_id`, tipo MIME, URLs).
+2. **Cloudinary**: guarda el archivo real (imagen/video) y entrega CDN optimizada.
+3. **Vercel**: ejecuta el frontend + API routes, leyendo credenciales por variables de entorno.
+
+### 1) Variables de entorno (`.env.local`)
+
+```bash
+MONGODB_URI=mongodb+srv://<user>:<pass>@<cluster>/<db>?retryWrites=true&w=majority
+MONGODB_DB=lelita
+
+CLOUDINARY_CLOUD_NAME=tu_cloud_name
+CLOUDINARY_API_KEY=tu_api_key
+CLOUDINARY_API_SECRET=tu_api_secret
+
+# opcional para recovery por email
+RESET_EMAIL_WEBHOOK_URL=https://tu-webhook.com/reset
+```
+
+> En Vercel agrega las mismas variables en **Project Settings → Environment Variables** para Preview/Production.
+
+### 2) Modelo de datos recomendado en MongoDB
+
+Colección sugerida `media`:
+
+```json
+{
+  "_id": "...",
+  "owner": "jeicob",
+  "description": "Nuestra foto en...",
+  "resourceType": "image",
+  "mimeType": "image/jpeg",
+  "publicId": "lelita/2026/mi-foto",
+  "secureUrl": "https://res.cloudinary.com/...",
+  "width": 1080,
+  "height": 1350,
+  "duration": null,
+  "createdAt": "2026-01-01T10:00:00.000Z",
+  "updatedAt": "2026-01-01T10:00:00.000Z"
+}
+```
+
+Índices recomendados:
+- `{ createdAt: -1 }` para feed rápido.
+- `{ owner: 1, createdAt: -1 }` para historial por usuario.
+- `{ description: "text" }` para búsqueda.
+- `{ publicId: 1 }` único para evitar duplicados.
+
+### 3) Flujo seguro de subida
+
+1. Cliente solicita firma o URL de subida al backend.
+2. Backend valida sesión/usuario.
+3. Cliente sube archivo a Cloudinary (direct upload o vía API route).
+4. Backend guarda metadatos en MongoDB con `publicId` y `secureUrl`.
+5. Frontend pinta el feed desde MongoDB (no desde estado en archivo local).
+
+### 4) Buenas prácticas para que nunca “desaparezcan”
+
+- Usa siempre `secure_url` HTTPS de Cloudinary, no URLs temporales.
+- Nunca borres de Cloudinary sin borrar/archivar en MongoDB (y viceversa).
+- Activa backups de MongoDB Atlas (Point-in-Time si plan lo permite).
+- Define carpeta fija en Cloudinary, por ejemplo: `lelita/<año>/<mes>/...`.
+- Guarda `public_id` + `resource_type` para poder regenerar URLs optimizadas.
+- En la UI usa fallback visual si una media falla (`onError`) y registra el evento.
+- Implementa soft-delete (`deletedAt`) antes de borrar definitivamente.
+- Crea un job de reconciliación periódico (cron): compara MongoDB vs Cloudinary y corrige inconsistencias.
+
+### 5) Despliegue en Vercel
+
+1. Conecta repo en Vercel.
+2. Configura variables de entorno.
+3. Deploy automático por branch.
+4. Verifica en logs de Vercel las API routes de subida/listado.
+5. Ejecuta prueba final: subir imagen + subir video + recargar + abrir desde otro dispositivo.
+
+### 6) Migración desde estado local actual
+
+Actualmente el proyecto guarda estado en `data/state.json` (MVP). Para producción:
+- mover lecturas/escrituras de `app/api/app/route.ts` a MongoDB,
+- reemplazar URLs manuales por subida real a Cloudinary,
+- mantener este JSON solo para desarrollo o eliminarlo al terminar la migración.
+
 ## Producción
 
 ```bash
