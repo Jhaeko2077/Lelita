@@ -3,15 +3,14 @@ import path from 'path';
 import { AppState } from './types';
 
 const seedFilePath = path.join(process.cwd(), 'data', 'state.json');
-const dataApiUrl = process.env.MONGODB_DATA_API_URL;
-const dataApiKey = process.env.MONGODB_DATA_API_KEY;
-const dataSource = process.env.MONGODB_DATA_SOURCE || 'Cluster0';
+const mongoUri = process.env.MONGODB_URI;
 const database = process.env.MONGODB_DB || 'lelita';
 const collection = process.env.MONGODB_COLLECTION || 'app_state';
 const stateDocumentId = process.env.MONGODB_STATE_ID || 'singleton';
 
 let queue: Promise<unknown> = Promise.resolve();
 let initPromise: Promise<void> | null = null;
+let mongoClientPromise: Promise<unknown> | null = null;
 
 const defaultState: AppState = {
   users: {},
@@ -34,53 +33,56 @@ const loadSeedState = async (): Promise<AppState> => {
   }
 };
 
-const assertDataApiEnv = () => {
-  if (!dataApiUrl || !dataApiKey) {
-    throw new Error('Faltan MONGODB_DATA_API_URL o MONGODB_DATA_API_KEY. Configura MongoDB Atlas Data API en Vercel.');
+const assertMongoEnv = () => {
+  if (!mongoUri) {
+    throw new Error('Falta MONGODB_URI. Configura tu connection string de MongoDB Atlas en Vercel.');
   }
 };
 
-const dataApiRequest = async <T>(action: 'findOne' | 'updateOne', body: Record<string, unknown>): Promise<T> => {
-  assertDataApiEnv();
+const getMongoClient = async (): Promise<unknown> => {
+  assertMongoEnv();
 
-  const response = await fetch(`${dataApiUrl}/action/${action}`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'api-key': dataApiKey as string
-    },
-    body: JSON.stringify({
-      dataSource,
-      database,
-      collection,
-      ...body
-    }),
-    cache: 'no-store'
-  });
-
-  const json = (await response.json()) as T & { error?: string; error_code?: string };
-
-  if (!response.ok || json.error) {
-    throw new Error(json.error || `MongoDB Data API error (${response.status}).`);
+  if (!mongoClientPromise) {
+    try {
+      const req = eval('require') as NodeRequire;
+      const { MongoClient } = req('mongodb') as { MongoClient: { new (uri: string): { connect: () => Promise<unknown> } } };
+      mongoClientPromise = new MongoClient(mongoUri as string).connect();
+    } catch {
+      throw new Error('No se encontró "mongodb". Instálalo con: npm install mongodb');
+    }
   }
 
-  return json;
+  return mongoClientPromise;
+};
+
+const getMongoCollection = async () => {
+  const client = (await getMongoClient()) as {
+    db: (name: string) => {
+      collection: <T>(name: string) => {
+        updateOne: (filter: Record<string, unknown>, update: Record<string, unknown>, options?: Record<string, unknown>) => Promise<unknown>;
+        findOne: (filter: Record<string, unknown>) => Promise<(Partial<T> & { _id?: string }) | null>;
+      };
+    };
+  };
+
+  return client.db(database).collection<AppState>(collection);
 };
 
 const ensureMongoState = async (): Promise<void> => {
   const seed = await loadSeedState();
+  const col = await getMongoCollection();
 
-  await dataApiRequest<{ matchedCount?: number; modifiedCount?: number; upsertedId?: string }>('updateOne', {
-    filter: { _id: stateDocumentId },
-    update: {
+  await col.updateOne(
+    { _id: stateDocumentId },
+    {
       $setOnInsert: {
         ...seed,
         _id: stateDocumentId,
         updatedAt: new Date().toISOString()
       }
     },
-    upsert: true
-  });
+    { upsert: true }
+  );
 };
 
 const ensureState = async (): Promise<void> => {
@@ -94,11 +96,9 @@ const ensureState = async (): Promise<void> => {
 const readState = async (): Promise<AppState> => {
   await ensureState();
 
-  const data = await dataApiRequest<{ document?: Partial<AppState> }>('findOne', {
-    filter: { _id: stateDocumentId }
-  });
+  const col = await getMongoCollection();
+  const doc = await col.findOne({ _id: stateDocumentId });
 
-  const doc = data.document;
   if (!doc) {
     throw new Error('No se pudo inicializar/leer el estado desde MongoDB Atlas.');
   }
@@ -117,16 +117,18 @@ const readState = async (): Promise<AppState> => {
 const writeState = async (nextState: AppState): Promise<void> => {
   await ensureState();
 
-  await dataApiRequest<{ matchedCount?: number; modifiedCount?: number }>('updateOne', {
-    filter: { _id: stateDocumentId },
-    update: {
+  const col = await getMongoCollection();
+
+  await col.updateOne(
+    { _id: stateDocumentId },
+    {
       $set: {
         ...nextState,
         updatedAt: new Date().toISOString()
       }
     },
-    upsert: true
-  });
+    { upsert: true }
+  );
 };
 
 export const withState = async <T>(fn: (state: AppState) => T | Promise<T>): Promise<T> => {

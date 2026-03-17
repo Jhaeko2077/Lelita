@@ -60,9 +60,7 @@ SMTP_FROM="Lelita Photlibrary <no-reply@tu-dominio.com>"
 
 ### Instalar dependencia en tu entorno
 
-MONGODB_DATA_API_URL=https://data.mongodb-api.com/app/<app-id>/endpoint/data/v1
-MONGODB_DATA_API_KEY=<tu_data_api_key>
-MONGODB_DATA_SOURCE=Cluster0
+MONGODB_URI=mongodb+srv://<user>:<password>@<cluster>.mongodb.net/?retryWrites=true&w=majority
 MONGODB_DB=lelita
 MONGODB_COLLECTION=app_state
 MONGODB_STATE_ID=singleton
@@ -156,7 +154,7 @@ Colección sugerida `media`:
 
 ### 6) Persistencia de estado en MongoDB Atlas
 
-Ahora el backend persiste `users`, `resetCodes`, `phrase`, `theme`, `media`, `letters` y `chat` en **MongoDB Atlas Data API** (colección `app_state`, documento `singleton`).
+Ahora el backend persiste `users`, `resetCodes`, `phrase`, `theme`, `media`, `letters` y `chat` en **MongoDB Atlas usando el driver oficial (`mongodb`)** (colección `app_state`, documento `singleton`).
 
 - Ya no se depende de escritura en archivos locales para producción en Vercel.
 - `data/state.json` se usa únicamente como semilla inicial si el documento aún no existe.
@@ -169,4 +167,4 @@ npm run build
 npm run start
 ```
 
-> Persistencia en producción: MongoDB Atlas Data API + Cloudinary.
+> Persistencia en producción: MongoDB Atlas (connection string) + Cloudinary.
