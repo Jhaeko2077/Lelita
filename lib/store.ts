@@ -1,5 +1,6 @@
 import { promises as fs } from 'fs';
 import path from 'path';
+import { MongoClient } from 'mongodb';
 import { AppState } from './types';
 
 const seedFilePath = path.join(process.cwd(), 'data', 'state.json');
@@ -10,7 +11,7 @@ const stateDocumentId = process.env.MONGODB_STATE_ID || 'singleton';
 
 let queue: Promise<unknown> = Promise.resolve();
 let initPromise: Promise<void> | null = null;
-let mongoClientPromise: Promise<unknown> | null = null;
+let mongoClientPromise: Promise<MongoClient> | null = null;
 
 const defaultState: AppState = {
   users: {},
@@ -39,17 +40,11 @@ const assertMongoEnv = () => {
   }
 };
 
-const getMongoClient = async (): Promise<unknown> => {
+const getMongoClient = async (): Promise<MongoClient> => {
   assertMongoEnv();
 
   if (!mongoClientPromise) {
-    try {
-      const req = eval('require') as NodeRequire;
-      const { MongoClient } = req('mongodb') as { MongoClient: { new (uri: string): { connect: () => Promise<unknown> } } };
-      mongoClientPromise = new MongoClient(mongoUri as string).connect();
-    } catch {
-      throw new Error('No se encontró "mongodb". Instálalo con: npm install mongodb');
-    }
+    mongoClientPromise = new MongoClient(mongoUri as string).connect();
   }
 
   return mongoClientPromise;
