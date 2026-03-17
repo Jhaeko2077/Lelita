@@ -1,16 +1,17 @@
 import { promises as fs } from 'fs';
 import path from 'path';
+import { MongoClient } from 'mongodb';
 import { AppState } from './types';
 
 const seedFilePath = path.join(process.cwd(), 'data', 'state.json');
-const mongoUri = process.env.MONGODB_URI;
+const mongoUri = process.env.MONGODB_URI?.trim();
 const database = process.env.MONGODB_DB || 'lelita';
 const collection = process.env.MONGODB_COLLECTION || 'app_state';
 const stateDocumentId = process.env.MONGODB_STATE_ID || 'singleton';
 
 let queue: Promise<unknown> = Promise.resolve();
 let initPromise: Promise<void> | null = null;
-let mongoClientPromise: Promise<unknown> | null = null;
+let mongoClientPromise: Promise<MongoClient> | null = null;
 
 const defaultState: AppState = {
   users: {},
@@ -37,19 +38,42 @@ const assertMongoEnv = () => {
   if (!mongoUri) {
     throw new Error('Falta MONGODB_URI. Configura tu connection string de MongoDB Atlas en Vercel.');
   }
+
+  if (mongoUri.includes('<db_password>') || mongoUri.includes('<password>') || mongoUri.includes('<username>')) {
+    throw new Error('MONGODB_URI contiene placeholders (<db_password>/<username>). Reemplázalos por valores reales.');
+  }
 };
 
-const getMongoClient = async (): Promise<unknown> => {
+const isMongoAuthError = (error: unknown): boolean => {
+  if (!error || typeof error !== 'object') return false;
+
+  const maybeError = error as { code?: number; message?: string };
+  if (maybeError.code === 18) return true;
+
+  const message = String(maybeError.message || '').toLowerCase();
+  return message.includes('bad auth') || message.includes('authentication failed');
+};
+
+const createMongoAuthHelpMessage = () => {
+  return [
+    'MongoDB rechazó las credenciales (bad auth).',
+    'Verifica en Vercel la variable MONGODB_URI.',
+    'Debe usar el usuario/clave correctos, con contraseña URL-encoded y whitelist de IP en Atlas para Vercel (o 0.0.0.0/0 temporal para probar).',
+    'Formato recomendado: mongodb+srv://<user>:<password>@<cluster>/<db>?retryWrites=true&w=majority'
+  ].join(' ');
+};
+
+const getMongoClient = async (): Promise<MongoClient> => {
   assertMongoEnv();
 
   if (!mongoClientPromise) {
-    try {
-      const req = eval('require') as NodeRequire;
-      const { MongoClient } = req('mongodb') as { MongoClient: { new (uri: string): { connect: () => Promise<unknown> } } };
-      mongoClientPromise = new MongoClient(mongoUri as string).connect();
-    } catch {
-      throw new Error('No se encontró "mongodb". Instálalo con: npm install mongodb');
-    }
+    mongoClientPromise = new MongoClient(mongoUri as string).connect().catch((error: unknown) => {
+      if (isMongoAuthError(error)) {
+        throw new Error(createMongoAuthHelpMessage());
+      }
+
+      throw error;
+    });
   }
 
   return mongoClientPromise;
