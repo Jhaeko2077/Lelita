@@ -177,7 +177,12 @@ export async function POST(req: NextRequest) {
         case 'requestReset': {
           const email = String(payload.email || '').toLowerCase();
           const entry = Object.entries(state.users).find(([, u]) => u.email.toLowerCase() === email);
-          if (!entry) throw new Error('Email no encontrado.');
+
+          // Respuesta uniforme para no filtrar si el correo existe o no.
+          if (!entry) {
+            return { ok: true, delivery: 'noop' };
+          }
+
           const code = String(Math.floor(100000 + Math.random() * 900000));
           state.resetCodes[email] = { code, expires: Date.now() + 10 * 60 * 1000 };
 
