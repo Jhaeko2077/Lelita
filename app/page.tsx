@@ -51,6 +51,8 @@ export default function Home() {
   const [lightboxId, setLightboxId] = useState<string | null>(null);
   const [mediaFilter, setMediaFilter] = useState('');
   const [counterNow, setCounterNow] = useState(Date.now());
+  const [isPublishingMedia, setIsPublishingMedia] = useState(false);
+  const [isSendingChat, setIsSendingChat] = useState(false);
 
   const filteredMedia = useMemo(
     () => state.media.filter((item) => item.description.toLowerCase().includes(mediaFilter.toLowerCase())),
@@ -83,7 +85,12 @@ export default function Home() {
   const uploadLocalFile = async (file: File, context: 'media' | 'chat', mediaType: string) => {
     const fileDataUrl = await fileToDataUrl(file);
     const out = await api('uploadFile', { fileDataUrl, context, mediaType });
-    return { url: String(out.url), type: String(out.type || mediaType) };
+    return {
+      url: String(out.url),
+      type: String(out.type || mediaType),
+      publicId: String(out.publicId || ''),
+      resourceType: String(out.resourceType || (mediaType.startsWith('video') ? 'video' : 'image'))
+    };
   };
 
   useEffect(() => {
@@ -301,12 +308,25 @@ export default function Home() {
             onSubmit={(e) => {
               e.preventDefault();
               safeRun(async () => {
-                if (!mediaFile) throw new Error('Selecciona una imagen o video local.');
-                const uploaded = await uploadLocalFile(mediaFile, 'media', media.type);
-                await api('addMedia', { url: uploaded.url, type: uploaded.type, description: media.description, author: user });
-                setMedia({ type: 'image/jpeg', description: '' });
-                setMediaFile(null);
-                await refresh();
+                if (isPublishingMedia) return;
+                setIsPublishingMedia(true);
+                try {
+                  if (!mediaFile) throw new Error('Selecciona una imagen o video local.');
+                  const uploaded = await uploadLocalFile(mediaFile, 'media', media.type);
+                  await api('addMedia', {
+                    url: uploaded.url,
+                    type: uploaded.type,
+                    publicId: uploaded.publicId,
+                    resourceType: uploaded.resourceType,
+                    description: media.description,
+                    author: user
+                  });
+                  setMedia({ type: 'image/jpeg', description: '' });
+                  setMediaFile(null);
+                  await refresh();
+                } finally {
+                  setIsPublishingMedia(false);
+                }
               }, 'Recuerdo publicado 📸');
             }}
             className="space-y-2"
@@ -327,7 +347,9 @@ export default function Home() {
               <option value="video/mp4">Video</option>
             </select>
             <input placeholder="Descripción" className="w-full rounded-lg border p-2" value={media.description} onChange={(e) => setMedia({ ...media, description: e.target.value })} />
-            <button className="w-full rounded-lg bg-primary p-2 text-white">Publicar</button>
+            <button disabled={isPublishingMedia} className="w-full rounded-lg bg-primary p-2 text-white disabled:opacity-60">
+              {isPublishingMedia ? 'Publicando...' : 'Publicar'}
+            </button>
           </form>
 
           <div className="columns-1 gap-3 space-y-3 md:columns-2">
@@ -348,19 +370,32 @@ export default function Home() {
                 <p className="mt-2 text-sm">{item.description}</p>
                 <p className="text-xs text-slate-500">{item.author} · {fmtDate(item.createdAt)}</p>
                 {item.author === user && (
-                  <button
-                    className="mt-2 rounded-md border px-2 py-1 text-xs"
-                    onClick={() => {
-                      const description = prompt('Nueva descripción', item.description);
-                      if (!description) return;
-                      safeRun(async () => {
-                        await api('editMedia', { id: item.id, description, user });
+                  <div className="mt-2 flex gap-2">
+                    <button
+                      className="rounded-md border px-2 py-1 text-xs"
+                      onClick={() => {
+                        const description = prompt('Nueva descripción', item.description);
+                        if (!description) return;
+                        safeRun(async () => {
+                          await api('editMedia', { id: item.id, description, user });
+                          await refresh();
+                        }, 'Descripción actualizada ✨');
+                      }}
+                    >
+                      Editar descripción
+                    </button>
+                    <button
+                      className="rounded-md border border-red-200 px-2 py-1 text-xs text-red-700"
+                      onClick={() => safeRun(async () => {
+                        const accepted = window.confirm('¿Seguro que deseas borrar este post y su archivo?');
+                        if (!accepted) return;
+                        await api('deleteMedia', { id: item.id, user });
                         await refresh();
-                      }, 'Descripción actualizada ✨');
-                    }}
-                  >
-                    Editar descripción
-                  </button>
+                      }, 'Post eliminado 🗑️')}
+                    >
+                      Borrar post
+                    </button>
+                  </div>
                 )}
               </motion.article>
             ))}
@@ -447,6 +482,19 @@ export default function Home() {
                 </div>
               )}
               <p className="mt-1 text-xs text-slate-500">{fmtDate(m.createdAt)}</p>
+              {m.author === user && (
+                <button
+                  className="mt-1 rounded border border-red-200 px-2 py-1 text-xs text-red-700"
+                  onClick={() => safeRun(async () => {
+                    const accepted = window.confirm('¿Seguro que deseas borrar este mensaje?');
+                    if (!accepted) return;
+                    await api('deleteChat', { id: m.id, user });
+                    await refresh();
+                  }, 'Mensaje eliminado 🗑️')}
+                >
+                  Borrar mensaje
+                </button>
+              )}
             </article>
           ))}
         </div>
@@ -455,19 +503,29 @@ export default function Home() {
           onSubmit={(e) => {
             e.preventDefault();
             safeRun(async () => {
-              let mediaUrl = '';
-              let mediaType = chat.mediaType;
+              if (isSendingChat) return;
+              setIsSendingChat(true);
+              try {
+                let mediaUrl = '';
+                let mediaType = chat.mediaType;
+                let mediaPublicId = '';
+                let mediaResourceType: 'image' | 'video' = chat.mediaType.startsWith('video') ? 'video' : 'image';
 
-              if (chatFile) {
-                const uploaded = await uploadLocalFile(chatFile, 'chat', chat.mediaType);
-                mediaUrl = uploaded.url;
-                mediaType = uploaded.type;
+                if (chatFile) {
+                  const uploaded = await uploadLocalFile(chatFile, 'chat', chat.mediaType);
+                  mediaUrl = uploaded.url;
+                  mediaType = uploaded.type;
+                  mediaPublicId = uploaded.publicId;
+                  mediaResourceType = uploaded.resourceType === 'video' ? 'video' : 'image';
+                }
+
+                await api('addChat', { text: chat.text, mediaUrl, mediaType, mediaPublicId, mediaResourceType, author: user });
+                setChat({ text: '', mediaType: 'image/jpeg' });
+                setChatFile(null);
+                await refresh();
+              } finally {
+                setIsSendingChat(false);
               }
-
-              await api('addChat', { text: chat.text, mediaUrl, mediaType, author: user });
-              setChat({ text: '', mediaType: 'image/jpeg' });
-              setChatFile(null);
-              await refresh();
             }, 'Mensaje enviado 💬');
           }}
         >
@@ -487,7 +545,9 @@ export default function Home() {
             <option value="image/jpeg">Imagen</option>
             <option value="video/mp4">Video</option>
           </select>
-          <button className="rounded-lg bg-primary px-4 text-white">Enviar</button>
+          <button disabled={isSendingChat} className="rounded-lg bg-primary px-4 text-white disabled:opacity-60">
+            {isSendingChat ? 'Enviando...' : 'Enviar'}
+          </button>
         </form>
       </section>
 
