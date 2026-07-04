@@ -7,8 +7,35 @@
   },
   "resetCodes": {},
   "phrase": "Cada día contigo es una historia hermosa.",
-  "theme": "day",
-  "media": [],
-  "letters": [],
-  "chat": []
+  "theme": "night",
+  "media": [
+    {
+      "id": "dmdzd9k6",
+      "createdAt": 1773701705167,
+      "url": "https://res.cloudinary.com/ddzgkldjs/image/upload/v1773701709/lelita/media/xovbrwnvefcefshgnlof.jpg",
+      "description": "Te quiero mucho Lelita. Es por eso que subo un pollito dormido. Así de relajado me siento cuando pienso en ti",
+      "author": "jeicob",
+      "type": "image/jpg"
+    }
+  ],
+  "letters": [
+    {
+      "id": "y3klzzkz",
+      "createdAt": 1773701844913,
+      "title": "Por si sientes que ya no puedes más",
+      "text": "Nunca olvides mi niña que yo siempre creo en ti. Jamás dejaría de quererte. En tu vida haz logrado muchas cosas demostrándote una y otra vez que puedes sola, lo cual es cierto y te deja claro que podrás superar esto, no dudes de eso. Sin embargo ahora somos dos, me tienes a mi, y mientras este corazoncito lata tendras a alguien quien te apoye ",
+      "author": "jeicob",
+      "to": "lelita"
+    }
+  ],
+  "chat": [
+    {
+      "id": "4o7halnr",
+      "createdAt": 1773702373219,
+      "text": "Holaaaa",
+      "author": "jeicob",
+      "mediaUrl": "",
+      "mediaType": "image/jpeg"
+    }
+  ]
 }

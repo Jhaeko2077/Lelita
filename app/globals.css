@@ -7,24 +7,156 @@
 }
 
 body {
-  @apply bg-amber-50 text-slate-800;
-  background-image: radial-gradient(circle at 15% 10%, #fff7e6, #f7efe2 40%, #f3e7d3 100%);
+  @apply bg-paper font-sans text-ink;
+}
+
+/* Fondo fijo en pseudo-elemento: evita los bugs de background-attachment:fixed en iOS Safari */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background-image:
+    radial-gradient(60rem 40rem at 92% -12%, rgba(217, 106, 133, 0.22), transparent 60%),
+    radial-gradient(48rem 34rem at -8% 28%, rgba(201, 162, 83, 0.14), transparent 55%),
+    linear-gradient(#fbf6ef, #f6ecdf);
 }
 
 body.night {
   color-scheme: dark;
-  @apply bg-slate-950 text-slate-100;
-  background-image: radial-gradient(circle at 20% 10%, #1d2d55, #0c1530 45%, #050912 100%);
+  @apply bg-plum text-rose-50;
 }
 
-.card {
-  @apply relative rounded-2xl border border-amber-200/80 bg-white/80 p-4 shadow-card backdrop-blur;
+body.night::before {
+  background-image:
+    radial-gradient(55rem 40rem at 88% -10%, rgba(142, 44, 72, 0.32), transparent 60%),
+    radial-gradient(circle at 18% 8%, #2a1b3d, #170f28 48%, #0a0713 100%);
 }
 
-body.night .card {
-  @apply border-slate-700 bg-slate-900/70;
+@layer components {
+  .card {
+    @apply relative rounded-3xl border border-rose/20 bg-white/75 p-5 shadow-card backdrop-blur-md dark:border-white/10 dark:bg-white/[0.05] dark:shadow-none;
+  }
+
+  .input {
+    @apply w-full rounded-xl border border-ink/15 bg-white/85 px-3.5 py-2.5 text-sm text-ink outline-none transition placeholder:text-ink/40 focus:border-wine focus:ring-2 focus:ring-wine/20 dark:border-white/15 dark:bg-white/10 dark:text-rose-50 dark:placeholder:text-rose-50/40 dark:focus:border-rose dark:focus:ring-rose/25;
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-wine to-rose px-4 py-2.5 text-sm font-semibold text-white shadow-lg shadow-wine/25 transition hover:-translate-y-0.5 hover:shadow-glow active:translate-y-0 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:translate-y-0 disabled:hover:shadow-none;
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl border border-ink/15 bg-white/60 px-3.5 py-2 text-sm font-medium text-ink/80 transition hover:border-wine/40 hover:text-wine active:scale-[0.97] dark:border-white/15 dark:bg-white/5 dark:text-rose-50/80 dark:hover:border-rose/60 dark:hover:text-rose-200;
+  }
+
+  .btn-tiny {
+    @apply rounded-lg border border-ink/15 px-2.5 py-1 text-xs font-medium text-ink/70 transition hover:border-wine/40 hover:text-wine active:scale-[0.97] dark:border-white/20 dark:text-rose-50/70 dark:hover:border-rose/60 dark:hover:text-rose-200;
+  }
+
+  .btn-tiny-danger {
+    @apply rounded-lg border border-wine/30 px-2.5 py-1 text-xs font-medium text-wine transition hover:bg-wine hover:text-white active:scale-[0.97] dark:border-rose/40 dark:text-rose-300 dark:hover:bg-rose dark:hover:text-plum;
+  }
+
+  .eyebrow {
+    @apply text-[11px] font-semibold uppercase tracking-[0.24em] text-wine/80 dark:text-rose-300/90;
+  }
+
+  .polaroid {
+    @apply mb-4 break-inside-avoid rounded-md bg-white p-3 pb-4 shadow-polaroid ring-1 ring-black/5 dark:bg-[#241a2e] dark:ring-white/10;
+  }
+
+  .keepsake {
+    @apply rounded-md bg-white p-2 pb-3 shadow-polaroid ring-1 ring-black/5 dark:bg-[#2b2036] dark:ring-white/10;
+  }
+
+  .stationery {
+    @apply relative rounded-2xl border border-gold/30 bg-gradient-to-br from-white to-blush/60 p-4 shadow-sm dark:border-gold/20 dark:from-white/[0.07] dark:to-rose/10;
+  }
 }
 
+/* --- Fototeca flotante del hero y login --- */
+.floaty {
+  animation: floaty 7s ease-in-out infinite;
+}
+
+.floaty-late {
+  animation: floaty 8.5s ease-in-out 1.2s infinite;
+}
+
+@keyframes floaty {
+  0%,
+  100% {
+    transform: translateY(0) rotate(var(--tilt, 0deg));
+  }
+  50% {
+    transform: translateY(-10px) rotate(var(--tilt, 0deg));
+  }
+}
+
+/* --- Corazones ambientales --- */
+.hearts {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.heart-float {
+  position: absolute;
+  bottom: -8vh;
+  color: rgba(217, 106, 133, 0.4);
+  animation: rise var(--d, 20s) linear var(--delay, 0s) infinite;
+  will-change: transform, opacity;
+}
+
+body.night .heart-float {
+  color: rgba(217, 106, 133, 0.3);
+}
+
+@keyframes rise {
+  0% {
+    transform: translateY(0) translateX(0) scale(var(--s, 1)) rotate(-8deg);
+    opacity: 0;
+  }
+  12% {
+    opacity: var(--o, 0.5);
+  }
+  85% {
+    opacity: var(--o, 0.5);
+  }
+  100% {
+    transform: translateY(-118vh) translateX(var(--sway, 30px)) scale(var(--s, 1)) rotate(10deg);
+    opacity: 0;
+  }
+}
+
+/* --- Latido del contador --- */
+.beat {
+  display: inline-block;
+  transform-origin: center;
+  animation: beat 1.6s ease-in-out infinite;
+}
+
+@keyframes beat {
+  0%,
+  40%,
+  100% {
+    transform: scale(1);
+  }
+  10% {
+    transform: scale(1.18);
+  }
+  20% {
+    transform: scale(1);
+  }
+  30% {
+    transform: scale(1.12);
+  }
+}
+
+/* --- Cielo estrellado (modo noche) --- */
 .stars {
   position: fixed;
   inset: 0;
@@ -32,12 +164,12 @@ body.night .card {
   z-index: 0;
   animation: twinkle 6s ease-in-out infinite alternate;
   background-image:
-    radial-gradient(2px 2px at 10% 20%, rgba(255,255,255,.8), transparent),
-    radial-gradient(1.5px 1.5px at 25% 80%, rgba(255,255,255,.7), transparent),
-    radial-gradient(1.8px 1.8px at 40% 30%, rgba(255,255,255,.65), transparent),
-    radial-gradient(1.7px 1.7px at 65% 75%, rgba(255,255,255,.8), transparent),
-    radial-gradient(1.6px 1.6px at 82% 26%, rgba(255,255,255,.75), transparent),
-    radial-gradient(2px 2px at 93% 60%, rgba(255,255,255,.65), transparent);
+    radial-gradient(2px 2px at 10% 20%, rgba(255, 255, 255, 0.8), transparent),
+    radial-gradient(1.5px 1.5px at 25% 80%, rgba(255, 255, 255, 0.7), transparent),
+    radial-gradient(1.8px 1.8px at 40% 30%, rgba(255, 255, 255, 0.65), transparent),
+    radial-gradient(1.7px 1.7px at 65% 75%, rgba(255, 255, 255, 0.8), transparent),
+    radial-gradient(1.6px 1.6px at 82% 26%, rgba(255, 255, 255, 0.75), transparent),
+    radial-gradient(2px 2px at 93% 60%, rgba(255, 255, 255, 0.65), transparent);
 }
 
 @keyframes twinkle {
@@ -48,5 +180,50 @@ body.night .card {
   100% {
     opacity: 0.9;
     transform: scale(1.02);
+  }
+}
+
+/* --- Cinta adhesiva de las polaroids --- */
+.tape {
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  width: 88px;
+  height: 22px;
+  transform: translateX(-50%) rotate(-2deg);
+  background: linear-gradient(rgba(246, 227, 230, 0.85), rgba(232, 214, 218, 0.75));
+  border-left: 1px dashed rgba(142, 44, 72, 0.18);
+  border-right: 1px dashed rgba(142, 44, 72, 0.18);
+  box-shadow: 0 2px 6px rgba(51, 32, 46, 0.12);
+}
+
+/* --- Scrollbar fino para el chat --- */
+.chat-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(142, 44, 72, 0.35) transparent;
+}
+
+.chat-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+
+.chat-scroll::-webkit-scrollbar-thumb {
+  border-radius: 9999px;
+  background: rgba(142, 44, 72, 0.35);
+}
+
+/* --- Accesibilidad --- */
+:focus-visible {
+  outline: 2px solid #d96a85;
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .heart-float,
+  .floaty,
+  .floaty-late,
+  .beat,
+  .stars {
+    animation: none;
   }
 }
