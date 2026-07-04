@@ -106,8 +106,39 @@ type CloudinaryResourceType = 'image' | 'video';
 
 type CloudinaryUploadResult = {
   secure_url: string;
+  public_id: string;
   resource_type: CloudinaryResourceType;
   format?: string;
+};
+
+const destroyFromCloudinary = async (publicId: string, resourceType: CloudinaryResourceType) => {
+  const cloudName = process.env.CLOUDINARY_CLOUD_NAME;
+  const apiKey = process.env.CLOUDINARY_API_KEY;
+  const apiSecret = process.env.CLOUDINARY_API_SECRET;
+
+  if (!cloudName || !apiKey || !apiSecret) {
+    throw new Error('Faltan CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY o CLOUDINARY_API_SECRET.');
+  }
+
+  const timestamp = Math.floor(Date.now() / 1000);
+  const paramsToSign = `public_id=${publicId}&timestamp=${timestamp}`;
+  const signature = crypto.createHash('sha1').update(`${paramsToSign}${apiSecret}`).digest('hex');
+
+  const form = new FormData();
+  form.append('public_id', publicId);
+  form.append('api_key', apiKey);
+  form.append('timestamp', String(timestamp));
+  form.append('signature', signature);
+
+  const res = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/${resourceType}/destroy`, {
+    method: 'POST',
+    body: form
+  });
+
+  const data = (await res.json()) as { result?: string; error?: { message?: string } };
+  if (!res.ok || data.error?.message) {
+    throw new Error(data.error?.message || 'No se pudo borrar archivo en Cloudinary.');
+  }
 };
 
 const uploadToCloudinary = async (fileDataUrl: string, resourceType: CloudinaryResourceType, folderSuffix: 'media' | 'chat'): Promise<CloudinaryUploadResult> => {
@@ -233,7 +264,13 @@ export async function POST(req: NextRequest) {
           const uploaded = await uploadToCloudinary(fileDataUrl, resourceType, context);
           const resolvedType = uploaded.format ? `${resourceType}/${uploaded.format}` : mediaType;
 
-          return { ok: true, url: uploaded.secure_url, type: resolvedType };
+          return {
+            ok: true,
+            url: uploaded.secure_url,
+            publicId: uploaded.public_id,
+            resourceType: uploaded.resource_type,
+            type: resolvedType
+          };
         }
 
         case 'addMedia': {
@@ -241,14 +278,26 @@ export async function POST(req: NextRequest) {
           const description = String(payload.description || '');
           const author = String(payload.author || '');
           const type = String(payload.type || 'image/jpeg');
+          const publicId = String(payload.publicId || '');
+          const resourceType: CloudinaryResourceType = payload.resourceType === 'video' ? 'video' : 'image';
           if (!url || !description || !author) throw new Error('Completa URL, descripción y autor.');
+
+          const duplicate = state.media.find(
+            (m) => m.author === author && m.url === url && m.description === description && Math.abs(Date.now() - m.createdAt) < 30_000
+          );
+          if (duplicate) {
+            return { ok: true, item: duplicate, deduplicated: true };
+          }
+
           const item = {
             id: uid(),
             createdAt: Date.now(),
             url,
             description,
             author,
-            type
+            type,
+            publicId,
+            resourceType
           };
           state.media.unshift(item);
           return { ok: true, item };
@@ -259,6 +308,22 @@ export async function POST(req: NextRequest) {
           if (!item) throw new Error('Media no encontrado.');
           if (item.author !== payload.user) throw new Error('Sin permisos.');
           item.description = String(payload.description || '');
+          return { ok: true };
+        }
+
+        case 'deleteMedia': {
+          const mediaId = String(payload.id || '');
+          const user = String(payload.user || '');
+          const index = state.media.findIndex((m) => m.id === mediaId);
+          if (index < 0) throw new Error('Media no encontrado.');
+          const item = state.media[index];
+          if (item.author !== user) throw new Error('Sin permisos.');
+
+          if (item.publicId) {
+            await destroyFromCloudinary(item.publicId, item.resourceType === 'video' ? 'video' : 'image');
+          }
+
+          state.media.splice(index, 1);
           return { ok: true };
         }
 
@@ -287,10 +352,52 @@ export async function POST(req: NextRequest) {
           const author = String(payload.author || '');
           const mediaUrl = String(payload.mediaUrl || '');
           const mediaType = String(payload.mediaType || '');
+          const mediaPublicId = String(payload.mediaPublicId || '');
+          const mediaResourceType: CloudinaryResourceType = payload.mediaResourceType === 'video' ? 'video' : 'image';
           if (!author || (!text && !mediaUrl)) throw new Error('El mensaje no puede estar vacío.');
-          const message = { id: uid(), createdAt: Date.now(), text, author, mediaUrl, mediaType };
+
+          const duplicate = state.chat.find(
+            (m) =>
+              m.author === author &&
+              m.text === text &&
+              (m.mediaUrl || '') === mediaUrl &&
+              Math.abs(Date.now() - m.createdAt) < 15_000
+          );
+          if (duplicate) {
+            return { ok: true, message: duplicate, deduplicated: true };
+          }
+
+          const message = {
+            id: uid(),
+            createdAt: Date.now(),
+            text,
+            author,
+            mediaUrl,
+            mediaType,
+            mediaPublicId,
+            mediaResourceType
+          };
           state.chat.push(message);
           return { ok: true, message };
+        }
+
+        case 'deleteChat': {
+          const messageId = String(payload.id || '');
+          const user = String(payload.user || '');
+          const index = state.chat.findIndex((m) => m.id === messageId);
+          if (index < 0) throw new Error('Mensaje no encontrado.');
+          const message = state.chat[index];
+          if (message.author !== user) throw new Error('Sin permisos.');
+
+          if (message.mediaPublicId) {
+            await destroyFromCloudinary(
+              message.mediaPublicId,
+              message.mediaResourceType === 'video' ? 'video' : 'image'
+            );
+          }
+
+          state.chat.splice(index, 1);
+          return { ok: true };
         }
 
         default:

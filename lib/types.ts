@@ -4,6 +4,8 @@ export type MediaItem = {
   id: string;
   url: string;
   type: string;
+  publicId?: string;
+  resourceType?: 'image' | 'video';
   description: string;
   author: string;
   createdAt: number;
@@ -23,6 +25,8 @@ export type ChatMessage = {
   text: string;
   mediaUrl?: string;
   mediaType?: string;
+  mediaPublicId?: string;
+  mediaResourceType?: 'image' | 'video';
   author: string;
   createdAt: number;
 };
