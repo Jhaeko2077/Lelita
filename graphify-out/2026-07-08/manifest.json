@@ -1,0 +1,222 @@
+{
+  ".claude/settings.local.json": {
+    "mtime": 1783189650.8557386,
+    "ast_hash": "5a6f9f8fe92221e463b8523ee2abd2cd",
+    "semantic_hash": ""
+  },
+  "app/api/app/route.ts": {
+    "mtime": 1783188267.4716253,
+    "ast_hash": "bc77cd448ccf0adefbad63fc383b39b5",
+    "semantic_hash": ""
+  },
+  "app/layout.tsx": {
+    "mtime": 1783519634.4453745,
+    "ast_hash": "d0c3bc6486d2a0f0b19e2c7e535dff12",
+    "semantic_hash": ""
+  },
+  "app/page.tsx": {
+    "mtime": 1783520736.4594727,
+    "ast_hash": "160dcb910a769329f6932207b7251f8e",
+    "semantic_hash": ""
+  },
+  "data/state.json": {
+    "mtime": 1773702460.206638,
+    "ast_hash": "f2485a497f3b967a87409ee0edd0e7d0",
+    "semantic_hash": ""
+  },
+  "lib/motion.ts": {
+    "mtime": 1783520531.5831673,
+    "ast_hash": "c99591abea7f9658be836f34682c2950",
+    "semantic_hash": ""
+  },
+  "lib/store.ts": {
+    "mtime": 1783188267.4746234,
+    "ast_hash": "6df401c93042200429c0853b6d8b8d63",
+    "semantic_hash": ""
+  },
+  "lib/types.ts": {
+    "mtime": 1783188267.4756227,
+    "ast_hash": "769f2b1909de60a709daa6c22ad024a5",
+    "semantic_hash": ""
+  },
+  "next-env.d.ts": {
+    "mtime": 1773343828.2894006,
+    "ast_hash": "da547da2ebeb322abd0257ae82d0f1bf",
+    "semantic_hash": ""
+  },
+  "next.config.js": {
+    "mtime": 1773343722.1560194,
+    "ast_hash": "1e0cb7bf8a323f9759175690ef3ec32e",
+    "semantic_hash": ""
+  },
+  "package.json": {
+    "mtime": 1773709166.0050607,
+    "ast_hash": "7b5070a87c17ddd0d505d882115abe0e",
+    "semantic_hash": ""
+  },
+  "postcss.config.js": {
+    "mtime": 1773343722.1570203,
+    "ast_hash": "2f4278ae04ce823d884d7ab2b493dbbb",
+    "semantic_hash": ""
+  },
+  "tailwind.config.ts": {
+    "mtime": 1783520542.2403595,
+    "ast_hash": "1e3d72053088376da79aa9c10bbaaad7",
+    "semantic_hash": ""
+  },
+  "tsconfig.json": {
+    "mtime": 1773343722.1580195,
+    "ast_hash": "a785f01dba23dce070f0331a79fa8c69",
+    "semantic_hash": ""
+  },
+  "README.md": {
+    "mtime": 1773709072.0169353,
+    "ast_hash": "be942079f5730e6184cf8770212f2ea4",
+    "semantic_hash": ""
+  },
+  "docs/ANIMATION-HOOKS.md": {
+    "mtime": 1783520992.983256,
+    "ast_hash": "e46741eadc19e22c0024598163d28466",
+    "semantic_hash": ""
+  },
+  "docs/REDESIGN-2026-07-04.md": {
+    "mtime": 1783189995.6867893,
+    "ast_hash": "2d360074664f1269f07a0951e695b401",
+    "semantic_hash": ""
+  },
+  "docs/REDESIGN-2026-07-08.md": {
+    "mtime": 1783520043.101555,
+    "ast_hash": "2038b19e260ff05335194babee7d153e",
+    "semantic_hash": ""
+  },
+  "img/imagen1.jpeg": {
+    "mtime": 1783189015.386133,
+    "ast_hash": "33e0e3992e0ff92f57331e0695fe1a09",
+    "semantic_hash": ""
+  },
+  "img/imagen2.jpeg": {
+    "mtime": 1783189025.3595004,
+    "ast_hash": "b18ffa89f620fa986b5c65cefc600f7d",
+    "semantic_hash": ""
+  },
+  "public/img/imagen1.jpeg": {
+    "mtime": 1783189015.386133,
+    "ast_hash": "33e0e3992e0ff92f57331e0695fe1a09",
+    "semantic_hash": ""
+  },
+  "public/img/imagen2.jpeg": {
+    "mtime": 1783189025.3595004,
+    "ast_hash": "b18ffa89f620fa986b5c65cefc600f7d",
+    "semantic_hash": ""
+  },
+  "C:\\Jeicob\\TaskMove\\Proyectos\\lelita\\.claude\\settings.local.json": {
+    "mtime": 1783189650.8557386,
+    "ast_hash": "5a6f9f8fe92221e463b8523ee2abd2cd",
+    "semantic_hash": "5a6f9f8fe92221e463b8523ee2abd2cd"
+  },
+  "C:\\Jeicob\\TaskMove\\Proyectos\\lelita\\app\\api\\app\\route.ts": {
+    "mtime": 1783188267.4716253,
+    "ast_hash": "bc77cd448ccf0adefbad63fc383b39b5",
+    "semantic_hash": "bc77cd448ccf0adefbad63fc383b39b5"
+  },
+  "C:\\Jeicob\\TaskMove\\Proyectos\\lelita\\app\\layout.tsx": {
+    "mtime": 1783519634.4453745,
+    "ast_hash": "d0c3bc6486d2a0f0b19e2c7e535dff12",
+    "semantic_hash": "d0c3bc6486d2a0f0b19e2c7e535dff12"
+  },
+  "C:\\Jeicob\\TaskMove\\Proyectos\\lelita\\app\\page.tsx": {
+    "mtime": 1783520736.4594727,
+    "ast_hash": "160dcb910a769329f6932207b7251f8e",
+    "semantic_hash": "160dcb910a769329f6932207b7251f8e"
+  },
+  "C:\\Jeicob\\TaskMove\\Proyectos\\lelita\\data\\state.json": {
+    "mtime": 1773702460.206638,
+    "ast_hash": "f2485a497f3b967a87409ee0edd0e7d0",
+    "semantic_hash": "f2485a497f3b967a87409ee0edd0e7d0"
+  },
+  "C:\\Jeicob\\TaskMove\\Proyectos\\lelita\\lib\\motion.ts": {
+    "mtime": 1783520531.5831673,
+    "ast_hash": "c99591abea7f9658be836f34682c2950",
+    "semantic_hash": "c99591abea7f9658be836f34682c2950"
+  },
+  "C:\\Jeicob\\TaskMove\\Proyectos\\lelita\\lib\\store.ts": {
+    "mtime": 1783188267.4746234,
+    "ast_hash": "6df401c93042200429c0853b6d8b8d63",
+    "semantic_hash": "6df401c93042200429c0853b6d8b8d63"
+  },
+  "C:\\Jeicob\\TaskMove\\Proyectos\\lelita\\lib\\types.ts": {
+    "mtime": 1783188267.4756227,
+    "ast_hash": "769f2b1909de60a709daa6c22ad024a5",
+    "semantic_hash": "769f2b1909de60a709daa6c22ad024a5"
+  },
+  "C:\\Jeicob\\TaskMove\\Proyectos\\lelita\\next-env.d.ts": {
+    "mtime": 1773343828.2894006,
+    "ast_hash": "da547da2ebeb322abd0257ae82d0f1bf",
+    "semantic_hash": "da547da2ebeb322abd0257ae82d0f1bf"
+  },
+  "C:\\Jeicob\\TaskMove\\Proyectos\\lelita\\next.config.js": {
+    "mtime": 1773343722.1560194,
+    "ast_hash": "1e0cb7bf8a323f9759175690ef3ec32e",
+    "semantic_hash": "1e0cb7bf8a323f9759175690ef3ec32e"
+  },
+  "C:\\Jeicob\\TaskMove\\Proyectos\\lelita\\package.json": {
+    "mtime": 1773709166.0050607,
+    "ast_hash": "7b5070a87c17ddd0d505d882115abe0e",
+    "semantic_hash": "7b5070a87c17ddd0d505d882115abe0e"
+  },
+  "C:\\Jeicob\\TaskMove\\Proyectos\\lelita\\postcss.config.js": {
+    "mtime": 1773343722.1570203,
+    "ast_hash": "2f4278ae04ce823d884d7ab2b493dbbb",
+    "semantic_hash": "2f4278ae04ce823d884d7ab2b493dbbb"
+  },
+  "C:\\Jeicob\\TaskMove\\Proyectos\\lelita\\tailwind.config.ts": {
+    "mtime": 1783520542.2403595,
+    "ast_hash": "1e3d72053088376da79aa9c10bbaaad7",
+    "semantic_hash": "1e3d72053088376da79aa9c10bbaaad7"
+  },
+  "C:\\Jeicob\\TaskMove\\Proyectos\\lelita\\tsconfig.json": {
+    "mtime": 1773343722.1580195,
+    "ast_hash": "a785f01dba23dce070f0331a79fa8c69",
+    "semantic_hash": "a785f01dba23dce070f0331a79fa8c69"
+  },
+  "C:\\Jeicob\\TaskMove\\Proyectos\\lelita\\README.md": {
+    "mtime": 1773709072.0169353,
+    "ast_hash": "be942079f5730e6184cf8770212f2ea4",
+    "semantic_hash": "be942079f5730e6184cf8770212f2ea4"
+  },
+  "C:\\Jeicob\\TaskMove\\Proyectos\\lelita\\docs\\ANIMATION-HOOKS.md": {
+    "mtime": 1783520992.983256,
+    "ast_hash": "e46741eadc19e22c0024598163d28466",
+    "semantic_hash": "e46741eadc19e22c0024598163d28466"
+  },
+  "C:\\Jeicob\\TaskMove\\Proyectos\\lelita\\docs\\REDESIGN-2026-07-04.md": {
+    "mtime": 1783189995.6867893,
+    "ast_hash": "2d360074664f1269f07a0951e695b401",
+    "semantic_hash": "2d360074664f1269f07a0951e695b401"
+  },
+  "C:\\Jeicob\\TaskMove\\Proyectos\\lelita\\docs\\REDESIGN-2026-07-08.md": {
+    "mtime": 1783520043.101555,
+    "ast_hash": "2038b19e260ff05335194babee7d153e",
+    "semantic_hash": "2038b19e260ff05335194babee7d153e"
+  },
+  "C:\\Jeicob\\TaskMove\\Proyectos\\lelita\\img\\imagen1.jpeg": {
+    "mtime": 1783189015.386133,
+    "ast_hash": "33e0e3992e0ff92f57331e0695fe1a09",
+    "semantic_hash": "33e0e3992e0ff92f57331e0695fe1a09"
+  },
+  "C:\\Jeicob\\TaskMove\\Proyectos\\lelita\\img\\imagen2.jpeg": {
+    "mtime": 1783189025.3595004,
+    "ast_hash": "b18ffa89f620fa986b5c65cefc600f7d",
+    "semantic_hash": "b18ffa89f620fa986b5c65cefc600f7d"
+  },
+  "C:\\Jeicob\\TaskMove\\Proyectos\\lelita\\public\\img\\imagen1.jpeg": {
+    "mtime": 1783189015.386133,
+    "ast_hash": "33e0e3992e0ff92f57331e0695fe1a09",
+    "semantic_hash": "33e0e3992e0ff92f57331e0695fe1a09"
+  },
+  "C:\\Jeicob\\TaskMove\\Proyectos\\lelita\\public\\img\\imagen2.jpeg": {
+    "mtime": 1783189025.3595004,
+    "ast_hash": "b18ffa89f620fa986b5c65cefc600f7d",
+    "semantic_hash": "b18ffa89f620fa986b5c65cefc600f7d"
+  }
+}

@@ -1,4 +1,4 @@
-// File: C:\Jeicob\Code\lelita\app\layout.tsx
+// File: C:\Jeicob\TaskMove\Proyectos\lelita\app\layout.tsx
 import * as entry from '../../../app/layout.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 

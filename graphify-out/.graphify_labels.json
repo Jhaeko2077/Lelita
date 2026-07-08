@@ -1,1 +1,23 @@
-{"0": "Sistema de Diseño y Aprendizajes", "1": "Configuración TypeScript", "2": "UI Principal y Tipos", "3": "Paquete y DevDependencies", "4": "API Backend (route.ts)", "5": "Persistencia MongoDB (store.ts)", "6": "Dependencias de Runtime", "7": "Layout y Tipografías", "8": "Foto 1: Beso en la Colina", "9": "Foto 2: Abrazo Alzado", "10": "Configuración Next.js", "11": "Configuración Tailwind", "12": "Pitfall background-attachment", "13": "Idea: Reacciones con Corazón", "14": "Pendiente: Hash de Contraseñas", "15": "Toasts de Notificación", "16": "Tipos de Next.js", "17": "Configuración PostCSS"}
+{
+  "0": "Pagina principal y animaciones UI",
+  "1": "Sistema de diseno editorial (rediseno 07-04)",
+  "2": "API: Cloudinary, email y acciones",
+  "3": "Layout, tipografia y mapa de animaciones",
+  "4": "Configuracion TypeScript",
+  "5": "Dependencias del proyecto",
+  "6": "Persistencia MongoDB (store)",
+  "7": "Tooling y devDependencies",
+  "8": "Foto 1: colina dorada (escena)",
+  "9": "Foto 2: abrazo en la colina (escena)",
+  "10": "Foto 1 como asset de diseno",
+  "11": "Foto 2 como asset de diseno",
+  "12": "Configuracion Next.js",
+  "13": "Leccion: background-attachment",
+  "14": "Idea: reacciones con corazon",
+  "15": "Pendiente: hash de contrasenas",
+  "16": "Toasts",
+  "17": "Tipos de Next.js",
+  "18": "PostCSS",
+  "19": "Community 19",
+  "20": "Community 20"
+}

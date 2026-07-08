@@ -4,6 +4,20 @@
   "graph": {
     "hyperedges": [
       {
+        "id": "media_persistence_pipeline",
+        "label": "Media Upload and Persistence Pipeline (Cloudinary + MongoDB)",
+        "nodes": [
+          "readme_cloudinary_upload_flow",
+          "readme_mongodb_state_persistence",
+          "readme_media_data_model",
+          "api_app_route"
+        ],
+        "relation": "participate_in",
+        "confidence": "EXTRACTED",
+        "confidence_score": 1.0,
+        "source_file": "README.md"
+      },
+      {
         "id": "editorial_design_system_foundation",
         "label": "Editorial Love Archive Design System Foundation",
         "nodes": [
@@ -17,20 +31,6 @@
         "confidence": "EXTRACTED",
         "confidence_score": 1.0,
         "source_file": "docs/REDESIGN-2026-07-04.md"
-      },
-      {
-        "id": "media_persistence_pipeline",
-        "label": "Media Upload and Persistence Pipeline (Cloudinary + MongoDB)",
-        "nodes": [
-          "readme_cloudinary_upload_flow",
-          "readme_mongodb_state_persistence",
-          "readme_media_data_model",
-          "api_app_route"
-        ],
-        "relation": "participate_in",
-        "confidence": "EXTRACTED",
-        "confidence_score": 1.0,
-        "source_file": "README.md"
       },
       {
         "id": "redesigned_ui_components",
@@ -47,6 +47,46 @@
         "confidence": "EXTRACTED",
         "confidence_score": 1.0,
         "source_file": "docs/REDESIGN-2026-07-04.md"
+      },
+      {
+        "id": "lelita_animation_system",
+        "label": "Sistema de animaci\u00f3n de Lelita: variants + anclas JSX + loops CSS",
+        "nodes": [
+          "lib_motion",
+          "app_page",
+          "app_globals"
+        ],
+        "relation": "form",
+        "confidence": "EXTRACTED",
+        "confidence_score": 1.0,
+        "source_file": "docs/ANIMATION-HOOKS.md"
+      },
+      {
+        "id": "reduced_motion_pipeline",
+        "label": "Cobertura completa de reduced motion (MotionConfig + CSS + count-up skip)",
+        "nodes": [
+          "docs_animation_hooks_reduced_motion",
+          "docs_animation_hooks_count_up",
+          "docs_animation_hooks_css_loops"
+        ],
+        "relation": "participate_in",
+        "confidence": "EXTRACTED",
+        "confidence_score": 1.0,
+        "source_file": "docs/ANIMATION-HOOKS.md"
+      },
+      {
+        "id": "lightbox_motion_flow",
+        "label": "Flujo de motion del lightbox: overlay + card + crossfade de media",
+        "nodes": [
+          "lib_motion_overlayfade",
+          "lib_motion_lightboxcard",
+          "lib_motion_mediaswap",
+          "docs_animation_hooks_lightbox_crossfade"
+        ],
+        "relation": "participate_in",
+        "confidence": "EXTRACTED",
+        "confidence_score": 1.0,
+        "source_file": "docs/ANIMATION-HOOKS.md"
       }
     ]
   },
@@ -58,7 +98,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_route",
-      "community": 4,
+      "community": 2,
       "norm_label": "route.ts"
     },
     {
@@ -68,7 +108,7 @@
       "source_location": "L6",
       "_origin": "ast",
       "id": "app_route_uid",
-      "community": 4,
+      "community": 2,
       "norm_label": "uid()"
     },
     {
@@ -78,7 +118,7 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "app_route_sendmailoptions",
-      "community": 4,
+      "community": 2,
       "norm_label": "sendmailoptions"
     },
     {
@@ -88,7 +128,7 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "app_route_mailtransporter",
-      "community": 4,
+      "community": 2,
       "norm_label": "mailtransporter"
     },
     {
@@ -98,7 +138,7 @@
       "source_location": "L27",
       "_origin": "ast",
       "id": "app_route_gettransporter",
-      "community": 4,
+      "community": 2,
       "norm_label": "gettransporter()"
     },
     {
@@ -108,7 +148,7 @@
       "source_location": "L65",
       "_origin": "ast",
       "id": "app_route_maybesendresetemail",
-      "community": 4,
+      "community": 2,
       "norm_label": "maybesendresetemail()"
     },
     {
@@ -118,7 +158,7 @@
       "source_location": "L82",
       "_origin": "ast",
       "id": "app_route_maybesendresetwebhook",
-      "community": 4,
+      "community": 2,
       "norm_label": "maybesendresetwebhook()"
     },
     {
@@ -128,7 +168,7 @@
       "source_location": "L95",
       "_origin": "ast",
       "id": "app_route_sendresetcode",
-      "community": 4,
+      "community": 2,
       "norm_label": "sendresetcode()"
     },
     {
@@ -138,7 +178,7 @@
       "source_location": "L105",
       "_origin": "ast",
       "id": "app_route_cloudinaryresourcetype",
-      "community": 4,
+      "community": 2,
       "norm_label": "cloudinaryresourcetype"
     },
     {
@@ -148,7 +188,7 @@
       "source_location": "L107",
       "_origin": "ast",
       "id": "app_route_cloudinaryuploadresult",
-      "community": 4,
+      "community": 2,
       "norm_label": "cloudinaryuploadresult"
     },
     {
@@ -158,7 +198,7 @@
       "source_location": "L114",
       "_origin": "ast",
       "id": "app_route_destroyfromcloudinary",
-      "community": 4,
+      "community": 2,
       "norm_label": "destroyfromcloudinary()"
     },
     {
@@ -168,7 +208,7 @@
       "source_location": "L144",
       "_origin": "ast",
       "id": "app_route_uploadtocloudinary",
-      "community": 4,
+      "community": 2,
       "norm_label": "uploadtocloudinary()"
     },
     {
@@ -178,7 +218,7 @@
       "source_location": "L179",
       "_origin": "ast",
       "id": "app_route_get",
-      "community": 4,
+      "community": 2,
       "norm_label": "get()"
     },
     {
@@ -188,7 +228,7 @@
       "source_location": "L184",
       "_origin": "ast",
       "id": "app_route_post",
-      "community": 4,
+      "community": 2,
       "norm_label": "post()"
     },
     {
@@ -198,57 +238,67 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_layout",
-      "community": 7,
+      "community": 3,
       "norm_label": "layout.tsx"
     },
     {
       "label": "fraunces",
       "file_type": "code",
       "source_file": "app/layout.tsx",
-      "source_location": "L5",
+      "source_location": "L6",
       "_origin": "ast",
       "id": "app_layout_fraunces",
-      "community": 7,
+      "community": 3,
       "norm_label": "fraunces"
     },
     {
       "label": "figtree",
       "file_type": "code",
       "source_file": "app/layout.tsx",
-      "source_location": "L6",
+      "source_location": "L7",
       "_origin": "ast",
       "id": "app_layout_figtree",
-      "community": 7,
+      "community": 3,
       "norm_label": "figtree"
     },
     {
       "label": "caveat",
       "file_type": "code",
       "source_file": "app/layout.tsx",
-      "source_location": "L7",
+      "source_location": "L8",
       "_origin": "ast",
       "id": "app_layout_caveat",
-      "community": 7,
+      "community": 3,
       "norm_label": "caveat"
     },
     {
       "label": "metadata",
       "file_type": "code",
       "source_file": "app/layout.tsx",
-      "source_location": "L9",
+      "source_location": "L10",
       "_origin": "ast",
       "id": "app_layout_metadata",
-      "community": 7,
+      "community": 3,
       "norm_label": "metadata"
+    },
+    {
+      "label": "viewport",
+      "file_type": "code",
+      "source_file": "app/layout.tsx",
+      "source_location": "L15",
+      "_origin": "ast",
+      "id": "app_layout_viewport",
+      "community": 3,
+      "norm_label": "viewport"
     },
     {
       "label": "RootLayout()",
       "file_type": "code",
       "source_file": "app/layout.tsx",
-      "source_location": "L14",
+      "source_location": "L19",
       "_origin": "ast",
       "id": "app_layout_rootlayout",
-      "community": 7,
+      "community": 3,
       "norm_label": "rootlayout()"
     },
     {
@@ -258,88 +308,318 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_page",
-      "community": 2,
+      "community": 0,
       "norm_label": "page.tsx"
     },
     {
       "label": "initial",
       "file_type": "code",
       "source_file": "app/page.tsx",
-      "source_location": "L7",
+      "source_location": "L27",
       "_origin": "ast",
       "id": "app_page_initial",
-      "community": 2,
+      "community": 0,
       "norm_label": "initial"
     },
     {
       "label": "api()",
       "file_type": "code",
       "source_file": "app/page.tsx",
-      "source_location": "L17",
+      "source_location": "L37",
       "_origin": "ast",
       "id": "app_page_api",
-      "community": 2,
+      "community": 0,
       "norm_label": "api()"
     },
     {
       "label": "fmtDate()",
       "file_type": "code",
       "source_file": "app/page.tsx",
-      "source_location": "L28",
+      "source_location": "L48",
       "_origin": "ast",
       "id": "app_page_fmtdate",
-      "community": 2,
+      "community": 0,
       "norm_label": "fmtdate()"
+    },
+    {
+      "label": "cld()",
+      "file_type": "code",
+      "source_file": "app/page.tsx",
+      "source_location": "L58",
+      "_origin": "ast",
+      "id": "app_page_cld",
+      "community": 0,
+      "norm_label": "cld()"
     },
     {
       "label": "HeartIcon()",
       "file_type": "code",
       "source_file": "app/page.tsx",
-      "source_location": "L36",
+      "source_location": "L63",
       "_origin": "ast",
       "id": "app_page_hearticon",
-      "community": 2,
+      "community": 0,
       "norm_label": "hearticon()"
     },
     {
       "label": "heartConfigs",
       "file_type": "code",
       "source_file": "app/page.tsx",
-      "source_location": "L42",
+      "source_location": "L70",
       "_origin": "ast",
       "id": "app_page_heartconfigs",
-      "community": 2,
+      "community": 0,
       "norm_label": "heartconfigs"
+    },
+    {
+      "label": "festiveHeartConfigs",
+      "file_type": "code",
+      "source_file": "app/page.tsx",
+      "source_location": "L82",
+      "_origin": "ast",
+      "id": "app_page_festiveheartconfigs",
+      "community": 0,
+      "norm_label": "festiveheartconfigs"
     },
     {
       "label": "FloatingHearts()",
       "file_type": "code",
       "source_file": "app/page.tsx",
-      "source_location": "L53",
+      "source_location": "L91",
       "_origin": "ast",
       "id": "app_page_floatinghearts",
-      "community": 2,
+      "community": 0,
       "norm_label": "floatinghearts()"
     },
     {
       "label": "PhotoStack()",
       "file_type": "code",
       "source_file": "app/page.tsx",
-      "source_location": "L74",
+      "source_location": "L112",
       "_origin": "ast",
       "id": "app_page_photostack",
-      "community": 2,
+      "community": 0,
       "norm_label": "photostack()"
+    },
+    {
+      "label": "SectionHeader()",
+      "file_type": "code",
+      "source_file": "app/page.tsx",
+      "source_location": "L129",
+      "_origin": "ast",
+      "id": "app_page_sectionheader",
+      "community": 0,
+      "norm_label": "sectionheader()"
     },
     {
       "label": "Home()",
       "file_type": "code",
       "source_file": "app/page.tsx",
-      "source_location": "L88",
+      "source_location": "L139",
       "_origin": "ast",
       "id": "app_page_home",
-      "community": 2,
+      "community": 0,
       "norm_label": "home()"
+    },
+    {
+      "label": "motion.ts",
+      "file_type": "code",
+      "source_file": "lib/motion.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "lib_motion",
+      "community": 0,
+      "norm_label": "motion.ts"
+    },
+    {
+      "label": "EASE_OUT",
+      "file_type": "code",
+      "source_file": "lib/motion.ts",
+      "source_location": "L21",
+      "_origin": "ast",
+      "id": "lib_motion_ease_out",
+      "community": 0,
+      "norm_label": "ease_out"
+    },
+    {
+      "label": "fadeRise",
+      "file_type": "code",
+      "source_file": "lib/motion.ts",
+      "source_location": "L24",
+      "_origin": "ast",
+      "id": "lib_motion_faderise",
+      "community": 0,
+      "norm_label": "faderise"
+    },
+    {
+      "label": "scaleIn",
+      "file_type": "code",
+      "source_file": "lib/motion.ts",
+      "source_location": "L30",
+      "_origin": "ast",
+      "id": "lib_motion_scalein",
+      "community": 0,
+      "norm_label": "scalein"
+    },
+    {
+      "label": "collapse",
+      "file_type": "code",
+      "source_file": "lib/motion.ts",
+      "source_location": "L36",
+      "_origin": "ast",
+      "id": "lib_motion_collapse",
+      "community": 0,
+      "norm_label": "collapse"
+    },
+    {
+      "label": "toastPop",
+      "file_type": "code",
+      "source_file": "lib/motion.ts",
+      "source_location": "L42",
+      "_origin": "ast",
+      "id": "lib_motion_toastpop",
+      "community": 0,
+      "norm_label": "toastpop"
+    },
+    {
+      "label": "overlayFade",
+      "file_type": "code",
+      "source_file": "lib/motion.ts",
+      "source_location": "L48",
+      "_origin": "ast",
+      "id": "lib_motion_overlayfade",
+      "community": 0,
+      "norm_label": "overlayfade"
+    },
+    {
+      "label": "lightboxCard",
+      "file_type": "code",
+      "source_file": "lib/motion.ts",
+      "source_location": "L54",
+      "_origin": "ast",
+      "id": "lib_motion_lightboxcard",
+      "community": 0,
+      "norm_label": "lightboxcard"
+    },
+    {
+      "label": "mediaSwap",
+      "file_type": "code",
+      "source_file": "lib/motion.ts",
+      "source_location": "L64",
+      "_origin": "ast",
+      "id": "lib_motion_mediaswap",
+      "community": 0,
+      "norm_label": "mediaswap"
+    },
+    {
+      "label": "polaroidSpring",
+      "file_type": "code",
+      "source_file": "lib/motion.ts",
+      "source_location": "L70",
+      "_origin": "ast",
+      "id": "lib_motion_polaroidspring",
+      "community": 0,
+      "norm_label": "polaroidspring"
+    },
+    {
+      "label": "heroStagger",
+      "file_type": "code",
+      "source_file": "lib/motion.ts",
+      "source_location": "L75",
+      "_origin": "ast",
+      "id": "lib_motion_herostagger",
+      "community": 0,
+      "norm_label": "herostagger"
+    },
+    {
+      "label": "riseChild",
+      "file_type": "code",
+      "source_file": "lib/motion.ts",
+      "source_location": "L81",
+      "_origin": "ast",
+      "id": "lib_motion_risechild",
+      "community": 0,
+      "norm_label": "risechild"
+    },
+    {
+      "label": "fadeChild",
+      "file_type": "code",
+      "source_file": "lib/motion.ts",
+      "source_location": "L87",
+      "_origin": "ast",
+      "id": "lib_motion_fadechild",
+      "community": 0,
+      "norm_label": "fadechild"
+    },
+    {
+      "label": "ruleDraw",
+      "file_type": "code",
+      "source_file": "lib/motion.ts",
+      "source_location": "L93",
+      "_origin": "ast",
+      "id": "lib_motion_ruledraw",
+      "community": 0,
+      "norm_label": "ruledraw"
+    },
+    {
+      "label": "wordStagger",
+      "file_type": "code",
+      "source_file": "lib/motion.ts",
+      "source_location": "L99",
+      "_origin": "ast",
+      "id": "lib_motion_wordstagger",
+      "community": 0,
+      "norm_label": "wordstagger"
+    },
+    {
+      "label": "wordIn",
+      "file_type": "code",
+      "source_file": "lib/motion.ts",
+      "source_location": "L105",
+      "_origin": "ast",
+      "id": "lib_motion_wordin",
+      "community": 0,
+      "norm_label": "wordin"
+    },
+    {
+      "label": "sealStamp",
+      "file_type": "code",
+      "source_file": "lib/motion.ts",
+      "source_location": "L113",
+      "_origin": "ast",
+      "id": "lib_motion_sealstamp",
+      "community": 0,
+      "norm_label": "sealstamp"
+    },
+    {
+      "label": "bubbleIn",
+      "file_type": "code",
+      "source_file": "lib/motion.ts",
+      "source_location": "L122",
+      "_origin": "ast",
+      "id": "lib_motion_bubblein",
+      "community": 0,
+      "norm_label": "bubblein"
+    },
+    {
+      "label": "rowFade",
+      "file_type": "code",
+      "source_file": "lib/motion.ts",
+      "source_location": "L128",
+      "_origin": "ast",
+      "id": "lib_motion_rowfade",
+      "community": 0,
+      "norm_label": "rowfade"
+    },
+    {
+      "label": "staggerChildren",
+      "file_type": "code",
+      "source_file": "lib/motion.ts",
+      "source_location": "L134",
+      "_origin": "ast",
+      "id": "lib_motion_staggerchildren",
+      "community": 0,
+      "norm_label": "staggerchildren"
     },
     {
       "label": "store.ts",
@@ -348,7 +628,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "lib_store",
-      "community": 5,
+      "community": 6,
       "norm_label": "store.ts"
     },
     {
@@ -358,7 +638,7 @@
       "source_location": "L6",
       "_origin": "ast",
       "id": "lib_store_seedfilepath",
-      "community": 5,
+      "community": 6,
       "norm_label": "seedfilepath"
     },
     {
@@ -368,7 +648,7 @@
       "source_location": "L12",
       "_origin": "ast",
       "id": "lib_store_queue",
-      "community": 5,
+      "community": 6,
       "norm_label": "queue"
     },
     {
@@ -378,7 +658,7 @@
       "source_location": "L16",
       "_origin": "ast",
       "id": "lib_store_defaultstate",
-      "community": 5,
+      "community": 6,
       "norm_label": "defaultstate"
     },
     {
@@ -388,7 +668,7 @@
       "source_location": "L26",
       "_origin": "ast",
       "id": "lib_store_deepclonestate",
-      "community": 5,
+      "community": 6,
       "norm_label": "deepclonestate()"
     },
     {
@@ -398,7 +678,7 @@
       "source_location": "L28",
       "_origin": "ast",
       "id": "lib_store_loadseedstate",
-      "community": 5,
+      "community": 6,
       "norm_label": "loadseedstate()"
     },
     {
@@ -408,7 +688,7 @@
       "source_location": "L37",
       "_origin": "ast",
       "id": "lib_store_assertmongoenv",
-      "community": 5,
+      "community": 6,
       "norm_label": "assertmongoenv()"
     },
     {
@@ -418,7 +698,7 @@
       "source_location": "L43",
       "_origin": "ast",
       "id": "lib_store_getmongoclient",
-      "community": 5,
+      "community": 6,
       "norm_label": "getmongoclient()"
     },
     {
@@ -428,7 +708,7 @@
       "source_location": "L53",
       "_origin": "ast",
       "id": "lib_store_getmongocollection",
-      "community": 5,
+      "community": 6,
       "norm_label": "getmongocollection()"
     },
     {
@@ -438,7 +718,7 @@
       "source_location": "L66",
       "_origin": "ast",
       "id": "lib_store_ensuremongostate",
-      "community": 5,
+      "community": 6,
       "norm_label": "ensuremongostate()"
     },
     {
@@ -448,7 +728,7 @@
       "source_location": "L83",
       "_origin": "ast",
       "id": "lib_store_ensurestate",
-      "community": 5,
+      "community": 6,
       "norm_label": "ensurestate()"
     },
     {
@@ -458,7 +738,7 @@
       "source_location": "L91",
       "_origin": "ast",
       "id": "lib_store_readstate",
-      "community": 5,
+      "community": 6,
       "norm_label": "readstate()"
     },
     {
@@ -468,7 +748,7 @@
       "source_location": "L112",
       "_origin": "ast",
       "id": "lib_store_writestate",
-      "community": 5,
+      "community": 6,
       "norm_label": "writestate()"
     },
     {
@@ -478,7 +758,7 @@
       "source_location": "L129",
       "_origin": "ast",
       "id": "lib_store_withstate",
-      "community": 4,
+      "community": 2,
       "norm_label": "withstate()"
     },
     {
@@ -508,7 +788,7 @@
       "source_location": "L3",
       "_origin": "ast",
       "id": "lib_types_mediaitem",
-      "community": 2,
+      "community": 1,
       "norm_label": "mediaitem"
     },
     {
@@ -558,7 +838,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "next_env_d",
-      "community": 16,
+      "community": 17,
       "norm_label": "next-env.d.ts"
     },
     {
@@ -568,7 +848,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "next_config",
-      "community": 10,
+      "community": 12,
       "norm_label": "next.config.js"
     },
     {
@@ -578,7 +858,7 @@
       "source_location": "L2",
       "_origin": "ast",
       "id": "next_config_nextconfig",
-      "community": 10,
+      "community": 12,
       "norm_label": "nextconfig"
     },
     {
@@ -587,8 +867,8 @@
       "source_file": "package.json",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "package",
-      "community": 3,
+      "id": "c_jeicob_code_lelita_package_json",
+      "community": 5,
       "norm_label": "package.json"
     },
     {
@@ -598,7 +878,7 @@
       "source_location": "L2",
       "_origin": "ast",
       "id": "package_name",
-      "community": 3,
+      "community": 5,
       "norm_label": "name"
     },
     {
@@ -608,7 +888,7 @@
       "source_location": "L3",
       "_origin": "ast",
       "id": "package_version",
-      "community": 3,
+      "community": 5,
       "norm_label": "version"
     },
     {
@@ -618,7 +898,7 @@
       "source_location": "L4",
       "_origin": "ast",
       "id": "package_private",
-      "community": 3,
+      "community": 5,
       "norm_label": "private"
     },
     {
@@ -628,7 +908,7 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "package_scripts",
-      "community": 3,
+      "community": 5,
       "norm_label": "scripts"
     },
     {
@@ -638,7 +918,7 @@
       "source_location": "L6",
       "_origin": "ast",
       "id": "package_scripts_dev",
-      "community": 3,
+      "community": 5,
       "norm_label": "dev"
     },
     {
@@ -648,7 +928,7 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "package_scripts_build",
-      "community": 3,
+      "community": 5,
       "norm_label": "build"
     },
     {
@@ -658,7 +938,7 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "package_scripts_start",
-      "community": 3,
+      "community": 5,
       "norm_label": "start"
     },
     {
@@ -668,7 +948,7 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "package_scripts_lint",
-      "community": 3,
+      "community": 5,
       "norm_label": "lint"
     },
     {
@@ -678,7 +958,7 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "package_dependencies",
-      "community": 6,
+      "community": 5,
       "norm_label": "dependencies"
     },
     {
@@ -688,7 +968,7 @@
       "source_location": "L12",
       "_origin": "ast",
       "id": "package_dependencies_cloudinary",
-      "community": 6,
+      "community": 5,
       "norm_label": "cloudinary"
     },
     {
@@ -698,7 +978,7 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "package_dependencies_framer_motion",
-      "community": 6,
+      "community": 5,
       "norm_label": "framer-motion"
     },
     {
@@ -708,7 +988,7 @@
       "source_location": "L14",
       "_origin": "ast",
       "id": "package_dependencies_mongodb",
-      "community": 6,
+      "community": 5,
       "norm_label": "mongodb"
     },
     {
@@ -718,7 +998,7 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "package_dependencies_next",
-      "community": 6,
+      "community": 5,
       "norm_label": "next"
     },
     {
@@ -728,7 +1008,7 @@
       "source_location": "L16",
       "_origin": "ast",
       "id": "package_dependencies_react",
-      "community": 6,
+      "community": 5,
       "norm_label": "react"
     },
     {
@@ -738,7 +1018,7 @@
       "source_location": "L17",
       "_origin": "ast",
       "id": "package_dependencies_react_dom",
-      "community": 6,
+      "community": 5,
       "norm_label": "react-dom"
     },
     {
@@ -748,7 +1028,7 @@
       "source_location": "L18",
       "_origin": "ast",
       "id": "package_dependencies_nodemailer",
-      "community": 6,
+      "community": 5,
       "norm_label": "nodemailer"
     },
     {
@@ -758,7 +1038,7 @@
       "source_location": "L20",
       "_origin": "ast",
       "id": "package_devdependencies",
-      "community": 3,
+      "community": 5,
       "norm_label": "devdependencies"
     },
     {
@@ -768,7 +1048,7 @@
       "source_location": "L21",
       "_origin": "ast",
       "id": "package_devdependencies_types_node",
-      "community": 3,
+      "community": 5,
       "norm_label": "@types/node"
     },
     {
@@ -778,7 +1058,7 @@
       "source_location": "L22",
       "_origin": "ast",
       "id": "package_devdependencies_types_react",
-      "community": 3,
+      "community": 5,
       "norm_label": "@types/react"
     },
     {
@@ -788,7 +1068,7 @@
       "source_location": "L23",
       "_origin": "ast",
       "id": "package_devdependencies_types_react_dom",
-      "community": 3,
+      "community": 5,
       "norm_label": "@types/react-dom"
     },
     {
@@ -798,7 +1078,7 @@
       "source_location": "L24",
       "_origin": "ast",
       "id": "package_devdependencies_autoprefixer",
-      "community": 3,
+      "community": 5,
       "norm_label": "autoprefixer"
     },
     {
@@ -808,7 +1088,7 @@
       "source_location": "L25",
       "_origin": "ast",
       "id": "package_devdependencies_postcss",
-      "community": 3,
+      "community": 5,
       "norm_label": "postcss"
     },
     {
@@ -818,7 +1098,7 @@
       "source_location": "L26",
       "_origin": "ast",
       "id": "package_devdependencies_tailwindcss",
-      "community": 3,
+      "community": 5,
       "norm_label": "tailwindcss"
     },
     {
@@ -828,7 +1108,7 @@
       "source_location": "L27",
       "_origin": "ast",
       "id": "package_devdependencies_typescript",
-      "community": 3,
+      "community": 5,
       "norm_label": "typescript"
     },
     {
@@ -838,7 +1118,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "postcss_config",
-      "community": 17,
+      "community": 18,
       "norm_label": "postcss.config.js"
     },
     {
@@ -848,7 +1128,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "tailwind_config",
-      "community": 11,
+      "community": 19,
       "norm_label": "tailwind.config.ts"
     },
     {
@@ -858,7 +1138,7 @@
       "source_location": "L4",
       "_origin": "ast",
       "id": "tailwind_config_config",
-      "community": 11,
+      "community": 19,
       "norm_label": "config"
     },
     {
@@ -867,8 +1147,8 @@
       "source_file": "tsconfig.json",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "tsconfig",
-      "community": 1,
+      "id": "c_jeicob_code_lelita_tsconfig_json",
+      "community": 4,
       "norm_label": "tsconfig.json"
     },
     {
@@ -878,7 +1158,7 @@
       "source_location": "L2",
       "_origin": "ast",
       "id": "tsconfig_compileroptions",
-      "community": 1,
+      "community": 4,
       "norm_label": "compileroptions"
     },
     {
@@ -888,7 +1168,7 @@
       "source_location": "L3",
       "_origin": "ast",
       "id": "tsconfig_compileroptions_target",
-      "community": 1,
+      "community": 4,
       "norm_label": "target"
     },
     {
@@ -898,7 +1178,7 @@
       "source_location": "L4",
       "_origin": "ast",
       "id": "tsconfig_compileroptions_lib",
-      "community": 1,
+      "community": 4,
       "norm_label": "lib"
     },
     {
@@ -908,7 +1188,7 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "tsconfig_compileroptions_allowjs",
-      "community": 1,
+      "community": 4,
       "norm_label": "allowjs"
     },
     {
@@ -918,7 +1198,7 @@
       "source_location": "L6",
       "_origin": "ast",
       "id": "tsconfig_compileroptions_skiplibcheck",
-      "community": 1,
+      "community": 4,
       "norm_label": "skiplibcheck"
     },
     {
@@ -928,7 +1208,7 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "tsconfig_compileroptions_strict",
-      "community": 1,
+      "community": 4,
       "norm_label": "strict"
     },
     {
@@ -938,7 +1218,7 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "tsconfig_compileroptions_noemit",
-      "community": 1,
+      "community": 4,
       "norm_label": "noemit"
     },
     {
@@ -948,7 +1228,7 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "tsconfig_compileroptions_esmoduleinterop",
-      "community": 1,
+      "community": 4,
       "norm_label": "esmoduleinterop"
     },
     {
@@ -958,7 +1238,7 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "tsconfig_compileroptions_module",
-      "community": 1,
+      "community": 4,
       "norm_label": "module"
     },
     {
@@ -968,7 +1248,7 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "tsconfig_compileroptions_moduleresolution",
-      "community": 1,
+      "community": 4,
       "norm_label": "moduleresolution"
     },
     {
@@ -978,7 +1258,7 @@
       "source_location": "L12",
       "_origin": "ast",
       "id": "tsconfig_compileroptions_resolvejsonmodule",
-      "community": 1,
+      "community": 4,
       "norm_label": "resolvejsonmodule"
     },
     {
@@ -988,7 +1268,7 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "tsconfig_compileroptions_isolatedmodules",
-      "community": 1,
+      "community": 4,
       "norm_label": "isolatedmodules"
     },
     {
@@ -998,7 +1278,7 @@
       "source_location": "L14",
       "_origin": "ast",
       "id": "tsconfig_compileroptions_jsx",
-      "community": 1,
+      "community": 4,
       "norm_label": "jsx"
     },
     {
@@ -1008,7 +1288,7 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "tsconfig_compileroptions_incremental",
-      "community": 1,
+      "community": 4,
       "norm_label": "incremental"
     },
     {
@@ -1018,7 +1298,7 @@
       "source_location": "L16",
       "_origin": "ast",
       "id": "tsconfig_compileroptions_plugins",
-      "community": 1,
+      "community": 4,
       "norm_label": "plugins"
     },
     {
@@ -1028,7 +1308,7 @@
       "source_location": "L17",
       "_origin": "ast",
       "id": "tsconfig_compileroptions_paths",
-      "community": 1,
+      "community": 4,
       "norm_label": "paths"
     },
     {
@@ -1038,7 +1318,7 @@
       "source_location": "L18",
       "_origin": "ast",
       "id": "tsconfig_paths",
-      "community": 1,
+      "community": 4,
       "norm_label": "@/*"
     },
     {
@@ -1048,7 +1328,7 @@
       "source_location": "L21",
       "_origin": "ast",
       "id": "tsconfig_include",
-      "community": 1,
+      "community": 4,
       "norm_label": "include"
     },
     {
@@ -1058,8 +1338,308 @@
       "source_location": "L22",
       "_origin": "ast",
       "id": "tsconfig_exclude",
-      "community": 1,
+      "community": 4,
       "norm_label": "exclude"
+    },
+    {
+      "label": "README.md",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "readme",
+      "community": 7,
+      "norm_label": "readme.md"
+    },
+    {
+      "label": "Lelita's Photlibrary (Next.js Fullstack)",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "readme_lelita_s_photlibrary_next_js_fullstack",
+      "community": 7,
+      "norm_label": "lelita's photlibrary (next.js fullstack)"
+    },
+    {
+      "label": "Funcionalidades principales",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L5",
+      "_origin": "ast",
+      "id": "readme_funcionalidades_principales",
+      "community": 7,
+      "norm_label": "funcionalidades principales"
+    },
+    {
+      "label": "Ejecutar en local",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L24",
+      "_origin": "ast",
+      "id": "readme_ejecutar_en_local",
+      "community": 7,
+      "norm_label": "ejecutar en local"
+    },
+    {
+      "label": "Recuperaci\u00f3n de contrase\u00f1a por correo (Nodemailer)",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L33",
+      "_origin": "ast",
+      "id": "readme_recuperaci\u00f3n_de_contrase\u00f1a_por_correo_nodemailer",
+      "community": 7,
+      "norm_label": "recuperacion de contrasena por correo (nodemailer)"
+    },
+    {
+      "label": "Variables de entorno para SMTP (`.env.local`)",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L37",
+      "_origin": "ast",
+      "id": "readme_variables_de_entorno_para_smtp_env_local",
+      "community": 7,
+      "norm_label": "variables de entorno para smtp (`.env.local`)"
+    },
+    {
+      "label": "Flujo de funcionamiento",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L50",
+      "_origin": "ast",
+      "id": "readme_flujo_de_funcionamiento",
+      "community": 7,
+      "norm_label": "flujo de funcionamiento"
+    },
+    {
+      "label": "Instalar dependencia en tu entorno",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L61",
+      "_origin": "ast",
+      "id": "readme_instalar_dependencia_en_tu_entorno",
+      "community": 7,
+      "norm_label": "instalar dependencia en tu entorno"
+    },
+    {
+      "label": "email recovery por SMTP",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L72",
+      "_origin": "ast",
+      "id": "readme_email_recovery_por_smtp",
+      "community": 7,
+      "norm_label": "email recovery por smtp"
+    },
+    {
+      "label": "opcional fallback por webhook",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L80",
+      "_origin": "ast",
+      "id": "readme_opcional_fallback_por_webhook",
+      "community": 7,
+      "norm_label": "opcional fallback por webhook"
+    },
+    {
+      "label": "ANIMATION-HOOKS.md",
+      "file_type": "document",
+      "source_file": "docs/ANIMATION-HOOKS.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "docs_animation_hooks",
+      "community": 3,
+      "norm_label": "animation-hooks.md"
+    },
+    {
+      "label": "Mapa de animaciones \u2014 Lelita",
+      "file_type": "document",
+      "source_file": "docs/ANIMATION-HOOKS.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "docs_animation_hooks_mapa_de_animaciones_lelita",
+      "community": 3,
+      "norm_label": "mapa de animaciones \u2014 lelita"
+    },
+    {
+      "label": "D\u00f3nde se trabaja",
+      "file_type": "document",
+      "source_file": "docs/ANIMATION-HOOKS.md",
+      "source_location": "L5",
+      "_origin": "ast",
+      "id": "docs_animation_hooks_d\u00f3nde_se_trabaja",
+      "community": 3,
+      "norm_label": "donde se trabaja"
+    },
+    {
+      "label": "Reglas vigentes (no romper)",
+      "file_type": "document",
+      "source_file": "docs/ANIMATION-HOOKS.md",
+      "source_location": "L13",
+      "_origin": "ast",
+      "id": "docs_animation_hooks_reglas_vigentes_no_romper",
+      "community": 3,
+      "norm_label": "reglas vigentes (no romper)"
+    },
+    {
+      "label": "Inventario de anclas (`data-animate`) \u2014 estado IMPLEMENTADO",
+      "file_type": "document",
+      "source_file": "docs/ANIMATION-HOOKS.md",
+      "source_location": "L25",
+      "_origin": "ast",
+      "id": "docs_animation_hooks_inventario_de_anclas_data_animate_estado_implementado",
+      "community": 3,
+      "norm_label": "inventario de anclas (`data-animate`) \u2014 estado implementado"
+    },
+    {
+      "label": "Ideas descartadas (y por qu\u00e9 \u2014 no reintentar sin raz\u00f3n nueva)",
+      "file_type": "document",
+      "source_file": "docs/ANIMATION-HOOKS.md",
+      "source_location": "L48",
+      "_origin": "ast",
+      "id": "docs_animation_hooks_ideas_descartadas_y_por_qu\u00e9_no_reintentar_sin_raz\u00f3n_nueva",
+      "community": 3,
+      "norm_label": "ideas descartadas (y por que \u2014 no reintentar sin razon nueva)"
+    },
+    {
+      "label": "Pendientes posibles (siguiente sesi\u00f3n)",
+      "file_type": "document",
+      "source_file": "docs/ANIMATION-HOOKS.md",
+      "source_location": "L54",
+      "_origin": "ast",
+      "id": "docs_animation_hooks_pendientes_posibles_siguiente_sesi\u00f3n",
+      "community": 3,
+      "norm_label": "pendientes posibles (siguiente sesion)"
+    },
+    {
+      "label": "REDESIGN-2026-07-04.md",
+      "file_type": "document",
+      "source_file": "docs/REDESIGN-2026-07-04.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "docs_redesign_2026_07_04",
+      "community": 3,
+      "norm_label": "redesign-2026-07-04.md"
+    },
+    {
+      "label": "Redise\u00f1o Lelita \u2014 Sesi\u00f3n 2026-07-04",
+      "file_type": "document",
+      "source_file": "docs/REDESIGN-2026-07-04.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "docs_redesign_2026_07_04_redise\u00f1o_lelita_sesi\u00f3n_2026_07_04",
+      "community": 20,
+      "norm_label": "rediseno lelita \u2014 sesion 2026-07-04"
+    },
+    {
+      "label": "Contexto del proyecto",
+      "file_type": "document",
+      "source_file": "docs/REDESIGN-2026-07-04.md",
+      "source_location": "L3",
+      "_origin": "ast",
+      "id": "docs_redesign_2026_07_04_contexto_del_proyecto",
+      "community": 20,
+      "norm_label": "contexto del proyecto"
+    },
+    {
+      "label": "Sistema de dise\u00f1o elegido (\"Archivo de amor editorial\")",
+      "file_type": "document",
+      "source_file": "docs/REDESIGN-2026-07-04.md",
+      "source_location": "L7",
+      "_origin": "ast",
+      "id": "docs_redesign_2026_07_04_sistema_de_dise\u00f1o_elegido_archivo_de_amor_editorial",
+      "community": 20,
+      "norm_label": "sistema de diseno elegido (\"archivo de amor editorial\")"
+    },
+    {
+      "label": "Componentes y patrones implementados",
+      "file_type": "document",
+      "source_file": "docs/REDESIGN-2026-07-04.md",
+      "source_location": "L16",
+      "_origin": "ast",
+      "id": "docs_redesign_2026_07_04_componentes_y_patrones_implementados",
+      "community": 20,
+      "norm_label": "componentes y patrones implementados"
+    },
+    {
+      "label": "Errores aprendidos (importantes para futuras sesiones)",
+      "file_type": "document",
+      "source_file": "docs/REDESIGN-2026-07-04.md",
+      "source_location": "L27",
+      "_origin": "ast",
+      "id": "docs_redesign_2026_07_04_errores_aprendidos_importantes_para_futuras_sesiones",
+      "community": 20,
+      "norm_label": "errores aprendidos (importantes para futuras sesiones)"
+    },
+    {
+      "label": "Decisiones de animaci\u00f3n (criterios Emil Kowalski)",
+      "file_type": "document",
+      "source_file": "docs/REDESIGN-2026-07-04.md",
+      "source_location": "L35",
+      "_origin": "ast",
+      "id": "docs_redesign_2026_07_04_decisiones_de_animaci\u00f3n_criterios_emil_kowalski",
+      "community": 20,
+      "norm_label": "decisiones de animacion (criterios emil kowalski)"
+    },
+    {
+      "label": "Pendientes / ideas para seguir mejorando",
+      "file_type": "document",
+      "source_file": "docs/REDESIGN-2026-07-04.md",
+      "source_location": "L43",
+      "_origin": "ast",
+      "id": "docs_redesign_2026_07_04_pendientes_ideas_para_seguir_mejorando",
+      "community": 20,
+      "norm_label": "pendientes / ideas para seguir mejorando"
+    },
+    {
+      "label": "Verificaci\u00f3n realizada",
+      "file_type": "document",
+      "source_file": "docs/REDESIGN-2026-07-04.md",
+      "source_location": "L55",
+      "_origin": "ast",
+      "id": "docs_redesign_2026_07_04_verificaci\u00f3n_realizada",
+      "community": 20,
+      "norm_label": "verificacion realizada"
+    },
+    {
+      "label": "REDESIGN-2026-07-08.md",
+      "file_type": "document",
+      "source_file": "docs/REDESIGN-2026-07-08.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "docs_redesign_2026_07_08",
+      "community": 3,
+      "norm_label": "redesign-2026-07-08.md"
+    },
+    {
+      "label": "Redise\u00f1o \"El archivo de nuestra historia\" \u2014 Sesi\u00f3n 2026-07-08",
+      "file_type": "document",
+      "source_file": "docs/REDESIGN-2026-07-08.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "docs_redesign_2026_07_08_redise\u00f1o_el_archivo_de_nuestra_historia_sesi\u00f3n_2026_07_08",
+      "community": 3,
+      "norm_label": "rediseno \"el archivo de nuestra historia\" \u2014 sesion 2026-07-08"
+    },
+    {
+      "label": "Qu\u00e9 cambi\u00f3 (solo presentaci\u00f3n)",
+      "file_type": "document",
+      "source_file": "docs/REDESIGN-2026-07-08.md",
+      "source_location": "L7",
+      "_origin": "ast",
+      "id": "docs_redesign_2026_07_08_qu\u00e9_cambi\u00f3_solo_presentaci\u00f3n",
+      "community": 3,
+      "norm_label": "que cambio (solo presentacion)"
+    },
+    {
+      "label": "Verificaci\u00f3n",
+      "file_type": "document",
+      "source_file": "docs/REDESIGN-2026-07-08.md",
+      "source_location": "L28",
+      "_origin": "ast",
+      "id": "docs_redesign_2026_07_08_verificaci\u00f3n",
+      "community": 3,
+      "norm_label": "verificacion"
     },
     {
       "label": "getState",
@@ -1068,7 +1648,7 @@
       "source_location": "L141",
       "_origin": "ast",
       "id": "lib_store_getstate",
-      "community": 4,
+      "community": 2,
       "norm_label": "getstate"
     },
     {
@@ -1081,9 +1661,9 @@
       "author": null,
       "contributor": null,
       "rationale": "Romantic private web app for the couple Jeicob & Lelita built with Next.js + React + Tailwind + Framer Motion, designed to look beautiful on desktop and mobile.",
-      "id": "readme_lelita_photlibrary",
-      "community": 0,
-      "norm_label": "lelita's photlibrary (app)"
+      "community": 1,
+      "norm_label": "lelita's photlibrary (app)",
+      "id": "readme_lelita_photlibrary"
     },
     {
       "label": "Password Recovery Flow (SMTP/Webhook/Debug)",
@@ -1095,9 +1675,9 @@
       "author": null,
       "contributor": null,
       "rationale": "6-digit code with 10-minute expiration stored in state.resetCodes. Delivery attempts in order: SMTP via Nodemailer, then RESET_EMAIL_WEBHOOK_URL webhook, then local debug mode returning the code \u2014 layered fallback so recovery works even without SMTP configured.",
-      "id": "readme_password_recovery_flow",
-      "community": 0,
-      "norm_label": "password recovery flow (smtp/webhook/debug)"
+      "community": 1,
+      "norm_label": "password recovery flow (smtp/webhook/debug)",
+      "id": "readme_password_recovery_flow"
     },
     {
       "label": "Cloudinary Local File Upload Flow",
@@ -1109,9 +1689,9 @@
       "author": null,
       "contributor": null,
       "rationale": "Frontend converts local file to Data URL and calls uploadFile action on /api/app; backend signs the upload with CLOUDINARY_API_SECRET and stores into CLOUDINARY_UPLOAD_FOLDER/media or /chat folders; Cloudinary's secure_url is then saved into app state.",
-      "id": "readme_cloudinary_upload_flow",
-      "community": 0,
-      "norm_label": "cloudinary local file upload flow"
+      "community": 1,
+      "norm_label": "cloudinary local file upload flow",
+      "id": "readme_cloudinary_upload_flow"
     },
     {
       "label": "MongoDB Atlas State Persistence",
@@ -1123,9 +1703,9 @@
       "author": null,
       "contributor": null,
       "rationale": "Backend persists users, resetCodes, phrase, theme, media, letters and chat in MongoDB Atlas via the official mongodb driver (collection app_state, document singleton) because local file writes do not work in production on Vercel; data/state.json is only an initial seed.",
-      "id": "readme_mongodb_state_persistence",
-      "community": 0,
-      "norm_label": "mongodb atlas state persistence"
+      "community": 1,
+      "norm_label": "mongodb atlas state persistence",
+      "id": "readme_mongodb_state_persistence"
     },
     {
       "label": "Recommended MongoDB Media Data Model",
@@ -1137,9 +1717,9 @@
       "author": null,
       "contributor": null,
       "rationale": "Suggested 'media' collection with owner, description, resourceType, publicId, secureUrl, dimensions and timestamps. Recommended indexes: createdAt desc for fast feed, owner+createdAt for per-user history, text index on description for search, unique publicId to avoid duplicates.",
-      "id": "readme_media_data_model",
-      "community": 2,
-      "norm_label": "recommended mongodb media data model"
+      "community": 1,
+      "norm_label": "recommended mongodb media data model",
+      "id": "readme_media_data_model"
     },
     {
       "label": "Media Durability Best Practices",
@@ -1151,9 +1731,9 @@
       "author": null,
       "contributor": null,
       "rationale": "So media never 'disappears': always use HTTPS secure_url, never delete from Cloudinary without archiving in MongoDB (and vice versa), enable Atlas backups, fixed folder scheme lelita/<year>/<month>, store public_id + resource_type to regenerate optimized URLs, visual onError fallback in UI, soft-delete via deletedAt before hard delete, periodic cron reconciliation job between MongoDB and Cloudinary.",
-      "id": "readme_media_durability_practices",
-      "community": 0,
-      "norm_label": "media durability best practices"
+      "community": 1,
+      "norm_label": "media durability best practices",
+      "id": "readme_media_durability_practices"
     },
     {
       "label": "Photo/Video Feed with Infinite Scroll",
@@ -1165,9 +1745,9 @@
       "author": null,
       "contributor": null,
       "rationale": "Collage/diary style feed with tilted cards, infinite scroll, local file upload to Cloudinary, description search, and author-only description editing.",
-      "id": "readme_media_feed",
-      "community": 0,
-      "norm_label": "photo/video feed with infinite scroll"
+      "community": 1,
+      "norm_label": "photo/video feed with infinite scroll",
+      "id": "readme_media_feed"
     },
     {
       "label": "Couple Chat (Text + Media)",
@@ -1178,9 +1758,9 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "readme_chat",
-      "community": 0,
-      "norm_label": "couple chat (text + media)"
+      "community": 1,
+      "norm_label": "couple chat (text + media)",
+      "id": "readme_chat"
     },
     {
       "label": "Lightbox with Prev/Next Navigation",
@@ -1191,9 +1771,9 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "readme_lightbox",
-      "community": 0,
-      "norm_label": "lightbox with prev/next navigation"
+      "community": 1,
+      "norm_label": "lightbox with prev/next navigation",
+      "id": "readme_lightbox"
     },
     {
       "label": "Secret Letters (Jeicob / Lelita)",
@@ -1205,9 +1785,9 @@
       "author": null,
       "contributor": null,
       "rationale": "Separate secret letters for each partner with author-controlled editing.",
-      "id": "readme_secret_letters",
-      "community": 0,
-      "norm_label": "secret letters (jeicob / lelita)"
+      "community": 1,
+      "norm_label": "secret letters (jeicob / lelita)",
+      "id": "readme_secret_letters"
     },
     {
       "label": "Relationship Day Counter (since 13/03/2025)",
@@ -1218,9 +1798,9 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "readme_relationship_counter",
-      "community": 0,
-      "norm_label": "relationship day counter (since 13/03/2025)"
+      "community": 1,
+      "norm_label": "relationship day counter (since 13/03/2025)",
+      "id": "readme_relationship_counter"
     },
     {
       "label": "Vercel Deployment",
@@ -1232,9 +1812,9 @@
       "author": null,
       "contributor": null,
       "rationale": "Connect repo to Vercel, configure env vars (MongoDB, Cloudinary, SMTP) in Project Settings, automatic deploy per branch; production persistence relies on MongoDB Atlas + Cloudinary instead of local files.",
-      "id": "readme_vercel_deployment",
-      "community": 0,
-      "norm_label": "vercel deployment"
+      "community": 1,
+      "norm_label": "vercel deployment",
+      "id": "readme_vercel_deployment"
     },
     {
       "label": "Design System: Archivo de amor editorial",
@@ -1246,9 +1826,9 @@
       "author": null,
       "contributor": null,
       "rationale": "Design system inspired by the couple's real photos (public/img/imagen1.jpeg, imagen2.jpeg): golden hill, blue sky, cream vintage-editorial clothing. The redesign was presentation-only; all existing logic (auth, reset, Cloudinary upload, edit/delete, infinite scroll, filter, QR) was preserved intact.",
-      "id": "docs_redesign_2026_07_04_editorial_love_archive",
-      "community": 0,
-      "norm_label": "design system: archivo de amor editorial"
+      "community": 1,
+      "norm_label": "design system: archivo de amor editorial",
+      "id": "docs_redesign_2026_07_04_editorial_love_archive"
     },
     {
       "label": "Color Palette (paper/ink/wine/rose/blush/gold/plum)",
@@ -1260,9 +1840,9 @@
       "author": null,
       "contributor": null,
       "rationale": "Defined in tailwind.config.ts: paper #FBF6EF (ivory), ink #33202E (dark plum), wine #8E2C48 (primary), rose #D96A85 (accent), blush #F6E3E6, gold #C9A253, plum #170F28 (night background). Colors derived from the couple's real photos.",
-      "id": "docs_redesign_2026_07_04_paleta",
-      "community": 0,
-      "norm_label": "color palette (paper/ink/wine/rose/blush/gold/plum)"
+      "community": 1,
+      "norm_label": "color palette (paper/ink/wine/rose/blush/gold/plum)",
+      "id": "docs_redesign_2026_07_04_paleta"
     },
     {
       "label": "Typography (Fraunces / Figtree / Caveat)",
@@ -1274,9 +1854,9 @@
       "author": null,
       "contributor": null,
       "rationale": "Loaded via next/font/google in app/layout.tsx: Fraunces (display serif, --font-display), Figtree (body, --font-sans), Caveat (handwritten, --font-hand) reserved for polaroid captions and the phrase of the day.",
-      "id": "docs_redesign_2026_07_04_tipografia",
-      "community": 0,
-      "norm_label": "typography (fraunces / figtree / caveat)"
+      "community": 1,
+      "norm_label": "typography (fraunces / figtree / caveat)",
+      "id": "docs_redesign_2026_07_04_tipografia"
     },
     {
       "label": "PhotoStack Component (Floating Polaroids)",
@@ -1288,9 +1868,9 @@
       "author": null,
       "contributor": null,
       "rationale": "Visual signature: the two real photos rendered as floating polaroids on login and hero, paired with a giant day counter in Fraunces and a beating heart ('beat' animation).",
-      "id": "docs_redesign_2026_07_04_photostack",
-      "community": 0,
-      "norm_label": "photostack component (floating polaroids)"
+      "community": 1,
+      "norm_label": "photostack component (floating polaroids)",
+      "id": "docs_redesign_2026_07_04_photostack"
     },
     {
       "label": "Night Mode (.night selector)",
@@ -1302,9 +1882,9 @@
       "author": null,
       "contributor": null,
       "rationale": "darkMode: ['selector', '.night'] in Tailwind \u2014 the 'night' class on <body> activates dark: variants. Deep plum background, dark glass cards, animated stars preserved. Pending idea: automatic night mode via prefers-color-scheme or local time instead of manual toggle only.",
-      "id": "docs_redesign_2026_07_04_night_mode",
-      "community": 0,
-      "norm_label": "night mode (.night selector)"
+      "community": 1,
+      "norm_label": "night mode (.night selector)",
+      "id": "docs_redesign_2026_07_04_night_mode"
     },
     {
       "label": "FloatingHearts Component",
@@ -1316,9 +1896,9 @@
       "author": null,
       "contributor": null,
       "rationale": "8 rising SVG hearts with deterministic configs \u2014 never use Math.random in SSR render, to avoid hydration mismatch. Negative animation delays so the sky is already populated on load.",
-      "id": "docs_redesign_2026_07_04_floatinghearts",
-      "community": 0,
-      "norm_label": "floatinghearts component"
+      "community": 1,
+      "norm_label": "floatinghearts component",
+      "id": "docs_redesign_2026_07_04_floatinghearts"
     },
     {
       "label": "Masonry Polaroid Gallery",
@@ -1330,9 +1910,9 @@
       "author": null,
       "contributor": null,
       "rationale": "CSS columns (columns-1 md:columns-2) with polaroid aesthetic: adhesive tape (.tape), alternating \u00b11.4\u00b0 rotation, hover straightens with a Framer Motion spring, whileTap for mobile.",
-      "id": "docs_redesign_2026_07_04_masonry_gallery",
-      "community": 0,
-      "norm_label": "masonry polaroid gallery"
+      "community": 1,
+      "norm_label": "masonry polaroid gallery",
+      "id": "docs_redesign_2026_07_04_masonry_gallery"
     },
     {
       "label": "Chat Redesign as Messaging Bubbles",
@@ -1344,9 +1924,9 @@
       "author": null,
       "contributor": null,
       "rationale": "Own messages on the right with wine-to-rose gradient; the other person's on the left in white.",
-      "id": "docs_redesign_2026_07_04_chat_bubbles",
-      "community": 0,
-      "norm_label": "chat redesign as messaging bubbles"
+      "community": 1,
+      "norm_label": "chat redesign as messaging bubbles",
+      "id": "docs_redesign_2026_07_04_chat_bubbles"
     },
     {
       "label": "Letters as Stationery (.stationery)",
@@ -1358,9 +1938,9 @@
       "author": null,
       "contributor": null,
       "rationale": "Letters styled as stationery with blush gradient and cursive signature.",
-      "id": "docs_redesign_2026_07_04_stationery_letters",
-      "community": 0,
-      "norm_label": "letters as stationery (.stationery)"
+      "community": 1,
+      "norm_label": "letters as stationery (.stationery)",
+      "id": "docs_redesign_2026_07_04_stationery_letters"
     },
     {
       "label": "Redesigned Lightbox (Keyboard Nav)",
@@ -1372,9 +1952,9 @@
       "author": null,
       "contributor": null,
       "rationale": "Keyboard navigation (Escape, arrows), position counter, backdrop blur, aria-label on controls.",
-      "id": "docs_redesign_2026_07_04_lightbox",
-      "community": 0,
-      "norm_label": "redesigned lightbox (keyboard nav)"
+      "community": 1,
+      "norm_label": "redesigned lightbox (keyboard nav)",
+      "id": "docs_redesign_2026_07_04_lightbox"
     },
     {
       "label": "Toasts as Floating Pills",
@@ -1386,9 +1966,9 @@
       "author": null,
       "contributor": null,
       "rationale": "Centered bottom floating pills animated with AnimatePresence.",
-      "id": "docs_redesign_2026_07_04_toasts",
-      "community": 15,
-      "norm_label": "toasts as floating pills"
+      "community": 16,
+      "norm_label": "toasts as floating pills",
+      "id": "docs_redesign_2026_07_04_toasts"
     },
     {
       "label": "Accessibility Measures",
@@ -1400,9 +1980,9 @@
       "author": null,
       "contributor": null,
       "rationale": "Global :focus-visible styles; prefers-reduced-motion disables hearts/floaty/beat/stars animations; aria-label on lightbox controls.",
-      "id": "docs_redesign_2026_07_04_accessibility",
-      "community": 0,
-      "norm_label": "accessibility measures"
+      "community": 1,
+      "norm_label": "accessibility measures",
+      "id": "docs_redesign_2026_07_04_accessibility"
     },
     {
       "label": "Pitfall: Overwriting Tailwind Color Scales",
@@ -1414,9 +1994,9 @@
       "author": null,
       "contributor": null,
       "rationale": "Defining rose: '#D96A85' in theme.extend.colors DELETES the whole rose-50\u2026rose-900 scale and breaks existing classes like text-rose-50. Fix: rose: { ...colors.rose, DEFAULT: '#D96A85' } importing colors from tailwindcss/colors.",
-      "id": "docs_redesign_2026_07_04_tailwind_color_scale_pitfall",
-      "community": 0,
-      "norm_label": "pitfall: overwriting tailwind color scales"
+      "community": 1,
+      "norm_label": "pitfall: overwriting tailwind color scales",
+      "id": "docs_redesign_2026_07_04_tailwind_color_scale_pitfall"
     },
     {
       "label": "Pitfall: background-attachment fixed",
@@ -1428,9 +2008,9 @@
       "author": null,
       "contributor": null,
       "rationale": "background-attachment: fixed causes artifacts in full-page screenshots and has known iOS Safari bugs. Fix: move the background to body::before { position: fixed; inset: 0; z-index: -1 }.",
-      "id": "docs_redesign_2026_07_04_background_attachment_pitfall",
-      "community": 12,
-      "norm_label": "pitfall: background-attachment fixed"
+      "community": 13,
+      "norm_label": "pitfall: background-attachment fixed",
+      "id": "docs_redesign_2026_07_04_background_attachment_pitfall"
     },
     {
       "label": "MongoDB Atlas SRV DNS Issue in Local Dev",
@@ -1442,9 +2022,9 @@
       "author": null,
       "contributor": null,
       "rationale": "querySrv ECONNREFUSED _mongodb._tcp.lelita.cm7ayqf.mongodb.net \u2014 local DNS does not resolve SRV records, so GET /api/app returns 500 locally but works on Vercel. Not a code bug; use another network/DNS (8.8.8.8) or fall back to data/state.json for local dev.",
-      "id": "docs_redesign_2026_07_04_mongodb_srv_dns_issue",
-      "community": 0,
-      "norm_label": "mongodb atlas srv dns issue in local dev"
+      "community": 1,
+      "norm_label": "mongodb atlas srv dns issue in local dev",
+      "id": "docs_redesign_2026_07_04_mongodb_srv_dns_issue"
     },
     {
       "label": "localStorage Session Trick for UI Verification",
@@ -1456,9 +2036,9 @@
       "author": null,
       "contributor": null,
       "rationale": "Session is stored in localStorage.lelita_session_user; setting it manually shows the logged-in UI without registering test users in the production database.",
-      "id": "docs_redesign_2026_07_04_localstorage_session_trick",
-      "community": 0,
-      "norm_label": "localstorage session trick for ui verification"
+      "community": 1,
+      "norm_label": "localstorage session trick for ui verification",
+      "id": "docs_redesign_2026_07_04_localstorage_session_trick"
     },
     {
       "label": "Animation Criteria (Emil Kowalski)",
@@ -1470,9 +2050,9 @@
       "author": null,
       "contributor": null,
       "rationale": "Only transform and opacity in infinite animations (GPU, off-main-thread via CSS); buttons use active:scale-[0.97/0.98] for instant press feedback; entrances never from scale(0) \u2014 lightbox enters from scale(0.96)+opacity; ease-out on entrances; springs (stiffness 220, damping 20) only on interruptible interactions like polaroid hover; ambient animations use negative delays so the scene is populated on load.",
-      "id": "docs_redesign_2026_07_04_animation_criteria",
-      "community": 0,
-      "norm_label": "animation criteria (emil kowalski)"
+      "community": 1,
+      "norm_label": "animation criteria (emil kowalski)",
+      "id": "docs_redesign_2026_07_04_animation_criteria"
     },
     {
       "label": "Pending Idea: Timeline 'Nuestra historia'",
@@ -1484,9 +2064,9 @@
       "author": null,
       "contributor": null,
       "rationale": "Chronological view of memories grouped by month using MediaItem.createdAt.",
-      "id": "docs_redesign_2026_07_04_timeline_nuestra_historia",
-      "community": 2,
-      "norm_label": "pending idea: timeline 'nuestra historia'"
+      "community": 1,
+      "norm_label": "pending idea: timeline 'nuestra historia'",
+      "id": "docs_redesign_2026_07_04_timeline_nuestra_historia"
     },
     {
       "label": "Pending Idea: Heart Reactions",
@@ -1498,9 +2078,9 @@
       "author": null,
       "contributor": null,
       "rationale": "Double tap \u2192 heart burst on photos and chat messages; requires a new action in route.ts and a new field in the types.",
-      "id": "docs_redesign_2026_07_04_heart_reactions",
-      "community": 13,
-      "norm_label": "pending idea: heart reactions"
+      "community": 14,
+      "norm_label": "pending idea: heart reactions",
+      "id": "docs_redesign_2026_07_04_heart_reactions"
     },
     {
       "label": "Pending Idea: Password Hashing (bcrypt)",
@@ -1512,9 +2092,9 @@
       "author": null,
       "contributor": null,
       "rationale": "Passwords are currently compared in plain text in the backend; migrating to bcrypt hashing would be more secure.",
-      "id": "docs_redesign_2026_07_04_password_hashing",
-      "community": 14,
-      "norm_label": "pending idea: password hashing (bcrypt)"
+      "community": 15,
+      "norm_label": "pending idea: password hashing (bcrypt)",
+      "id": "docs_redesign_2026_07_04_password_hashing"
     },
     {
       "label": "Couple Kissing on Golden Hillside",
@@ -1525,9 +2105,9 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "img_imagen1_photo",
       "community": 8,
-      "norm_label": "couple kissing on golden hillside"
+      "norm_label": "couple kissing on golden hillside",
+      "id": "img_imagen1_photo"
     },
     {
       "label": "Vintage Romantic Styling (Ivory Blouse, Taupe Trousers, Riding Boots)",
@@ -1538,9 +2118,9 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "img_imagen1_vintage_styling",
       "community": 8,
-      "norm_label": "vintage romantic styling (ivory blouse, taupe trousers, riding boots)"
+      "norm_label": "vintage romantic styling (ivory blouse, taupe trousers, riding boots)",
+      "id": "img_imagen1_vintage_styling"
     },
     {
       "label": "Golden Dry-Grass Hillside with Eucalyptus Trees",
@@ -1551,9 +2131,9 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "img_imagen1_golden_hillside",
       "community": 8,
-      "norm_label": "golden dry-grass hillside with eucalyptus trees"
+      "norm_label": "golden dry-grass hillside with eucalyptus trees",
+      "id": "img_imagen1_golden_hillside"
     },
     {
       "label": "Andean Town Below with Domed Church",
@@ -1564,9 +2144,9 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "img_imagen1_andean_town",
       "community": 8,
-      "norm_label": "andean town below with domed church"
+      "norm_label": "andean town below with domed church",
+      "id": "img_imagen1_andean_town"
     },
     {
       "label": "Warm Ivory-Gold Palette Under Deep Blue Sky",
@@ -1577,9 +2157,9 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "img_imagen1_warm_palette",
       "community": 8,
-      "norm_label": "warm ivory-gold palette under deep blue sky"
+      "norm_label": "warm ivory-gold palette under deep blue sky",
+      "id": "img_imagen1_warm_palette"
     },
     {
       "label": "Hillside Lift-and-Kiss Photo",
@@ -1590,9 +2170,9 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "img_imagen2_photo",
       "community": 9,
-      "norm_label": "hillside lift-and-kiss photo"
+      "norm_label": "hillside lift-and-kiss photo",
+      "id": "img_imagen2_photo"
     },
     {
       "label": "Lift Embrace Kiss Pose",
@@ -1603,9 +2183,9 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "img_imagen2_lift_embrace",
       "community": 9,
-      "norm_label": "lift embrace kiss pose"
+      "norm_label": "lift embrace kiss pose",
+      "id": "img_imagen2_lift_embrace"
     },
     {
       "label": "Arid Andean Hillside Setting",
@@ -1616,9 +2196,9 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "img_imagen2_andean_hillside",
       "community": 9,
-      "norm_label": "arid andean hillside setting"
+      "norm_label": "arid andean hillside setting",
+      "id": "img_imagen2_andean_hillside"
     },
     {
       "label": "Ivory and Warm Taupe Palette",
@@ -1629,9 +2209,9 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "img_imagen2_ivory_taupe_palette",
       "community": 9,
-      "norm_label": "ivory and warm taupe palette"
+      "norm_label": "ivory and warm taupe palette",
+      "id": "img_imagen2_ivory_taupe_palette"
     },
     {
       "label": "Jeicob and Lelita (Couple)",
@@ -1642,9 +2222,265 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "img_imagen2_jeicob_lelita",
       "community": 9,
-      "norm_label": "jeicob and lelita (couple)"
+      "norm_label": "jeicob and lelita (couple)",
+      "id": "img_imagen2_jeicob_lelita"
+    },
+    {
+      "label": "app/globals.css \u2014 keyframes CSS de loops ambientales",
+      "file_type": "code",
+      "source_file": "docs/ANIMATION-HOOKS.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "community": 19,
+      "norm_label": "app/globals.css \u2014 keyframes css de loops ambientales",
+      "id": "app_globals"
+    },
+    {
+      "label": "Reduced motion (MotionConfig reducedMotion=user)",
+      "file_type": "rationale",
+      "source_file": "docs/ANIMATION-HOOKS.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "rationale": "Respeta la preferencia del usuario: quita movimiento pero conserva opacidad; los loops CSS se apagan en globals.css y el count-up se salta con useReducedMotion().",
+      "community": 19,
+      "norm_label": "reduced motion (motionconfig reducedmotion=user)",
+      "id": "docs_animation_hooks_reduced_motion"
+    },
+    {
+      "label": "Hover gating (@media hover:hover)",
+      "file_type": "rationale",
+      "source_file": "docs/ANIMATION-HOOKS.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "rationale": "future.hoverOnlyWhenSupported en Tailwind pone todo hover: tras @media (hover:hover) para evitar estados hover pegados en pantallas t\u00e1ctiles.",
+      "community": 19,
+      "norm_label": "hover gating (@media hover:hover)",
+      "id": "docs_animation_hooks_hover_gating"
+    },
+    {
+      "label": "Count-up del contador de d\u00edas (0\u2192d\u00edas en 900ms)",
+      "file_type": "rationale",
+      "source_file": "docs/ANIMATION-HOOKS.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "rationale": "Solo una vez por visita (ref daysCountedUp) \u2014 se descart\u00f3 repetirlo en cada refresh de 30s porque un elemento visto a diario no debe re-animarse; se salta con useReducedMotion().",
+      "community": 19,
+      "norm_label": "count-up del contador de dias (0\u2192dias en 900ms)",
+      "id": "docs_animation_hooks_count_up"
+    },
+    {
+      "label": "Loops CSS ambientales (floaty, rise, beat, twinkle)",
+      "file_type": "concept",
+      "source_file": "docs/ANIMATION-HOOKS.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "rationale": "Loops decorativos infinitos viven en CSS (no Framer) y se apagan bajo reduced motion; marcados con comentarios ANIMATION HOOK en globals.css.",
+      "community": 19,
+      "norm_label": "loops css ambientales (floaty, rise, beat, twinkle)",
+      "id": "docs_animation_hooks_css_loops"
+    },
+    {
+      "label": "Crossfade del lightbox (scale/fade + blur interno)",
+      "file_type": "rationale",
+      "source_file": "docs/ANIMATION-HOOKS.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "rationale": "Se descart\u00f3 layoutId foto\u2192lightbox: las polaroids viven en columnas CSS y rotadas \u00b11.4\u00b0, y la animaci\u00f3n de layout desde un padre rotado glitchea. Se prefiri\u00f3 scale/fade con crossfade interno (mediaSwap).",
+      "community": 0,
+      "norm_label": "crossfade del lightbox (scale/fade + blur interno)",
+      "id": "docs_animation_hooks_lightbox_crossfade"
+    },
+    {
+      "label": "Pol\u00edtica de animaci\u00f3n del chat: solo mensajes nuevos",
+      "file_type": "rationale",
+      "source_file": "docs/ANIMATION-HOOKS.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "rationale": "Se descart\u00f3 animar todas las burbujas al cargar: todo-a-la-vez en un elemento visto a diario cansa. Solo animan mensajes con createdAt > mount; los hist\u00f3ricos usan initial={false}.",
+      "community": 0,
+      "norm_label": "politica de animacion del chat: solo mensajes nuevos",
+      "id": "docs_animation_hooks_chat_bubble_policy"
+    },
+    {
+      "label": "Corazones festivos del d\u00eda 13 (festiveHeartConfigs)",
+      "file_type": "concept",
+      "source_file": "docs/ANIMATION-HOOKS.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "rationale": "Cada 13 del mes se suman 6 corazones al loop rise; el estado vive en un efecto para evitar mismatch SSR \u2014 regla general: configs deterministas para SSR, nunca Math.random() en render.",
+      "community": 19,
+      "norm_label": "corazones festivos del dia 13 (festiveheartconfigs)",
+      "id": "docs_animation_hooks_festive_hearts"
+    },
+    {
+      "label": "Concepto 'El archivo de nuestra historia' (archivo editorial)",
+      "file_type": "rationale",
+      "source_file": "docs/REDESIGN-2026-07-08.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "rationale": "La p\u00e1gina deja de ser una pila de cards uniformes y se vuelve un archivo editorial de la historia de la pareja: hero masthead a sangre completa con nombres gigantes en Fraunces it\u00e1lica, contador protagonista, frase del d\u00eda integrada, y secciones numeradas como cap\u00edtulos (II Recuerdos \u00b7 III Cartas \u00b7 IV Chat). Solo cambi\u00f3 la presentaci\u00f3n; toda la l\u00f3gica (auth, reset, uploads, lightbox, QR, toasts) se conserv\u00f3 intacta.",
+      "community": 3,
+      "norm_label": "concepto 'el archivo de nuestra historia' (archivo editorial)",
+      "id": "docs_redesign_2026_07_08_archivo_editorial"
+    },
+    {
+      "label": "Sello de lacre 'J\u2665L' (.seal)",
+      "file_type": "concept",
+      "source_file": "docs/REDESIGN-2026-07-08.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "community": 3,
+      "norm_label": "sello de lacre 'j\u2665l' (.seal)",
+      "id": "docs_redesign_2026_07_08_seal"
+    },
+    {
+      "label": "Fraunces con ejes variables SOFT/WONK/opsz",
+      "file_type": "concept",
+      "source_file": "docs/REDESIGN-2026-07-08.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "rationale": "Cargar los ejes variables da m\u00e1s car\u00e1cter al display; los nombres del hero van en Fraunces it\u00e1lica gigante.",
+      "community": 3,
+      "norm_label": "fraunces con ejes variables soft/wonk/opsz",
+      "id": "docs_redesign_2026_07_08_fraunces"
+    },
+    {
+      "label": "Foto de pareja bes\u00e1ndose en colina (Jeicob & Lelita)",
+      "file_type": "image",
+      "source_file": "img/imagen1.jpeg",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "community": 10,
+      "norm_label": "foto de pareja besandose en colina (jeicob & lelita)",
+      "id": "img_imagen1"
+    },
+    {
+      "label": "Paisaje semi\u00e1rido con cielo azul y pueblo al fondo",
+      "file_type": "image",
+      "source_file": "img/imagen1.jpeg",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "community": 10,
+      "norm_label": "paisaje semiarido con cielo azul y pueblo al fondo",
+      "id": "img_imagen1_paisaje_semiarido"
+    },
+    {
+      "label": "Ambiente rom\u00e1ntico con est\u00e9tica vintage",
+      "file_type": "image",
+      "source_file": "img/imagen1.jpeg",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "community": 10,
+      "norm_label": "ambiente romantico con estetica vintage",
+      "id": "img_imagen1_ambiente_romantico_vintage"
+    },
+    {
+      "label": "Asset de dise\u00f1o de la web de pareja Lelita",
+      "file_type": "image",
+      "source_file": "img/imagen1.jpeg",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "community": 10,
+      "norm_label": "asset de diseno de la web de pareja lelita",
+      "id": "img_imagen1_asset_diseno_lelita"
+    },
+    {
+      "label": "Imagen2 \u2014 Foto de pareja (Jeicob cargando a Lelita)",
+      "file_type": "image",
+      "source_file": "img/imagen2.jpeg",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "community": 11,
+      "norm_label": "imagen2 \u2014 foto de pareja (jeicob cargando a lelita)",
+      "id": "img_imagen2"
+    },
+    {
+      "label": "Paisaje andino soleado (cerros \u00e1ridos y eucalipto)",
+      "file_type": "image",
+      "source_file": "img/imagen2.jpeg",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "community": 11,
+      "norm_label": "paisaje andino soleado (cerros aridos y eucalipto)",
+      "id": "img_imagen2_paisaje_andino"
+    },
+    {
+      "label": "Momento rom\u00e1ntico \u2014 beso al aire libre",
+      "file_type": "image",
+      "source_file": "img/imagen2.jpeg",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "community": 11,
+      "norm_label": "momento romantico \u2014 beso al aire libre",
+      "id": "img_imagen2_momento_romantico"
+    },
+    {
+      "label": "Asset de dise\u00f1o de la web Lelita",
+      "file_type": "image",
+      "source_file": "img/imagen2.jpeg",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "community": 11,
+      "norm_label": "asset de diseno de la web lelita",
+      "id": "img_imagen2_asset_diseno"
     }
   ],
   "links": [
@@ -1654,9 +2490,9 @@
       "source_file": "app/api/app/route.ts",
       "source_location": "L105",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_route",
-      "target": "app_route_cloudinaryresourcetype",
-      "confidence_score": 1.0
+      "target": "app_route_cloudinaryresourcetype"
     },
     {
       "relation": "contains",
@@ -1664,9 +2500,9 @@
       "source_file": "app/api/app/route.ts",
       "source_location": "L107",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_route",
-      "target": "app_route_cloudinaryuploadresult",
-      "confidence_score": 1.0
+      "target": "app_route_cloudinaryuploadresult"
     },
     {
       "relation": "contains",
@@ -1674,9 +2510,9 @@
       "source_file": "app/api/app/route.ts",
       "source_location": "L114",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_route",
-      "target": "app_route_destroyfromcloudinary",
-      "confidence_score": 1.0
+      "target": "app_route_destroyfromcloudinary"
     },
     {
       "relation": "contains",
@@ -1684,9 +2520,9 @@
       "source_file": "app/api/app/route.ts",
       "source_location": "L179",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_route",
-      "target": "app_route_get",
-      "confidence_score": 1.0
+      "target": "app_route_get"
     },
     {
       "relation": "contains",
@@ -1694,9 +2530,9 @@
       "source_file": "app/api/app/route.ts",
       "source_location": "L27",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_route",
-      "target": "app_route_gettransporter",
-      "confidence_score": 1.0
+      "target": "app_route_gettransporter"
     },
     {
       "relation": "contains",
@@ -1704,9 +2540,9 @@
       "source_file": "app/api/app/route.ts",
       "source_location": "L15",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_route",
-      "target": "app_route_mailtransporter",
-      "confidence_score": 1.0
+      "target": "app_route_mailtransporter"
     },
     {
       "relation": "contains",
@@ -1714,9 +2550,9 @@
       "source_file": "app/api/app/route.ts",
       "source_location": "L65",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_route",
-      "target": "app_route_maybesendresetemail",
-      "confidence_score": 1.0
+      "target": "app_route_maybesendresetemail"
     },
     {
       "relation": "contains",
@@ -1724,9 +2560,9 @@
       "source_file": "app/api/app/route.ts",
       "source_location": "L82",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_route",
-      "target": "app_route_maybesendresetwebhook",
-      "confidence_score": 1.0
+      "target": "app_route_maybesendresetwebhook"
     },
     {
       "relation": "contains",
@@ -1734,9 +2570,9 @@
       "source_file": "app/api/app/route.ts",
       "source_location": "L184",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_route",
-      "target": "app_route_post",
-      "confidence_score": 1.0
+      "target": "app_route_post"
     },
     {
       "relation": "contains",
@@ -1744,9 +2580,9 @@
       "source_file": "app/api/app/route.ts",
       "source_location": "L8",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_route",
-      "target": "app_route_sendmailoptions",
-      "confidence_score": 1.0
+      "target": "app_route_sendmailoptions"
     },
     {
       "relation": "contains",
@@ -1754,9 +2590,9 @@
       "source_file": "app/api/app/route.ts",
       "source_location": "L95",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_route",
-      "target": "app_route_sendresetcode",
-      "confidence_score": 1.0
+      "target": "app_route_sendresetcode"
     },
     {
       "relation": "contains",
@@ -1764,9 +2600,9 @@
       "source_file": "app/api/app/route.ts",
       "source_location": "L6",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_route",
-      "target": "app_route_uid",
-      "confidence_score": 1.0
+      "target": "app_route_uid"
     },
     {
       "relation": "contains",
@@ -1774,9 +2610,9 @@
       "source_file": "app/api/app/route.ts",
       "source_location": "L144",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_route",
-      "target": "app_route_uploadtocloudinary",
-      "confidence_score": 1.0
+      "target": "app_route_uploadtocloudinary"
     },
     {
       "relation": "imports_from",
@@ -1785,9 +2621,9 @@
       "source_file": "app/api/app/route.ts",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_route",
-      "target": "lib_store",
-      "confidence_score": 1.0
+      "target": "lib_store"
     },
     {
       "relation": "imports",
@@ -1796,9 +2632,9 @@
       "source_file": "app/api/app/route.ts",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_route",
-      "target": "lib_store_getstate",
-      "confidence_score": 1.0
+      "target": "lib_store_getstate"
     },
     {
       "relation": "imports",
@@ -1807,9 +2643,9 @@
       "source_file": "app/api/app/route.ts",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_route",
-      "target": "lib_store_withstate",
-      "confidence_score": 1.0
+      "target": "lib_store_withstate"
     },
     {
       "relation": "imports_from",
@@ -1818,9 +2654,9 @@
       "source_file": "app/api/app/route.ts",
       "source_location": "L4",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_route",
-      "target": "lib_types",
-      "confidence_score": 1.0
+      "target": "lib_types"
     },
     {
       "relation": "imports",
@@ -1829,9 +2665,9 @@
       "source_file": "app/api/app/route.ts",
       "source_location": "L4",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_route",
-      "target": "lib_types_letter",
-      "confidence_score": 1.0
+      "target": "lib_types_letter"
     },
     {
       "relation": "calls",
@@ -1840,9 +2676,9 @@
       "source_file": "app/api/app/route.ts",
       "source_location": "L77",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_route_maybesendresetemail",
-      "target": "app_route_gettransporter",
-      "confidence_score": 1.0
+      "target": "app_route_gettransporter"
     },
     {
       "relation": "calls",
@@ -1851,9 +2687,9 @@
       "source_file": "app/api/app/route.ts",
       "source_location": "L96",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_route_sendresetcode",
-      "target": "app_route_maybesendresetemail",
-      "confidence_score": 1.0
+      "target": "app_route_maybesendresetemail"
     },
     {
       "relation": "calls",
@@ -1862,9 +2698,9 @@
       "source_file": "app/api/app/route.ts",
       "source_location": "L99",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_route_sendresetcode",
-      "target": "app_route_maybesendresetwebhook",
-      "confidence_score": 1.0
+      "target": "app_route_maybesendresetwebhook"
     },
     {
       "relation": "calls",
@@ -1892,11 +2728,21 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "app/layout.tsx",
+      "source_location": "L8",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_layout",
+      "target": "app_layout_caveat"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/layout.tsx",
       "source_location": "L7",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_layout",
-      "target": "app_layout_caveat",
-      "confidence_score": 1.0
+      "target": "app_layout_figtree"
     },
     {
       "relation": "contains",
@@ -1904,119 +2750,388 @@
       "source_file": "app/layout.tsx",
       "source_location": "L6",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_layout",
-      "target": "app_layout_figtree",
-      "confidence_score": 1.0
+      "target": "app_layout_fraunces"
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "app/layout.tsx",
-      "source_location": "L5",
+      "source_location": "L10",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_layout",
-      "target": "app_layout_fraunces",
-      "confidence_score": 1.0
+      "target": "app_layout_metadata"
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "app/layout.tsx",
-      "source_location": "L9",
+      "source_location": "L19",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_layout",
-      "target": "app_layout_metadata",
-      "confidence_score": 1.0
+      "target": "app_layout_rootlayout"
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "app/layout.tsx",
-      "source_location": "L14",
+      "source_location": "L15",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_layout",
-      "target": "app_layout_rootlayout",
-      "confidence_score": 1.0
+      "target": "app_layout_viewport"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/REDESIGN-2026-07-08.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "docs_redesign_2026_07_08",
+      "target": "app_layout"
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/REDESIGN-2026-07-08.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "docs_redesign_2026_07_08_fraunces",
+      "target": "app_layout"
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "app/page.tsx",
-      "source_location": "L17",
+      "source_location": "L37",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_page",
-      "target": "app_page_api",
-      "confidence_score": 1.0
+      "target": "app_page_api"
+    },
+    {
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/REDESIGN-2026-07-08.md",
+      "source_location": null,
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_page",
+      "target": "app_page_cld"
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "app/page.tsx",
-      "source_location": "L53",
+      "source_location": "L82",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_page",
-      "target": "app_page_floatinghearts",
-      "confidence_score": 1.0
+      "target": "app_page_festiveheartconfigs"
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "app/page.tsx",
-      "source_location": "L28",
+      "source_location": "L91",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_page",
-      "target": "app_page_fmtdate",
-      "confidence_score": 1.0
+      "target": "app_page_floatinghearts"
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "app/page.tsx",
-      "source_location": "L42",
+      "source_location": "L48",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_page",
-      "target": "app_page_heartconfigs",
-      "confidence_score": 1.0
+      "target": "app_page_fmtdate"
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "app/page.tsx",
-      "source_location": "L36",
+      "source_location": "L70",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_page",
-      "target": "app_page_hearticon",
-      "confidence_score": 1.0
+      "target": "app_page_heartconfigs"
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "app/page.tsx",
-      "source_location": "L88",
+      "source_location": "L63",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_page",
-      "target": "app_page_home",
-      "confidence_score": 1.0
+      "target": "app_page_hearticon"
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "app/page.tsx",
-      "source_location": "L7",
+      "source_location": "L139",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_page",
-      "target": "app_page_initial",
-      "confidence_score": 1.0
+      "target": "app_page_home"
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "app/page.tsx",
-      "source_location": "L74",
+      "source_location": "L27",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_page",
+      "target": "app_page_initial"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/page.tsx",
+      "source_location": "L112",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_page",
+      "target": "app_page_photostack"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/page.tsx",
+      "source_location": "L129",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_page",
+      "target": "app_page_sectionheader"
+    },
+    {
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/ANIMATION-HOOKS.md",
+      "source_location": null,
       "weight": 1.0,
       "source": "app_page",
-      "target": "app_page_photostack",
-      "confidence_score": 1.0
+      "target": "docs_animation_hooks_count_up"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/page.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_page",
+      "target": "lib_motion"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/page.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_page",
+      "target": "lib_motion_bubblein"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/page.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_page",
+      "target": "lib_motion_collapse"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/page.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_page",
+      "target": "lib_motion_ease_out"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/page.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_page",
+      "target": "lib_motion_fadechild"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/page.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_page",
+      "target": "lib_motion_faderise"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/page.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_page",
+      "target": "lib_motion_herostagger"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/page.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_page",
+      "target": "lib_motion_lightboxcard"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/page.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_page",
+      "target": "lib_motion_mediaswap"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/page.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_page",
+      "target": "lib_motion_overlayfade"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/page.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_page",
+      "target": "lib_motion_polaroidspring"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/page.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_page",
+      "target": "lib_motion_risechild"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/page.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_page",
+      "target": "lib_motion_rowfade"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/page.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_page",
+      "target": "lib_motion_ruledraw"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/page.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_page",
+      "target": "lib_motion_scalein"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/page.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_page",
+      "target": "lib_motion_sealstamp"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/page.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_page",
+      "target": "lib_motion_toastpop"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/page.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_page",
+      "target": "lib_motion_wordin"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/page.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_page",
+      "target": "lib_motion_wordstagger"
     },
     {
       "relation": "imports_from",
@@ -2025,9 +3140,9 @@
       "source_file": "app/page.tsx",
       "source_location": "L5",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_page",
-      "target": "lib_types",
-      "confidence_score": 1.0
+      "target": "lib_types"
     },
     {
       "relation": "imports",
@@ -2036,9 +3151,9 @@
       "source_file": "app/page.tsx",
       "source_location": "L5",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_page",
-      "target": "lib_types_appstate",
-      "confidence_score": 1.0
+      "target": "lib_types_appstate"
     },
     {
       "relation": "imports",
@@ -2047,20 +3162,300 @@
       "source_file": "app/page.tsx",
       "source_location": "L5",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_page",
-      "target": "lib_types_letter",
-      "confidence_score": 1.0
+      "target": "lib_types_letter"
     },
     {
-      "relation": "imports",
-      "context": "import",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/ANIMATION-HOOKS.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "docs_animation_hooks",
+      "target": "app_page"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "app/page.tsx",
-      "source_location": "L5",
+      "source_location": "L969",
       "weight": 1.0,
-      "source": "app_page",
-      "target": "lib_types_mediaitem",
-      "confidence_score": 1.0
+      "confidence_score": 1.0,
+      "source": "app_page_home",
+      "target": "app_page_cld"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/REDESIGN-2026-07-08.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "docs_redesign_2026_07_08",
+      "target": "app_page_cld"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/ANIMATION-HOOKS.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "docs_animation_hooks",
+      "target": "lib_motion"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/REDESIGN-2026-07-08.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "docs_redesign_2026_07_08",
+      "target": "lib_motion"
+    },
+    {
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/ANIMATION-HOOKS.md",
+      "source_location": null,
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_motion",
+      "target": "lib_motion_bubblein"
+    },
+    {
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/ANIMATION-HOOKS.md",
+      "source_location": null,
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_motion",
+      "target": "lib_motion_collapse"
+    },
+    {
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/ANIMATION-HOOKS.md",
+      "source_location": null,
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_motion",
+      "target": "lib_motion_ease_out"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/motion.ts",
+      "source_location": "L87",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_motion",
+      "target": "lib_motion_fadechild"
+    },
+    {
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/ANIMATION-HOOKS.md",
+      "source_location": null,
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_motion",
+      "target": "lib_motion_faderise"
+    },
+    {
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/ANIMATION-HOOKS.md",
+      "source_location": null,
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_motion",
+      "target": "lib_motion_herostagger"
+    },
+    {
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/ANIMATION-HOOKS.md",
+      "source_location": null,
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_motion",
+      "target": "lib_motion_lightboxcard"
+    },
+    {
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/ANIMATION-HOOKS.md",
+      "source_location": null,
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_motion",
+      "target": "lib_motion_mediaswap"
+    },
+    {
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/ANIMATION-HOOKS.md",
+      "source_location": null,
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_motion",
+      "target": "lib_motion_overlayfade"
+    },
+    {
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/ANIMATION-HOOKS.md",
+      "source_location": null,
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_motion",
+      "target": "lib_motion_polaroidspring"
+    },
+    {
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/ANIMATION-HOOKS.md",
+      "source_location": null,
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_motion",
+      "target": "lib_motion_risechild"
+    },
+    {
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/ANIMATION-HOOKS.md",
+      "source_location": null,
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_motion",
+      "target": "lib_motion_rowfade"
+    },
+    {
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/ANIMATION-HOOKS.md",
+      "source_location": null,
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_motion",
+      "target": "lib_motion_ruledraw"
+    },
+    {
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/ANIMATION-HOOKS.md",
+      "source_location": null,
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_motion",
+      "target": "lib_motion_scalein"
+    },
+    {
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/ANIMATION-HOOKS.md",
+      "source_location": null,
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_motion",
+      "target": "lib_motion_sealstamp"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/motion.ts",
+      "source_location": "L134",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_motion",
+      "target": "lib_motion_staggerchildren"
+    },
+    {
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/ANIMATION-HOOKS.md",
+      "source_location": null,
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_motion",
+      "target": "lib_motion_toastpop"
+    },
+    {
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/ANIMATION-HOOKS.md",
+      "source_location": null,
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_motion",
+      "target": "lib_motion_wordin"
+    },
+    {
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/ANIMATION-HOOKS.md",
+      "source_location": null,
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_motion",
+      "target": "lib_motion_wordstagger"
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/ANIMATION-HOOKS.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "docs_animation_hooks_lightbox_crossfade",
+      "target": "lib_motion_overlayfade"
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/ANIMATION-HOOKS.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "docs_animation_hooks_lightbox_crossfade",
+      "target": "lib_motion_lightboxcard"
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/ANIMATION-HOOKS.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "docs_animation_hooks_lightbox_crossfade",
+      "target": "lib_motion_mediaswap"
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/ANIMATION-HOOKS.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "lib_motion_sealstamp",
+      "target": "docs_redesign_2026_07_08_seal"
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/ANIMATION-HOOKS.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "docs_animation_hooks_chat_bubble_policy",
+      "target": "lib_motion_bubblein"
     },
     {
       "relation": "contains",
@@ -2068,9 +3463,9 @@
       "source_file": "lib/store.ts",
       "source_location": "L37",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_store",
-      "target": "lib_store_assertmongoenv",
-      "confidence_score": 1.0
+      "target": "lib_store_assertmongoenv"
     },
     {
       "relation": "contains",
@@ -2078,9 +3473,9 @@
       "source_file": "lib/store.ts",
       "source_location": "L26",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_store",
-      "target": "lib_store_deepclonestate",
-      "confidence_score": 1.0
+      "target": "lib_store_deepclonestate"
     },
     {
       "relation": "contains",
@@ -2088,9 +3483,9 @@
       "source_file": "lib/store.ts",
       "source_location": "L16",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_store",
-      "target": "lib_store_defaultstate",
-      "confidence_score": 1.0
+      "target": "lib_store_defaultstate"
     },
     {
       "relation": "contains",
@@ -2098,9 +3493,9 @@
       "source_file": "lib/store.ts",
       "source_location": "L66",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_store",
-      "target": "lib_store_ensuremongostate",
-      "confidence_score": 1.0
+      "target": "lib_store_ensuremongostate"
     },
     {
       "relation": "contains",
@@ -2108,9 +3503,9 @@
       "source_file": "lib/store.ts",
       "source_location": "L83",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_store",
-      "target": "lib_store_ensurestate",
-      "confidence_score": 1.0
+      "target": "lib_store_ensurestate"
     },
     {
       "relation": "contains",
@@ -2118,9 +3513,9 @@
       "source_file": "lib/store.ts",
       "source_location": "L43",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_store",
-      "target": "lib_store_getmongoclient",
-      "confidence_score": 1.0
+      "target": "lib_store_getmongoclient"
     },
     {
       "relation": "contains",
@@ -2128,9 +3523,9 @@
       "source_file": "lib/store.ts",
       "source_location": "L53",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_store",
-      "target": "lib_store_getmongocollection",
-      "confidence_score": 1.0
+      "target": "lib_store_getmongocollection"
     },
     {
       "relation": "contains",
@@ -2138,9 +3533,9 @@
       "source_file": "lib/store.ts",
       "source_location": "L28",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_store",
-      "target": "lib_store_loadseedstate",
-      "confidence_score": 1.0
+      "target": "lib_store_loadseedstate"
     },
     {
       "relation": "contains",
@@ -2148,9 +3543,9 @@
       "source_file": "lib/store.ts",
       "source_location": "L12",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_store",
-      "target": "lib_store_queue",
-      "confidence_score": 1.0
+      "target": "lib_store_queue"
     },
     {
       "relation": "contains",
@@ -2158,9 +3553,9 @@
       "source_file": "lib/store.ts",
       "source_location": "L91",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_store",
-      "target": "lib_store_readstate",
-      "confidence_score": 1.0
+      "target": "lib_store_readstate"
     },
     {
       "relation": "contains",
@@ -2168,9 +3563,9 @@
       "source_file": "lib/store.ts",
       "source_location": "L6",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_store",
-      "target": "lib_store_seedfilepath",
-      "confidence_score": 1.0
+      "target": "lib_store_seedfilepath"
     },
     {
       "relation": "contains",
@@ -2178,9 +3573,9 @@
       "source_file": "lib/store.ts",
       "source_location": "L129",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_store",
-      "target": "lib_store_withstate",
-      "confidence_score": 1.0
+      "target": "lib_store_withstate"
     },
     {
       "relation": "contains",
@@ -2188,9 +3583,9 @@
       "source_file": "lib/store.ts",
       "source_location": "L112",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_store",
-      "target": "lib_store_writestate",
-      "confidence_score": 1.0
+      "target": "lib_store_writestate"
     },
     {
       "relation": "imports_from",
@@ -2199,9 +3594,9 @@
       "source_file": "lib/store.ts",
       "source_location": "L4",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_store",
-      "target": "lib_types",
-      "confidence_score": 1.0
+      "target": "lib_types"
     },
     {
       "relation": "imports",
@@ -2210,9 +3605,9 @@
       "source_file": "lib/store.ts",
       "source_location": "L4",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_store",
-      "target": "lib_types_appstate",
-      "confidence_score": 1.0
+      "target": "lib_types_appstate"
     },
     {
       "relation": "calls",
@@ -2221,9 +3616,9 @@
       "source_file": "lib/store.ts",
       "source_location": "L33",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_store_loadseedstate",
-      "target": "lib_store_deepclonestate",
-      "confidence_score": 1.0
+      "target": "lib_store_deepclonestate"
     },
     {
       "relation": "calls",
@@ -2232,9 +3627,9 @@
       "source_file": "lib/store.ts",
       "source_location": "L67",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_store_ensuremongostate",
-      "target": "lib_store_loadseedstate",
-      "confidence_score": 1.0
+      "target": "lib_store_loadseedstate"
     },
     {
       "relation": "calls",
@@ -2243,9 +3638,9 @@
       "source_file": "lib/store.ts",
       "source_location": "L44",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_store_getmongoclient",
-      "target": "lib_store_assertmongoenv",
-      "confidence_score": 1.0
+      "target": "lib_store_assertmongoenv"
     },
     {
       "relation": "calls",
@@ -2254,9 +3649,9 @@
       "source_file": "lib/store.ts",
       "source_location": "L54",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_store_getmongocollection",
-      "target": "lib_store_getmongoclient",
-      "confidence_score": 1.0
+      "target": "lib_store_getmongoclient"
     },
     {
       "relation": "calls",
@@ -2265,9 +3660,9 @@
       "source_file": "lib/store.ts",
       "source_location": "L68",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_store_ensuremongostate",
-      "target": "lib_store_getmongocollection",
-      "confidence_score": 1.0
+      "target": "lib_store_getmongocollection"
     },
     {
       "relation": "calls",
@@ -2276,9 +3671,9 @@
       "source_file": "lib/store.ts",
       "source_location": "L94",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_store_readstate",
-      "target": "lib_store_getmongocollection",
-      "confidence_score": 1.0
+      "target": "lib_store_getmongocollection"
     },
     {
       "relation": "calls",
@@ -2287,9 +3682,9 @@
       "source_file": "lib/store.ts",
       "source_location": "L115",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_store_writestate",
-      "target": "lib_store_getmongocollection",
-      "confidence_score": 1.0
+      "target": "lib_store_getmongocollection"
     },
     {
       "relation": "calls",
@@ -2298,9 +3693,9 @@
       "source_file": "lib/store.ts",
       "source_location": "L85",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_store_ensurestate",
-      "target": "lib_store_ensuremongostate",
-      "confidence_score": 1.0
+      "target": "lib_store_ensuremongostate"
     },
     {
       "relation": "calls",
@@ -2309,9 +3704,9 @@
       "source_file": "lib/store.ts",
       "source_location": "L92",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_store_readstate",
-      "target": "lib_store_ensurestate",
-      "confidence_score": 1.0
+      "target": "lib_store_ensurestate"
     },
     {
       "relation": "calls",
@@ -2320,9 +3715,9 @@
       "source_file": "lib/store.ts",
       "source_location": "L113",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_store_writestate",
-      "target": "lib_store_ensurestate",
-      "confidence_score": 1.0
+      "target": "lib_store_ensurestate"
     },
     {
       "relation": "contains",
@@ -2330,9 +3725,9 @@
       "source_file": "lib/types.ts",
       "source_location": "L39",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_types",
-      "target": "lib_types_appstate",
-      "confidence_score": 1.0
+      "target": "lib_types_appstate"
     },
     {
       "relation": "contains",
@@ -2340,9 +3735,9 @@
       "source_file": "lib/types.ts",
       "source_location": "L23",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_types",
-      "target": "lib_types_chatmessage",
-      "confidence_score": 1.0
+      "target": "lib_types_chatmessage"
     },
     {
       "relation": "contains",
@@ -2350,9 +3745,9 @@
       "source_file": "lib/types.ts",
       "source_location": "L14",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_types",
-      "target": "lib_types_letter",
-      "confidence_score": 1.0
+      "target": "lib_types_letter"
     },
     {
       "relation": "contains",
@@ -2360,9 +3755,9 @@
       "source_file": "lib/types.ts",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_types",
-      "target": "lib_types_mediaitem",
-      "confidence_score": 1.0
+      "target": "lib_types_mediaitem"
     },
     {
       "relation": "contains",
@@ -2370,9 +3765,9 @@
       "source_file": "lib/types.ts",
       "source_location": "L34",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_types",
-      "target": "lib_types_resetcode",
-      "confidence_score": 1.0
+      "target": "lib_types_resetcode"
     },
     {
       "relation": "contains",
@@ -2380,9 +3775,9 @@
       "source_file": "lib/types.ts",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_types",
-      "target": "lib_types_user",
-      "confidence_score": 1.0
+      "target": "lib_types_user"
     },
     {
       "relation": "references",
@@ -2410,9 +3805,9 @@
       "source_file": "next.config.js",
       "source_location": "L2",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "next_config",
-      "target": "next_config_nextconfig",
-      "confidence_score": 1.0
+      "target": "next_config_nextconfig"
     },
     {
       "relation": "contains",
@@ -2420,9 +3815,9 @@
       "source_file": "package.json",
       "source_location": "L11",
       "weight": 1.0,
-      "source": "package",
-      "target": "package_dependencies",
-      "confidence_score": 1.0
+      "confidence_score": 1.0,
+      "source": "c_jeicob_code_lelita_package_json",
+      "target": "package_dependencies"
     },
     {
       "relation": "contains",
@@ -2430,9 +3825,9 @@
       "source_file": "package.json",
       "source_location": "L20",
       "weight": 1.0,
-      "source": "package",
-      "target": "package_devdependencies",
-      "confidence_score": 1.0
+      "confidence_score": 1.0,
+      "source": "c_jeicob_code_lelita_package_json",
+      "target": "package_devdependencies"
     },
     {
       "relation": "contains",
@@ -2440,9 +3835,9 @@
       "source_file": "package.json",
       "source_location": "L2",
       "weight": 1.0,
-      "source": "package",
-      "target": "package_name",
-      "confidence_score": 1.0
+      "confidence_score": 1.0,
+      "source": "c_jeicob_code_lelita_package_json",
+      "target": "package_name"
     },
     {
       "relation": "contains",
@@ -2450,9 +3845,9 @@
       "source_file": "package.json",
       "source_location": "L4",
       "weight": 1.0,
-      "source": "package",
-      "target": "package_private",
-      "confidence_score": 1.0
+      "confidence_score": 1.0,
+      "source": "c_jeicob_code_lelita_package_json",
+      "target": "package_private"
     },
     {
       "relation": "contains",
@@ -2460,9 +3855,9 @@
       "source_file": "package.json",
       "source_location": "L5",
       "weight": 1.0,
-      "source": "package",
-      "target": "package_scripts",
-      "confidence_score": 1.0
+      "confidence_score": 1.0,
+      "source": "c_jeicob_code_lelita_package_json",
+      "target": "package_scripts"
     },
     {
       "relation": "contains",
@@ -2470,9 +3865,9 @@
       "source_file": "package.json",
       "source_location": "L3",
       "weight": 1.0,
-      "source": "package",
-      "target": "package_version",
-      "confidence_score": 1.0
+      "confidence_score": 1.0,
+      "source": "c_jeicob_code_lelita_package_json",
+      "target": "package_version"
     },
     {
       "relation": "contains",
@@ -2480,9 +3875,9 @@
       "source_file": "package.json",
       "source_location": "L7",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "package_scripts",
-      "target": "package_scripts_build",
-      "confidence_score": 1.0
+      "target": "package_scripts_build"
     },
     {
       "relation": "contains",
@@ -2490,9 +3885,9 @@
       "source_file": "package.json",
       "source_location": "L6",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "package_scripts",
-      "target": "package_scripts_dev",
-      "confidence_score": 1.0
+      "target": "package_scripts_dev"
     },
     {
       "relation": "contains",
@@ -2500,9 +3895,9 @@
       "source_file": "package.json",
       "source_location": "L9",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "package_scripts",
-      "target": "package_scripts_lint",
-      "confidence_score": 1.0
+      "target": "package_scripts_lint"
     },
     {
       "relation": "contains",
@@ -2510,9 +3905,9 @@
       "source_file": "package.json",
       "source_location": "L8",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "package_scripts",
-      "target": "package_scripts_start",
-      "confidence_score": 1.0
+      "target": "package_scripts_start"
     },
     {
       "relation": "contains",
@@ -2520,9 +3915,9 @@
       "source_file": "package.json",
       "source_location": "L12",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "package_dependencies",
-      "target": "package_dependencies_cloudinary",
-      "confidence_score": 1.0
+      "target": "package_dependencies_cloudinary"
     },
     {
       "relation": "contains",
@@ -2530,9 +3925,9 @@
       "source_file": "package.json",
       "source_location": "L13",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "package_dependencies",
-      "target": "package_dependencies_framer_motion",
-      "confidence_score": 1.0
+      "target": "package_dependencies_framer_motion"
     },
     {
       "relation": "contains",
@@ -2540,9 +3935,9 @@
       "source_file": "package.json",
       "source_location": "L14",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "package_dependencies",
-      "target": "package_dependencies_mongodb",
-      "confidence_score": 1.0
+      "target": "package_dependencies_mongodb"
     },
     {
       "relation": "contains",
@@ -2550,9 +3945,9 @@
       "source_file": "package.json",
       "source_location": "L15",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "package_dependencies",
-      "target": "package_dependencies_next",
-      "confidence_score": 1.0
+      "target": "package_dependencies_next"
     },
     {
       "relation": "contains",
@@ -2560,9 +3955,9 @@
       "source_file": "package.json",
       "source_location": "L18",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "package_dependencies",
-      "target": "package_dependencies_nodemailer",
-      "confidence_score": 1.0
+      "target": "package_dependencies_nodemailer"
     },
     {
       "relation": "contains",
@@ -2570,9 +3965,9 @@
       "source_file": "package.json",
       "source_location": "L16",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "package_dependencies",
-      "target": "package_dependencies_react",
-      "confidence_score": 1.0
+      "target": "package_dependencies_react"
     },
     {
       "relation": "contains",
@@ -2580,9 +3975,9 @@
       "source_file": "package.json",
       "source_location": "L17",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "package_dependencies",
-      "target": "package_dependencies_react_dom",
-      "confidence_score": 1.0
+      "target": "package_dependencies_react_dom"
     },
     {
       "relation": "contains",
@@ -2590,9 +3985,9 @@
       "source_file": "package.json",
       "source_location": "L24",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "package_devdependencies",
-      "target": "package_devdependencies_autoprefixer",
-      "confidence_score": 1.0
+      "target": "package_devdependencies_autoprefixer"
     },
     {
       "relation": "contains",
@@ -2600,9 +3995,9 @@
       "source_file": "package.json",
       "source_location": "L25",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "package_devdependencies",
-      "target": "package_devdependencies_postcss",
-      "confidence_score": 1.0
+      "target": "package_devdependencies_postcss"
     },
     {
       "relation": "contains",
@@ -2610,9 +4005,9 @@
       "source_file": "package.json",
       "source_location": "L26",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "package_devdependencies",
-      "target": "package_devdependencies_tailwindcss",
-      "confidence_score": 1.0
+      "target": "package_devdependencies_tailwindcss"
     },
     {
       "relation": "contains",
@@ -2620,9 +4015,9 @@
       "source_file": "package.json",
       "source_location": "L21",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "package_devdependencies",
-      "target": "package_devdependencies_types_node",
-      "confidence_score": 1.0
+      "target": "package_devdependencies_types_node"
     },
     {
       "relation": "contains",
@@ -2630,9 +4025,9 @@
       "source_file": "package.json",
       "source_location": "L22",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "package_devdependencies",
-      "target": "package_devdependencies_types_react",
-      "confidence_score": 1.0
+      "target": "package_devdependencies_types_react"
     },
     {
       "relation": "contains",
@@ -2640,9 +4035,9 @@
       "source_file": "package.json",
       "source_location": "L23",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "package_devdependencies",
-      "target": "package_devdependencies_types_react_dom",
-      "confidence_score": 1.0
+      "target": "package_devdependencies_types_react_dom"
     },
     {
       "relation": "contains",
@@ -2650,9 +4045,29 @@
       "source_file": "package.json",
       "source_location": "L27",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "package_devdependencies",
-      "target": "package_devdependencies_typescript",
-      "confidence_score": 1.0
+      "target": "package_devdependencies_typescript"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/ANIMATION-HOOKS.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "docs_animation_hooks",
+      "target": "tailwind_config"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/ANIMATION-HOOKS.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "docs_animation_hooks_hover_gating",
+      "target": "tailwind_config"
     },
     {
       "relation": "contains",
@@ -2660,9 +4075,9 @@
       "source_file": "tailwind.config.ts",
       "source_location": "L4",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "tailwind_config",
-      "target": "tailwind_config_config",
-      "confidence_score": 1.0
+      "target": "tailwind_config_config"
     },
     {
       "relation": "contains",
@@ -2670,9 +4085,9 @@
       "source_file": "tsconfig.json",
       "source_location": "L2",
       "weight": 1.0,
-      "source": "tsconfig",
-      "target": "tsconfig_compileroptions",
-      "confidence_score": 1.0
+      "confidence_score": 1.0,
+      "source": "c_jeicob_code_lelita_tsconfig_json",
+      "target": "tsconfig_compileroptions"
     },
     {
       "relation": "contains",
@@ -2680,9 +4095,9 @@
       "source_file": "tsconfig.json",
       "source_location": "L22",
       "weight": 1.0,
-      "source": "tsconfig",
-      "target": "tsconfig_exclude",
-      "confidence_score": 1.0
+      "confidence_score": 1.0,
+      "source": "c_jeicob_code_lelita_tsconfig_json",
+      "target": "tsconfig_exclude"
     },
     {
       "relation": "contains",
@@ -2690,9 +4105,9 @@
       "source_file": "tsconfig.json",
       "source_location": "L21",
       "weight": 1.0,
-      "source": "tsconfig",
-      "target": "tsconfig_include",
-      "confidence_score": 1.0
+      "confidence_score": 1.0,
+      "source": "c_jeicob_code_lelita_tsconfig_json",
+      "target": "tsconfig_include"
     },
     {
       "relation": "contains",
@@ -2700,9 +4115,9 @@
       "source_file": "tsconfig.json",
       "source_location": "L5",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "tsconfig_compileroptions",
-      "target": "tsconfig_compileroptions_allowjs",
-      "confidence_score": 1.0
+      "target": "tsconfig_compileroptions_allowjs"
     },
     {
       "relation": "contains",
@@ -2710,9 +4125,9 @@
       "source_file": "tsconfig.json",
       "source_location": "L9",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "tsconfig_compileroptions",
-      "target": "tsconfig_compileroptions_esmoduleinterop",
-      "confidence_score": 1.0
+      "target": "tsconfig_compileroptions_esmoduleinterop"
     },
     {
       "relation": "contains",
@@ -2720,9 +4135,9 @@
       "source_file": "tsconfig.json",
       "source_location": "L15",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "tsconfig_compileroptions",
-      "target": "tsconfig_compileroptions_incremental",
-      "confidence_score": 1.0
+      "target": "tsconfig_compileroptions_incremental"
     },
     {
       "relation": "contains",
@@ -2730,9 +4145,9 @@
       "source_file": "tsconfig.json",
       "source_location": "L13",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "tsconfig_compileroptions",
-      "target": "tsconfig_compileroptions_isolatedmodules",
-      "confidence_score": 1.0
+      "target": "tsconfig_compileroptions_isolatedmodules"
     },
     {
       "relation": "contains",
@@ -2740,9 +4155,9 @@
       "source_file": "tsconfig.json",
       "source_location": "L14",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "tsconfig_compileroptions",
-      "target": "tsconfig_compileroptions_jsx",
-      "confidence_score": 1.0
+      "target": "tsconfig_compileroptions_jsx"
     },
     {
       "relation": "contains",
@@ -2750,9 +4165,9 @@
       "source_file": "tsconfig.json",
       "source_location": "L4",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "tsconfig_compileroptions",
-      "target": "tsconfig_compileroptions_lib",
-      "confidence_score": 1.0
+      "target": "tsconfig_compileroptions_lib"
     },
     {
       "relation": "contains",
@@ -2760,9 +4175,9 @@
       "source_file": "tsconfig.json",
       "source_location": "L10",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "tsconfig_compileroptions",
-      "target": "tsconfig_compileroptions_module",
-      "confidence_score": 1.0
+      "target": "tsconfig_compileroptions_module"
     },
     {
       "relation": "contains",
@@ -2770,9 +4185,9 @@
       "source_file": "tsconfig.json",
       "source_location": "L11",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "tsconfig_compileroptions",
-      "target": "tsconfig_compileroptions_moduleresolution",
-      "confidence_score": 1.0
+      "target": "tsconfig_compileroptions_moduleresolution"
     },
     {
       "relation": "contains",
@@ -2780,9 +4195,9 @@
       "source_file": "tsconfig.json",
       "source_location": "L8",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "tsconfig_compileroptions",
-      "target": "tsconfig_compileroptions_noemit",
-      "confidence_score": 1.0
+      "target": "tsconfig_compileroptions_noemit"
     },
     {
       "relation": "contains",
@@ -2790,9 +4205,9 @@
       "source_file": "tsconfig.json",
       "source_location": "L17",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "tsconfig_compileroptions",
-      "target": "tsconfig_compileroptions_paths",
-      "confidence_score": 1.0
+      "target": "tsconfig_compileroptions_paths"
     },
     {
       "relation": "contains",
@@ -2800,9 +4215,9 @@
       "source_file": "tsconfig.json",
       "source_location": "L16",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "tsconfig_compileroptions",
-      "target": "tsconfig_compileroptions_plugins",
-      "confidence_score": 1.0
+      "target": "tsconfig_compileroptions_plugins"
     },
     {
       "relation": "contains",
@@ -2810,9 +4225,9 @@
       "source_file": "tsconfig.json",
       "source_location": "L12",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "tsconfig_compileroptions",
-      "target": "tsconfig_compileroptions_resolvejsonmodule",
-      "confidence_score": 1.0
+      "target": "tsconfig_compileroptions_resolvejsonmodule"
     },
     {
       "relation": "contains",
@@ -2820,9 +4235,9 @@
       "source_file": "tsconfig.json",
       "source_location": "L6",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "tsconfig_compileroptions",
-      "target": "tsconfig_compileroptions_skiplibcheck",
-      "confidence_score": 1.0
+      "target": "tsconfig_compileroptions_skiplibcheck"
     },
     {
       "relation": "contains",
@@ -2830,9 +4245,9 @@
       "source_file": "tsconfig.json",
       "source_location": "L7",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "tsconfig_compileroptions",
-      "target": "tsconfig_compileroptions_strict",
-      "confidence_score": 1.0
+      "target": "tsconfig_compileroptions_strict"
     },
     {
       "relation": "contains",
@@ -2840,9 +4255,9 @@
       "source_file": "tsconfig.json",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "tsconfig_compileroptions",
-      "target": "tsconfig_compileroptions_target",
-      "confidence_score": 1.0
+      "target": "tsconfig_compileroptions_target"
     },
     {
       "relation": "contains",
@@ -2850,8 +4265,328 @@
       "source_file": "tsconfig.json",
       "source_location": "L18",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "tsconfig_compileroptions_paths",
-      "target": "tsconfig_paths",
+      "target": "tsconfig_paths"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L72",
+      "weight": 1.0,
+      "source": "readme",
+      "target": "readme_email_recovery_por_smtp",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "readme",
+      "target": "readme_lelita_s_photlibrary_next_js_fullstack",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L80",
+      "weight": 1.0,
+      "source": "readme",
+      "target": "readme_opcional_fallback_por_webhook",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L24",
+      "weight": 1.0,
+      "source": "readme_lelita_s_photlibrary_next_js_fullstack",
+      "target": "readme_ejecutar_en_local",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "readme_lelita_s_photlibrary_next_js_fullstack",
+      "target": "readme_funcionalidades_principales",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L33",
+      "weight": 1.0,
+      "source": "readme_lelita_s_photlibrary_next_js_fullstack",
+      "target": "readme_recuperaci\u00f3n_de_contrase\u00f1a_por_correo_nodemailer",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L50",
+      "weight": 1.0,
+      "source": "readme_recuperaci\u00f3n_de_contrase\u00f1a_por_correo_nodemailer",
+      "target": "readme_flujo_de_funcionamiento",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L61",
+      "weight": 1.0,
+      "source": "readme_recuperaci\u00f3n_de_contrase\u00f1a_por_correo_nodemailer",
+      "target": "readme_instalar_dependencia_en_tu_entorno",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L37",
+      "weight": 1.0,
+      "source": "readme_recuperaci\u00f3n_de_contrase\u00f1a_por_correo_nodemailer",
+      "target": "readme_variables_de_entorno_para_smtp_env_local",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/ANIMATION-HOOKS.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "docs_animation_hooks",
+      "target": "app_globals"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/ANIMATION-HOOKS.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "docs_animation_hooks",
+      "target": "docs_animation_hooks_mapa_de_animaciones_lelita",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/ANIMATION-HOOKS.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "docs_animation_hooks",
+      "target": "docs_redesign_2026_07_08_archivo_editorial"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/REDESIGN-2026-07-08.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "docs_redesign_2026_07_08",
+      "target": "docs_animation_hooks"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/ANIMATION-HOOKS.md",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "docs_animation_hooks_mapa_de_animaciones_lelita",
+      "target": "docs_animation_hooks_d\u00f3nde_se_trabaja",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/ANIMATION-HOOKS.md",
+      "source_location": "L48",
+      "weight": 1.0,
+      "source": "docs_animation_hooks_mapa_de_animaciones_lelita",
+      "target": "docs_animation_hooks_ideas_descartadas_y_por_qu\u00e9_no_reintentar_sin_raz\u00f3n_nueva",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/ANIMATION-HOOKS.md",
+      "source_location": "L25",
+      "weight": 1.0,
+      "source": "docs_animation_hooks_mapa_de_animaciones_lelita",
+      "target": "docs_animation_hooks_inventario_de_anclas_data_animate_estado_implementado",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/ANIMATION-HOOKS.md",
+      "source_location": "L54",
+      "weight": 1.0,
+      "source": "docs_animation_hooks_mapa_de_animaciones_lelita",
+      "target": "docs_animation_hooks_pendientes_posibles_siguiente_sesi\u00f3n",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/ANIMATION-HOOKS.md",
+      "source_location": "L13",
+      "weight": 1.0,
+      "source": "docs_animation_hooks_mapa_de_animaciones_lelita",
+      "target": "docs_animation_hooks_reglas_vigentes_no_romper",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/REDESIGN-2026-07-04.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "docs_redesign_2026_07_04",
+      "target": "docs_redesign_2026_07_04_redise\u00f1o_lelita_sesi\u00f3n_2026_07_04",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "docs/REDESIGN-2026-07-08.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "docs_redesign_2026_07_04",
+      "target": "docs_redesign_2026_07_08_archivo_editorial"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/REDESIGN-2026-07-08.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "docs_redesign_2026_07_08",
+      "target": "docs_redesign_2026_07_04"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/REDESIGN-2026-07-04.md",
+      "source_location": "L16",
+      "weight": 1.0,
+      "source": "docs_redesign_2026_07_04_redise\u00f1o_lelita_sesi\u00f3n_2026_07_04",
+      "target": "docs_redesign_2026_07_04_componentes_y_patrones_implementados",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/REDESIGN-2026-07-04.md",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "docs_redesign_2026_07_04_redise\u00f1o_lelita_sesi\u00f3n_2026_07_04",
+      "target": "docs_redesign_2026_07_04_contexto_del_proyecto",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/REDESIGN-2026-07-04.md",
+      "source_location": "L35",
+      "weight": 1.0,
+      "source": "docs_redesign_2026_07_04_redise\u00f1o_lelita_sesi\u00f3n_2026_07_04",
+      "target": "docs_redesign_2026_07_04_decisiones_de_animaci\u00f3n_criterios_emil_kowalski",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/REDESIGN-2026-07-04.md",
+      "source_location": "L27",
+      "weight": 1.0,
+      "source": "docs_redesign_2026_07_04_redise\u00f1o_lelita_sesi\u00f3n_2026_07_04",
+      "target": "docs_redesign_2026_07_04_errores_aprendidos_importantes_para_futuras_sesiones",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/REDESIGN-2026-07-04.md",
+      "source_location": "L43",
+      "weight": 1.0,
+      "source": "docs_redesign_2026_07_04_redise\u00f1o_lelita_sesi\u00f3n_2026_07_04",
+      "target": "docs_redesign_2026_07_04_pendientes_ideas_para_seguir_mejorando",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/REDESIGN-2026-07-04.md",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "docs_redesign_2026_07_04_redise\u00f1o_lelita_sesi\u00f3n_2026_07_04",
+      "target": "docs_redesign_2026_07_04_sistema_de_dise\u00f1o_elegido_archivo_de_amor_editorial",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/REDESIGN-2026-07-04.md",
+      "source_location": "L55",
+      "weight": 1.0,
+      "source": "docs_redesign_2026_07_04_redise\u00f1o_lelita_sesi\u00f3n_2026_07_04",
+      "target": "docs_redesign_2026_07_04_verificaci\u00f3n_realizada",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/REDESIGN-2026-07-08.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "docs_redesign_2026_07_08",
+      "target": "docs_redesign_2026_07_08_redise\u00f1o_el_archivo_de_nuestra_historia_sesi\u00f3n_2026_07_08",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/REDESIGN-2026-07-08.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "docs_redesign_2026_07_08_archivo_editorial",
+      "target": "docs_redesign_2026_07_08"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/REDESIGN-2026-07-08.md",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "docs_redesign_2026_07_08_redise\u00f1o_el_archivo_de_nuestra_historia_sesi\u00f3n_2026_07_08",
+      "target": "docs_redesign_2026_07_08_qu\u00e9_cambi\u00f3_solo_presentaci\u00f3n",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/REDESIGN-2026-07-08.md",
+      "source_location": "L28",
+      "weight": 1.0,
+      "source": "docs_redesign_2026_07_08_redise\u00f1o_el_archivo_de_nuestra_historia_sesi\u00f3n_2026_07_08",
+      "target": "docs_redesign_2026_07_08_verificaci\u00f3n",
       "confidence_score": 1.0
     },
     {
@@ -3262,7 +4997,7 @@
       "source_location": null,
       "weight": 1.0,
       "source": "img_imagen2_photo",
-      "target": "img_imagen2_ivory_taupe_palette"
+      "target": "img_imagen2_andean_hillside"
     },
     {
       "relation": "references",
@@ -3272,7 +5007,7 @@
       "source_location": null,
       "weight": 1.0,
       "source": "img_imagen2_photo",
-      "target": "img_imagen2_andean_hillside"
+      "target": "img_imagen2_ivory_taupe_palette"
     },
     {
       "relation": "references",
@@ -3293,9 +5028,173 @@
       "weight": 1.0,
       "source": "img_imagen2_photo",
       "target": "img_imagen2_lift_embrace"
+    },
+    {
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/ANIMATION-HOOKS.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "app_globals",
+      "target": "docs_animation_hooks_css_loops"
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/ANIMATION-HOOKS.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "docs_animation_hooks_reduced_motion",
+      "target": "app_globals"
+    },
+    {
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.75,
+      "source_file": "docs/ANIMATION-HOOKS.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "docs_animation_hooks_hover_gating",
+      "target": "docs_animation_hooks_reduced_motion"
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/ANIMATION-HOOKS.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "docs_animation_hooks_reduced_motion",
+      "target": "docs_animation_hooks_count_up"
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/ANIMATION-HOOKS.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "docs_animation_hooks_reduced_motion",
+      "target": "docs_animation_hooks_css_loops"
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/ANIMATION-HOOKS.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "docs_animation_hooks_festive_hearts",
+      "target": "docs_animation_hooks_css_loops"
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/REDESIGN-2026-07-08.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "docs_redesign_2026_07_08_archivo_editorial",
+      "target": "docs_redesign_2026_07_08_fraunces"
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/REDESIGN-2026-07-08.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "docs_redesign_2026_07_08_archivo_editorial",
+      "target": "docs_redesign_2026_07_08_seal"
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "img/imagen1.jpeg",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "img_imagen1",
+      "target": "img_imagen1_ambiente_romantico_vintage"
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "img/imagen1.jpeg",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "img_imagen1",
+      "target": "img_imagen1_asset_diseno_lelita"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "img/imagen1.jpeg",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "img_imagen1",
+      "target": "img_imagen1_paisaje_semiarido"
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "img/imagen2.jpeg",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "img_imagen2",
+      "target": "img_imagen2_asset_diseno"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "img/imagen2.jpeg",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "img_imagen2",
+      "target": "img_imagen2_momento_romantico"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "img/imagen2.jpeg",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "img_imagen2",
+      "target": "img_imagen2_paisaje_andino"
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "img/imagen2.jpeg",
+      "source_location": null,
+      "weight": 0.8,
+      "source": "img_imagen2_momento_romantico",
+      "target": "img_imagen2_asset_diseno"
     }
   ],
   "hyperedges": [
+    {
+      "id": "media_persistence_pipeline",
+      "label": "Media Upload and Persistence Pipeline (Cloudinary + MongoDB)",
+      "nodes": [
+        "readme_cloudinary_upload_flow",
+        "readme_mongodb_state_persistence",
+        "readme_media_data_model",
+        "api_app_route"
+      ],
+      "relation": "participate_in",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md"
+    },
     {
       "id": "editorial_design_system_foundation",
       "label": "Editorial Love Archive Design System Foundation",
@@ -3312,20 +5211,6 @@
       "source_file": "docs/REDESIGN-2026-07-04.md"
     },
     {
-      "id": "media_persistence_pipeline",
-      "label": "Media Upload and Persistence Pipeline (Cloudinary + MongoDB)",
-      "nodes": [
-        "readme_cloudinary_upload_flow",
-        "readme_mongodb_state_persistence",
-        "readme_media_data_model",
-        "api_app_route"
-      ],
-      "relation": "participate_in",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "README.md"
-    },
-    {
       "id": "redesigned_ui_components",
       "label": "UI Components Implementing the Editorial Redesign",
       "nodes": [
@@ -3340,7 +5225,47 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/REDESIGN-2026-07-04.md"
+    },
+    {
+      "id": "lelita_animation_system",
+      "label": "Sistema de animaci\u00f3n de Lelita: variants + anclas JSX + loops CSS",
+      "nodes": [
+        "lib_motion",
+        "app_page",
+        "app_globals"
+      ],
+      "relation": "form",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/ANIMATION-HOOKS.md"
+    },
+    {
+      "id": "reduced_motion_pipeline",
+      "label": "Cobertura completa de reduced motion (MotionConfig + CSS + count-up skip)",
+      "nodes": [
+        "docs_animation_hooks_reduced_motion",
+        "docs_animation_hooks_count_up",
+        "docs_animation_hooks_css_loops"
+      ],
+      "relation": "participate_in",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/ANIMATION-HOOKS.md"
+    },
+    {
+      "id": "lightbox_motion_flow",
+      "label": "Flujo de motion del lightbox: overlay + card + crossfade de media",
+      "nodes": [
+        "lib_motion_overlayfade",
+        "lib_motion_lightboxcard",
+        "lib_motion_mediaswap",
+        "docs_animation_hooks_lightbox_crossfade"
+      ],
+      "relation": "participate_in",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/ANIMATION-HOOKS.md"
     }
   ],
-  "built_at_commit": "c5589de37977c8f25b3a2cb5b04fce1c5264e449"
+  "built_at_commit": "384c5cd4f17ecea27c41f6209ffc8534a1e0a419"
 }

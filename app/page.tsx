@@ -1,8 +1,28 @@
 'use client';
 
-import { FormEvent, useEffect, useMemo, useState } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
-import { AppState, Letter, MediaItem } from '@/lib/types';
+import { FormEvent, useEffect, useMemo, useRef, useState } from 'react';
+import { AnimatePresence, MotionConfig, animate, motion, useReducedMotion } from 'framer-motion';
+import { AppState, Letter } from '@/lib/types';
+import {
+  EASE_OUT,
+  bubbleIn,
+  collapse,
+  fadeChild,
+  fadeRise,
+  heroStagger,
+  lightboxCard,
+  mediaSwap,
+  overlayFade,
+  polaroidSpring,
+  riseChild,
+  rowFade,
+  ruleDraw,
+  scaleIn,
+  sealStamp,
+  toastPop,
+  wordIn,
+  wordStagger
+} from '@/lib/motion';
 
 const initial: AppState = {
   users: {},
@@ -33,12 +53,20 @@ const fmtDate = (time: number) =>
     minute: '2-digit'
   });
 
+// Transformación de entrega de Cloudinary (solo presentación): sirve imágenes
+// optimizadas y responsivas sin tocar la URL original guardada en la BD.
+const cld = (url: string, width = 900) =>
+  url.includes('res.cloudinary.com') && url.includes('/upload/')
+    ? url.replace('/upload/', `/upload/f_auto,q_auto,w_${width}/`)
+    : url;
+
 const HeartIcon = ({ className }: { className?: string }) => (
   <svg viewBox="0 0 24 24" fill="currentColor" className={className} aria-hidden="true">
     <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
   </svg>
 );
 
+// Configs deterministas: evita hydration mismatch (nunca Math.random en render SSR)
 const heartConfigs = [
   { left: '6%', d: '22s', delay: '-3s', s: 0.7, o: 0.35, sway: '40px' },
   { left: '16%', d: '26s', delay: '-14s', s: 1.1, o: 0.3, sway: '-30px' },
@@ -50,9 +78,19 @@ const heartConfigs = [
   { left: '91%', d: '24s', delay: '-2s', s: 0.8, o: 0.3, sway: '-38px' }
 ];
 
-const FloatingHearts = () => (
-  <div className="hearts" aria-hidden="true">
-    {heartConfigs.map((h, i) => (
+// Corazones extra solo los 13 de cada mes (mesiversario) — también deterministas
+const festiveHeartConfigs = [
+  { left: '11%', d: '17s', delay: '-6s', s: 0.65, o: 0.4, sway: '28px' },
+  { left: '35%', d: '20s', delay: '-12s', s: 0.85, o: 0.35, sway: '-34px' },
+  { left: '48%', d: '16s', delay: '-4s', s: 0.5, o: 0.45, sway: '22px' },
+  { left: '62%', d: '23s', delay: '-15s', s: 1.0, o: 0.3, sway: '30px' },
+  { left: '74%', d: '18s', delay: '-9s', s: 0.6, o: 0.4, sway: '-26px' },
+  { left: '96%', d: '21s', delay: '-1s', s: 0.75, o: 0.35, sway: '36px' }
+];
+
+const FloatingHearts = ({ festive = false }: { festive?: boolean }) => (
+  <div className="hearts" data-animate="ambient-hearts" aria-hidden="true">
+    {(festive ? [...heartConfigs, ...festiveHeartConfigs] : heartConfigs).map((h, i) => (
       <span
         key={i}
         className="heart-float"
@@ -72,18 +110,31 @@ const FloatingHearts = () => (
 );
 
 const PhotoStack = ({ size = 'md' }: { size?: 'md' | 'lg' }) => {
-  const dims = size === 'lg' ? 'w-40 md:w-48' : 'w-28 md:w-32';
+  const dims = size === 'lg' ? 'w-44 md:w-52' : 'w-28 md:w-36';
   return (
-    <div className="relative flex items-center justify-center" aria-hidden="true">
+    <div className="relative flex items-center justify-center" data-animate="photo-stack" aria-hidden="true">
       <div className={`keepsake floaty ${dims} -rotate-6`} style={{ ['--tilt' as string]: '-6deg' }}>
-        <img src="/img/imagen1.jpeg" alt="" className="aspect-[3/4] w-full rounded-sm object-cover" />
+        <img src="/img/imagen1.jpeg" alt="" className="aspect-[3/4] w-full rounded-[3px] object-cover" />
+        <p className="pt-1.5 text-center font-hand text-sm text-ink/60 dark:text-rose-50/60">nosotros ♡</p>
       </div>
-      <div className={`keepsake floaty-late ${dims} -ml-8 mt-8 rotate-6`} style={{ ['--tilt' as string]: '6deg' }}>
-        <img src="/img/imagen2.jpeg" alt="" className="aspect-[3/4] w-full rounded-sm object-cover" />
+      <div className={`keepsake floaty-late ${dims} -ml-10 mt-10 rotate-6`} style={{ ['--tilt' as string]: '6deg' }}>
+        <img src="/img/imagen2.jpeg" alt="" className="aspect-[3/4] w-full rounded-[3px] object-cover" />
+        <p className="pt-1.5 text-center font-hand text-sm text-ink/60 dark:text-rose-50/60">13 · 03 · 25</p>
       </div>
     </div>
   );
 };
+
+// La página es su historia contada por capítulos: la numeración encabeza cada sección
+const SectionHeader = ({ chapter, title, note }: { chapter: string; title: string; note?: string }) => (
+  <div data-animate="section-header">
+    <p className="chapter-num">Capítulo {chapter}</p>
+    <div className="mt-1 flex flex-wrap items-baseline gap-x-3">
+      <h2 className="font-display text-2xl font-semibold text-ink dark:text-rose-50 md:text-3xl">{title}</h2>
+      {note && <span className="font-hand text-xl text-wine/70 dark:text-rose-200/70">{note}</span>}
+    </div>
+  </div>
+);
 
 export default function Home() {
   const [state, setState] = useState<AppState>(initial);
@@ -105,6 +156,12 @@ export default function Home() {
   const [counterNow, setCounterNow] = useState(Date.now());
   const [isPublishingMedia, setIsPublishingMedia] = useState(false);
   const [isSendingChat, setIsSendingChat] = useState(false);
+
+  const reduceMotion = useReducedMotion();
+  const [shownDays, setShownDays] = useState(0);
+  const daysCountedUp = useRef(false);
+  const chatMountedAt = useRef(Date.now());
+  const [festiveHearts, setFestiveHearts] = useState(false);
 
   const filteredMedia = useMemo(
     () => state.media.filter((item) => item.description.toLowerCase().includes(mediaFilter.toLowerCase())),
@@ -202,6 +259,28 @@ export default function Home() {
     return { days, years, months, day };
   }, [counterNow]);
 
+  // Count-up del contador de días: una sola vez por visita (momento firma del hero).
+  // Con prefers-reduced-motion va directo al valor; los refrescos de 30 s también.
+  useEffect(() => {
+    if (daysCountedUp.current || reduceMotion) {
+      daysCountedUp.current = true;
+      setShownDays(counters.days);
+      return;
+    }
+    daysCountedUp.current = true;
+    const controls = animate(0, counters.days, {
+      duration: 0.9,
+      ease: EASE_OUT,
+      onUpdate: (v) => setShownDays(Math.round(v))
+    });
+    return () => controls.stop();
+  }, [counters.days, reduceMotion]);
+
+  // Mesiversario: cada 13 del mes llueven más corazones (en efecto: evita mismatch SSR)
+  useEffect(() => {
+    setFestiveHearts(new Date().getDate() === 13);
+  }, []);
+
   const qrUrl = useMemo(() => {
     const target = typeof window !== 'undefined' ? window.location.href : 'http://localhost:3000';
     return `https://quickchart.io/qr?size=170&text=${encodeURIComponent(target)}`;
@@ -246,21 +325,41 @@ export default function Home() {
 
   if (!user) {
     return (
-      <main className="relative mx-auto flex min-h-screen max-w-5xl items-center justify-center overflow-hidden p-6">
-        <FloatingHearts />
+      <MotionConfig reducedMotion="user">
+      <main className="relative mx-auto flex min-h-screen max-w-5xl items-center justify-center overflow-hidden px-6 py-10">
+        <FloatingHearts festive={festiveHearts} />
 
-        <div className="relative z-10 grid w-full items-center gap-10 md:grid-cols-[1fr_auto]">
+        <div className="relative z-10 grid w-full items-center gap-12 md:grid-cols-2">
+          <motion.div
+            variants={scaleIn}
+            initial="hidden"
+            animate="visible"
+            className="hidden text-center md:block"
+            data-animate="login-cover"
+          >
+            <p className="eyebrow mb-3">El archivo de nuestra historia</p>
+            <h1 className="font-display text-5xl font-semibold italic leading-tight text-wine dark:text-rose-100 lg:text-6xl">
+              Jeicob <span className="not-italic text-rose">&amp;</span> Lelita
+            </h1>
+            <div className="rule-heart mx-auto my-7 max-w-sm" aria-hidden="true">
+              <HeartIcon className="h-4 w-4" />
+            </div>
+            <PhotoStack size="lg" />
+            <p className="mt-10 font-hand text-2xl text-wine/80 dark:text-rose-200/80">nuestra historia favorita ♡</p>
+          </motion.div>
+
           <motion.form
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: 'easeOut' }}
+            variants={fadeRise}
+            initial="hidden"
+            animate="visible"
             onSubmit={doAuth}
-            className="card w-full max-w-md space-y-4 p-7 md:justify-self-end"
+            className="card mx-auto w-full max-w-md space-y-4 p-7"
+            data-animate="login-form"
           >
             <div className="space-y-1">
               <p className="eyebrow">Desde el 13 de marzo de 2025</p>
               <h1 className="font-display text-4xl font-semibold italic text-wine dark:text-rose-200">
-                Jeicob <span className="text-rose">&amp;</span> Lelita
+                Jeicob <span className="not-italic text-rose">&amp;</span> Lelita
               </h1>
               <p className="text-sm text-ink/60 dark:text-rose-50/60">
                 Nuestro pequeño rincón del mundo: recuerdos, cartas y mensajes solo para dos.
@@ -282,7 +381,7 @@ export default function Home() {
             </button>
             <AnimatePresence>
               {resetOpen && (
-                <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0, height: 0 }} className="space-y-2 overflow-hidden">
+                <motion.div variants={collapse} initial="hidden" animate="visible" exit="hidden" className="space-y-2 overflow-hidden" data-animate="reset-panel">
                   <input placeholder="Email" className="input" value={reset.email} onChange={(e) => setReset({ ...reset, email: e.target.value })} />
                   <div className="grid grid-cols-2 items-stretch gap-2">
                     <button
@@ -315,110 +414,121 @@ export default function Home() {
             {error && <p className="rounded-xl bg-wine/10 p-2.5 text-sm text-wine dark:bg-rose/15 dark:text-rose-200">{error}</p>}
             {notice && <p className="rounded-xl bg-gold/15 p-2.5 text-sm text-ink/80 dark:text-rose-50/85">{notice}</p>}
           </motion.form>
-
-          <motion.div
-            initial={{ opacity: 0, scale: 0.92 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, delay: 0.2, ease: 'easeOut' }}
-            className="hidden md:block"
-          >
-            <PhotoStack size="lg" />
-            <p className="mt-8 text-center font-hand text-2xl text-wine/80 dark:text-rose-200/80">nuestra historia favorita ♡</p>
-          </motion.div>
         </div>
       </main>
+      </MotionConfig>
     );
   }
 
   return (
-    <main className="relative mx-auto min-h-screen max-w-6xl space-y-5 px-4 pb-24 pt-6">
+    <MotionConfig reducedMotion="user">
+    <main className="relative mx-auto min-h-screen max-w-6xl space-y-10 px-4 pb-24 pt-6 md:px-6">
       <AnimatePresence>
         {state.theme === 'night' && <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="stars" />}
       </AnimatePresence>
-      <FloatingHearts />
+      <FloatingHearts festive={festiveHearts} />
 
-      <motion.header
-        initial={{ opacity: 0, y: 16 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, ease: 'easeOut' }}
-        className="card z-10 overflow-hidden p-6 md:p-8"
-      >
-        <div className="grid items-center gap-6 md:grid-cols-[1fr_auto]">
-          <div className="space-y-2">
-            <p className="eyebrow">Hola, {user} · nuestro rincón</p>
-            <p className="font-display text-5xl font-semibold text-wine dark:text-rose-100 md:text-6xl">
-              {counters.days}{' '}
-              <span className="text-3xl font-normal italic text-ink/70 dark:text-rose-50/70 md:text-4xl">días juntos</span>{' '}
-              <span className="beat align-middle text-rose">
+      {/* Capítulo I — el masthead: los nombres, el contador vivo y la frase del día */}
+      <motion.header variants={heroStagger} initial="hidden" animate="visible" className="relative z-10 pt-2 md:pt-6" data-animate="hero">
+        <motion.div variants={fadeChild} className="flex flex-wrap items-center justify-between gap-3">
+          <p className="eyebrow">Hola, {user} · el archivo de nuestra historia</p>
+          <div className="flex shrink-0 gap-2">
+            <button
+              className="btn-tiny"
+              onClick={() => safeRun(async () => {
+                await api('setTheme', { theme: state.theme === 'night' ? 'day' : 'night' });
+                await refresh();
+              }, `Modo ${state.theme === 'night' ? 'día' : 'noche'} activado`)}
+            >
+              {state.theme === 'night' ? '☀️ Día' : '🌙 Noche'}
+            </button>
+            <button
+              className="btn-tiny"
+              onClick={() => {
+                setUser('');
+                window.localStorage.removeItem('lelita_session_user');
+              }}
+            >
+              Salir
+            </button>
+          </div>
+        </motion.div>
+
+        <div className="mt-8 grid items-center gap-10 md:grid-cols-[1fr_auto] md:gap-14">
+          <div>
+            <motion.h1
+              variants={riseChild}
+              className="font-display text-5xl font-semibold italic leading-[1.05] text-wine dark:text-rose-100 md:text-7xl"
+              data-animate="hero-title"
+            >
+              Jeicob <span className="not-italic text-rose">&amp;</span> Lelita
+            </motion.h1>
+
+            <motion.div variants={ruleDraw} style={{ transformOrigin: 'center' }} className="rule-heart my-6 max-w-lg" aria-hidden="true">
+              <HeartIcon className="h-4 w-4" />
+            </motion.div>
+
+            <motion.p variants={riseChild} className="flex flex-wrap items-baseline gap-x-3" data-animate="hero-counter">
+              <span className="font-display text-7xl font-semibold tabular-nums leading-none text-ink dark:text-rose-50 md:text-8xl">
+                {shownDays}
+              </span>
+              <span className="font-display text-2xl italic text-ink/60 dark:text-rose-50/60 md:text-3xl">días juntos</span>
+              <span className="beat self-center text-rose">
                 <HeartIcon className="h-8 w-8 md:h-9 md:w-9" />
               </span>
-            </p>
-            <p className="text-sm text-ink/60 dark:text-rose-50/60">
-              Desde el 13 de marzo de 2025 · {counters.years} {counters.years === 1 ? 'año' : 'años'}, {counters.months} {counters.months === 1 ? 'mes' : 'meses'} y {counters.day} {counters.day === 1 ? 'día' : 'días'}
-            </p>
-            <div className="flex gap-2 pt-2">
-              <button
-                className="btn-ghost"
-                onClick={() => safeRun(async () => {
-                  await api('setTheme', { theme: state.theme === 'night' ? 'day' : 'night' });
-                  await refresh();
-                }, `Modo ${state.theme === 'night' ? 'día' : 'noche'} activado`)}
-              >
-                {state.theme === 'night' ? '☀️ Día' : '🌙 Noche'}
+            </motion.p>
+            <motion.p variants={fadeChild} className="mt-2 text-sm text-ink/60 dark:text-rose-50/60">
+              Desde el 13 de marzo de 2025 · {counters.years} {counters.years === 1 ? 'año' : 'años'}, {counters.months}{' '}
+              {counters.months === 1 ? 'mes' : 'meses'} y {counters.day} {counters.day === 1 ? 'día' : 'días'} escribiendo esto juntos
+            </motion.p>
+
+            <motion.div variants={riseChild} className="mt-7" data-animate="phrase">
+              <motion.p variants={wordStagger} className="font-hand text-3xl leading-snug text-wine dark:text-rose-100 md:text-4xl">
+                {`“${state.phrase}”`.split(' ').map((word, i) => (
+                  <motion.span key={`${i}-${word}`} variants={wordIn}>
+                    {word}{' '}
+                  </motion.span>
+                ))}
+              </motion.p>
+              <button className="btn-tiny mt-3" onClick={() => setPhraseOpen((v) => !v)}>
+                {phraseOpen ? 'Cerrar' : '✏️ Editar la frase de hoy'}
               </button>
-              <button
-                className="btn-ghost"
-                onClick={() => {
-                  setUser('');
-                  window.localStorage.removeItem('lelita_session_user');
-                }}
-              >
-                Salir
-              </button>
-            </div>
+              <AnimatePresence>
+                {phraseOpen && (
+                  <motion.div variants={collapse} initial="hidden" animate="visible" exit="hidden" className="max-w-lg overflow-hidden">
+                    <textarea className="input mt-3 min-h-24" value={state.phrase} onChange={(e) => setState({ ...state, phrase: e.target.value })} />
+                    <button
+                      className="btn-primary mt-2"
+                      onClick={() => safeRun(async () => {
+                        await api('setPhrase', { phrase: state.phrase });
+                        await refresh();
+                      }, 'Frase guardada 📝')}
+                    >
+                      Guardar frase
+                    </button>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </motion.div>
           </div>
-          <div className="hidden sm:block">
-            <PhotoStack />
-          </div>
+
+          <motion.div variants={scaleIn} className="hidden sm:block">
+            <PhotoStack size="lg" />
+          </motion.div>
         </div>
       </motion.header>
 
-      <motion.section
-        initial={{ opacity: 0, y: 16 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.1, ease: 'easeOut' }}
-        className="card z-10 p-6 text-center"
-      >
-        <p className="eyebrow mb-2">Frase de hoy</p>
-        <p className="font-hand text-3xl leading-snug text-wine dark:text-rose-100 md:text-4xl">“{state.phrase}”</p>
-        <button className="btn-tiny mt-3" onClick={() => setPhraseOpen((v) => !v)}>
-          {phraseOpen ? 'Cerrar' : '✏️ Editar frase'}
-        </button>
-        <AnimatePresence>
-          {phraseOpen && (
-            <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0, height: 0 }} className="overflow-hidden">
-              <textarea className="input mt-3 min-h-24" value={state.phrase} onChange={(e) => setState({ ...state, phrase: e.target.value })} />
-              <button
-                className="btn-primary mt-2"
-                onClick={() => safeRun(async () => {
-                  await api('setPhrase', { phrase: state.phrase });
-                  await refresh();
-                }, 'Frase guardada 📝')}
-              >
-                Guardar frase
-              </button>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </motion.section>
-
-      <div className="grid gap-5 lg:grid-cols-[1.15fr_.85fr]">
-        <section className="card z-10 space-y-4">
-          <div className="flex flex-wrap items-end justify-between gap-2">
-            <div>
-              <p className="eyebrow">Galería</p>
-              <h2 className="font-display text-2xl font-semibold text-ink dark:text-rose-50">Nuestros recuerdos</h2>
-            </div>
+      <div className="grid gap-10 lg:grid-cols-[1.15fr_.85fr] lg:gap-8">
+        {/* Capítulo II — la galería como álbum de polaroids sobre el papel */}
+        <motion.section
+          variants={fadeRise}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: '-40px' }}
+          className="relative z-10 space-y-5"
+        >
+          <div className="flex flex-wrap items-end justify-between gap-3">
+            <SectionHeader chapter="II" title="Nuestros recuerdos" note="lo que no queremos olvidar" />
             <input
               value={mediaFilter}
               onChange={(e) => {
@@ -455,20 +565,27 @@ export default function Home() {
                 }
               }, 'Recuerdo publicado 📸');
             }}
-            className="space-y-2 rounded-2xl border border-dashed border-wine/30 bg-blush/40 p-4 dark:border-rose/30 dark:bg-white/[0.04]"
+            className="space-y-2.5 rounded-[1.4rem] border border-dashed border-wine/30 bg-blush/40 p-4 backdrop-blur-sm dark:border-rose/30 dark:bg-white/[0.04]"
+            data-animate="upload-form"
           >
-            <p className="text-sm font-medium text-wine dark:text-rose-200">✨ Guarda un nuevo recuerdo</p>
+            <p className="text-sm font-medium text-wine dark:text-rose-200">✨ Añadir al álbum</p>
             <input
               type="file"
               accept="image/*,video/*"
-              className="input file:mr-3 file:rounded-lg file:border-0 file:bg-wine file:px-3 file:py-1.5 file:text-xs file:font-semibold file:text-white hover:file:bg-rose"
+              className="input file:mr-3 file:rounded-full file:border-0 file:bg-wine file:px-3.5 file:py-1.5 file:text-xs file:font-semibold file:text-white hover:file:bg-rose"
               onChange={(e) => {
                 const file = e.target.files?.[0] || null;
                 setMediaFile(file);
                 if (file?.type) setMedia({ ...media, type: file.type });
               }}
             />
-            {mediaFile && <p className="text-xs text-ink/60 dark:text-rose-50/60">Archivo seleccionado: {mediaFile.name}</p>}
+            <AnimatePresence>
+              {mediaFile && (
+                <motion.p variants={rowFade} initial="hidden" animate="visible" exit="hidden" className="text-xs text-ink/60 dark:text-rose-50/60">
+                  Archivo seleccionado: {mediaFile.name}
+                </motion.p>
+              )}
+            </AnimatePresence>
             <div className="grid gap-2 sm:grid-cols-[130px_1fr]">
               <select className="input" value={media.type} onChange={(e) => setMedia({ ...media, type: e.target.value })}>
                 <option value="image/jpeg">Imagen</option>
@@ -486,16 +603,23 @@ export default function Home() {
               <motion.article
                 key={item.id}
                 initial={{ opacity: 0, y: 20, rotate: 0 }}
-                animate={{ opacity: 1, y: 0, rotate: i % 2 === 0 ? -1.4 : 1.4 }}
+                animate={{
+                  opacity: 1,
+                  y: 0,
+                  rotate: i % 2 === 0 ? -1.4 : 1.4,
+                  // Cascada de 60ms solo en la entrada (cap 180ms); el hover usa el spring sin delay
+                  transition: { ...polaroidSpring, delay: (i % 4) * 0.06 }
+                }}
                 whileHover={{ rotate: 0, scale: 1.02 }}
                 whileTap={{ scale: 0.99 }}
-                transition={{ type: 'spring', stiffness: 220, damping: 20 }}
+                transition={polaroidSpring}
                 className="polaroid relative"
+                data-animate="polaroid"
               >
                 <span className="tape" aria-hidden="true" />
                 <button type="button" className="w-full" onClick={() => setLightboxId(item.id)}>
                   {item.type.startsWith('image') ? (
-                    <img src={item.url} alt={item.description} loading="lazy" className="max-h-96 w-full rounded-sm object-cover" />
+                    <img src={cld(item.url, 900)} alt={item.description} loading="lazy" className="max-h-96 w-full rounded-sm object-cover" />
                   ) : (
                     <video src={item.url} className="max-h-96 w-full rounded-sm object-cover" />
                   )}
@@ -536,18 +660,24 @@ export default function Home() {
             ))}
           </div>
           {!visibleMedia.length && (
-            <p className="rounded-2xl bg-blush/50 p-6 text-center text-sm text-ink/60 dark:bg-white/5 dark:text-rose-50/60">
+            <p className="rounded-[1.4rem] bg-blush/50 p-6 text-center text-sm text-ink/60 dark:bg-white/5 dark:text-rose-50/60">
               {mediaFilter ? 'No hay recuerdos con esa descripción.' : 'Aún no hay recuerdos: sube el primero ✨'}
             </p>
           )}
-        </section>
+        </motion.section>
 
-        <section className="space-y-5">
-          <div className="card z-10 space-y-3">
-            <div>
-              <p className="eyebrow">Correo del corazón</p>
-              <h2 className="font-display text-2xl font-semibold text-ink dark:text-rose-50">Cartas secretas</h2>
-            </div>
+        {/* Capítulo III — el correo del corazón */}
+        <motion.section
+          variants={fadeRise}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: '-40px' }}
+          className="relative z-10 space-y-5"
+        >
+          <SectionHeader chapter="III" title="Cartas secretas" note="correo del corazón" />
+
+          <div className="card space-y-3">
+            <p className="text-sm font-medium text-wine dark:text-rose-200">💌 Escribir una carta</p>
             <form
               onSubmit={(e) => {
                 e.preventDefault();
@@ -565,26 +695,35 @@ export default function Home() {
                 <option value="jeicob">Para Jeicob</option>
                 <option value="lelita">Para Lelita</option>
               </select>
-              <button className="btn-primary w-full">💌 Enviar carta</button>
+              <button className="btn-primary w-full">Enviar carta</button>
             </form>
           </div>
 
-          <div className="card z-10">
+          <div className="card">
             <h3 className="mb-3 font-display text-lg font-semibold text-ink dark:text-rose-50">Para ti, Jeicob</h3>
-            <div className="space-y-3">
+            <div className="space-y-4">
               {state.letters
                 .filter((l: Letter) => l.to === 'jeicob' && (user === 'jeicob' || l.author === user))
                 .map((l) => (
-                  <article key={l.id} className="stationery text-sm">
-                    <p className="font-display text-base font-semibold text-wine dark:text-rose-200">{l.title}</p>
+                  <motion.article
+                    key={l.id}
+                    variants={fadeRise}
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true, margin: '-30px' }}
+                    className="stationery text-sm"
+                    data-animate="letter-card"
+                  >
+                    <motion.span variants={sealStamp} className="seal" aria-hidden="true">J♥L</motion.span>
+                    <p className="pr-8 font-display text-base font-semibold text-wine dark:text-rose-200">{l.title}</p>
                     <p className="mt-1 whitespace-pre-wrap text-ink/80 dark:text-rose-50/80">{l.text}</p>
-                    <p className="mt-2 text-xs italic text-ink/50 dark:text-rose-50/50">— con amor, {l.author}</p>
+                    <p className="mt-2 font-hand text-base text-ink/60 dark:text-rose-50/60">— con amor, {l.author}</p>
                     {l.author === user && (
                       <button className="btn-tiny mt-2" onClick={() => editLetter(l)}>
                         Editar
                       </button>
                     )}
-                  </article>
+                  </motion.article>
                 ))}
               {!state.letters.filter((l: Letter) => l.to === 'jeicob' && (user === 'jeicob' || l.author === user)).length && (
                 <p className="text-sm text-ink/50 dark:text-rose-50/50">Todavía no hay cartas aquí.</p>
@@ -592,22 +731,31 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="card z-10">
+          <div className="card">
             <h3 className="mb-3 font-display text-lg font-semibold text-ink dark:text-rose-50">Para ti, Lelita</h3>
-            <div className="space-y-3">
+            <div className="space-y-4">
               {state.letters
                 .filter((l: Letter) => l.to === 'lelita' && (user === 'lelita' || l.author === user))
                 .map((l) => (
-                  <article key={l.id} className="stationery text-sm">
-                    <p className="font-display text-base font-semibold text-wine dark:text-rose-200">{l.title}</p>
+                  <motion.article
+                    key={l.id}
+                    variants={fadeRise}
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true, margin: '-30px' }}
+                    className="stationery text-sm"
+                    data-animate="letter-card"
+                  >
+                    <motion.span variants={sealStamp} className="seal" aria-hidden="true">J♥L</motion.span>
+                    <p className="pr-8 font-display text-base font-semibold text-wine dark:text-rose-200">{l.title}</p>
                     <p className="mt-1 whitespace-pre-wrap text-ink/80 dark:text-rose-50/80">{l.text}</p>
-                    <p className="mt-2 text-xs italic text-ink/50 dark:text-rose-50/50">— con amor, {l.author}</p>
+                    <p className="mt-2 font-hand text-base text-ink/60 dark:text-rose-50/60">— con amor, {l.author}</p>
                     {l.author === user && (
                       <button className="btn-tiny mt-2" onClick={() => editLetter(l)}>
                         Editar
                       </button>
                     )}
-                  </article>
+                  </motion.article>
                 ))}
               {!state.letters.filter((l: Letter) => l.to === 'lelita' && (user === 'lelita' || l.author === user)).length && (
                 <p className="text-sm text-ink/50 dark:text-rose-50/50">Todavía no hay cartas aquí.</p>
@@ -615,129 +763,175 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="card z-10 text-center">
-            <p className="eyebrow mb-2">Llévanos contigo</p>
-            <img src={qrUrl} alt="QR para abrir esta web en el móvil" className="mx-auto rounded-xl border border-rose/20 bg-white p-2" />
+          <div className="card text-center" data-animate="qr-card">
+            <p className="eyebrow mb-2">Colofón · llévanos contigo</p>
+            <img src={qrUrl} alt="QR para abrir esta web en el móvil" className="mx-auto rounded-2xl border border-rose/20 bg-white p-2" />
             <p className="mt-2 text-xs text-ink/50 dark:text-rose-50/50">Escanéalo para abrir nuestro rincón en el móvil</p>
           </div>
-        </section>
+        </motion.section>
       </div>
 
-      <section className="card z-10">
-        <div className="mb-3">
-          <p className="eyebrow">Solo para dos</p>
-          <h2 className="font-display text-2xl font-semibold text-ink dark:text-rose-50">Nuestro chat</h2>
-        </div>
-        <div className="chat-scroll mb-3 flex max-h-96 flex-col gap-2 overflow-y-auto rounded-2xl border border-rose/15 bg-white/40 p-3 dark:border-white/10 dark:bg-white/[0.03]">
-          {state.chat.map((m) => {
-            const own = m.author === user;
-            return (
-              <article
-                key={m.id}
-                className={`max-w-[85%] rounded-2xl px-3.5 py-2.5 text-sm shadow-sm md:max-w-[70%] ${
-                  own
-                    ? 'self-end rounded-br-md bg-gradient-to-br from-wine to-rose text-white'
-                    : 'self-start rounded-bl-md bg-white text-ink ring-1 ring-rose/15 dark:bg-white/10 dark:text-rose-50 dark:ring-white/10'
-                }`}
-              >
-                {!own && <p className="mb-0.5 text-[11px] font-semibold uppercase tracking-wide opacity-60">{m.author}</p>}
-                {m.text && <p className="whitespace-pre-wrap">{m.text}</p>}
-                {m.mediaUrl && (
-                  <div className="mt-2">
-                    {(m.mediaType || '').startsWith('video') ? (
-                      <video src={m.mediaUrl} controls className="max-h-56 w-full rounded-xl object-cover" />
-                    ) : (
-                      <img src={m.mediaUrl} alt="adjunto" loading="lazy" className="max-h-56 w-full rounded-xl object-cover" />
-                    )}
-                  </div>
-                )}
-                <div className={`mt-1 flex items-center gap-2 text-[11px] ${own ? 'text-white/70' : 'text-ink/45 dark:text-rose-50/45'}`}>
-                  <span>{fmtDate(m.createdAt)}</span>
-                  {own && (
-                    <button
-                      className="underline-offset-2 transition hover:underline"
-                      onClick={() => safeRun(async () => {
-                        const accepted = window.confirm('¿Seguro que deseas borrar este mensaje?');
-                        if (!accepted) return;
-                        await api('deleteChat', { id: m.id, user });
-                        await refresh();
-                      }, 'Mensaje eliminado 🗑️')}
+      {/* Capítulo IV — el chat solo para dos */}
+      <motion.section
+        variants={fadeRise}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: '-40px' }}
+        className="relative z-10 space-y-5"
+        data-animate="chat"
+      >
+        <SectionHeader chapter="IV" title="Nuestro chat" note="solo para dos" />
+
+        <div className="card">
+          <div className="chat-scroll mb-3 flex max-h-96 flex-col gap-2.5 overflow-y-auto rounded-2xl border border-rose/15 bg-white/40 p-3 dark:border-white/10 dark:bg-white/[0.03]">
+            {state.chat.map((m) => {
+              const own = m.author === user;
+              // Solo animan los mensajes nuevos (posteriores al mount) — nunca todo-a-la-vez
+              const isNew = m.createdAt > chatMountedAt.current;
+              return (
+                <motion.div
+                  key={m.id}
+                  custom={own}
+                  variants={bubbleIn}
+                  initial={isNew ? 'hidden' : false}
+                  animate="visible"
+                  className={`flex max-w-[85%] items-end gap-2 md:max-w-[70%] ${own ? 'flex-row-reverse self-end' : 'self-start'}`}
+                >
+                  {!own && (
+                    <span
+                      className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-gradient-to-br from-rose to-wine font-display text-xs font-semibold text-white"
+                      title={m.author}
+                      aria-hidden="true"
                     >
-                      Borrar
-                    </button>
+                      {m.author[0]?.toUpperCase()}
+                    </span>
                   )}
-                </div>
-              </article>
-            );
-          })}
-          {!state.chat.length && <p className="p-4 text-center text-sm text-ink/50 dark:text-rose-50/50">Escríbanse algo bonito para empezar 💬</p>}
-        </div>
-        <form
-          className="grid gap-2 md:grid-cols-[1fr_190px_130px_auto]"
-          onSubmit={(e) => {
-            e.preventDefault();
-            safeRun(async () => {
-              if (isSendingChat) return;
-              setIsSendingChat(true);
-              try {
-                let mediaUrl = '';
-                let mediaType = chat.mediaType;
-                let mediaPublicId = '';
-                let mediaResourceType: 'image' | 'video' = chat.mediaType.startsWith('video') ? 'video' : 'image';
+                  <article
+                    className={`rounded-2xl px-3.5 py-2.5 text-sm shadow-sm ${
+                      own
+                        ? 'rounded-br-md bg-gradient-to-br from-wine to-rose text-white'
+                        : 'rounded-bl-md bg-white text-ink ring-1 ring-rose/15 dark:bg-white/10 dark:text-rose-50 dark:ring-white/10'
+                    }`}
+                    data-animate="chat-bubble"
+                  >
+                    {m.text && <p className="whitespace-pre-wrap">{m.text}</p>}
+                    {m.mediaUrl && (
+                      <div className="mt-2">
+                        {(m.mediaType || '').startsWith('video') ? (
+                          <video src={m.mediaUrl} controls className="max-h-56 w-full rounded-xl object-cover" />
+                        ) : (
+                          <img src={cld(m.mediaUrl, 700)} alt="adjunto" loading="lazy" className="max-h-56 w-full rounded-xl object-cover" />
+                        )}
+                      </div>
+                    )}
+                    <div className={`mt-1 flex items-center gap-2 text-[11px] ${own ? 'text-white/70' : 'text-ink/45 dark:text-rose-50/45'}`}>
+                      <span>{fmtDate(m.createdAt)}</span>
+                      {own && (
+                        <button
+                          className="underline-offset-2 transition hover:underline"
+                          onClick={() => safeRun(async () => {
+                            const accepted = window.confirm('¿Seguro que deseas borrar este mensaje?');
+                            if (!accepted) return;
+                            await api('deleteChat', { id: m.id, user });
+                            await refresh();
+                          }, 'Mensaje eliminado 🗑️')}
+                        >
+                          Borrar
+                        </button>
+                      )}
+                    </div>
+                  </article>
+                </motion.div>
+              );
+            })}
+            {!state.chat.length && <p className="p-4 text-center text-sm text-ink/50 dark:text-rose-50/50">Escríbanse algo bonito para empezar 💬</p>}
+          </div>
+          <form
+            className="grid gap-2 md:grid-cols-[1fr_190px_130px_auto]"
+            onSubmit={(e) => {
+              e.preventDefault();
+              safeRun(async () => {
+                if (isSendingChat) return;
+                setIsSendingChat(true);
+                try {
+                  let mediaUrl = '';
+                  let mediaType = chat.mediaType;
+                  let mediaPublicId = '';
+                  let mediaResourceType: 'image' | 'video' = chat.mediaType.startsWith('video') ? 'video' : 'image';
 
-                if (chatFile) {
-                  const uploaded = await uploadLocalFile(chatFile, 'chat', chat.mediaType);
-                  mediaUrl = uploaded.url;
-                  mediaType = uploaded.type;
-                  mediaPublicId = uploaded.publicId;
-                  mediaResourceType = uploaded.resourceType === 'video' ? 'video' : 'image';
+                  if (chatFile) {
+                    const uploaded = await uploadLocalFile(chatFile, 'chat', chat.mediaType);
+                    mediaUrl = uploaded.url;
+                    mediaType = uploaded.type;
+                    mediaPublicId = uploaded.publicId;
+                    mediaResourceType = uploaded.resourceType === 'video' ? 'video' : 'image';
+                  }
+
+                  await api('addChat', { text: chat.text, mediaUrl, mediaType, mediaPublicId, mediaResourceType, author: user });
+                  setChat({ text: '', mediaType: 'image/jpeg' });
+                  setChatFile(null);
+                  await refresh();
+                } finally {
+                  setIsSendingChat(false);
                 }
-
-                await api('addChat', { text: chat.text, mediaUrl, mediaType, mediaPublicId, mediaResourceType, author: user });
-                setChat({ text: '', mediaType: 'image/jpeg' });
-                setChatFile(null);
-                await refresh();
-              } finally {
-                setIsSendingChat(false);
-              }
-            }, 'Mensaje enviado 💬');
-          }}
-        >
-          <input className="input" placeholder="Escribe un mensaje bonito…" value={chat.text} onChange={(e) => setChat({ ...chat, text: e.target.value })} />
-          <input
-            type="file"
-            accept="image/*,video/*"
-            className="input file:mr-2 file:rounded-lg file:border-0 file:bg-wine file:px-2.5 file:py-1 file:text-xs file:font-semibold file:text-white hover:file:bg-rose"
-            onChange={(e) => {
-              const file = e.target.files?.[0] || null;
-              setChatFile(file);
-              if (file?.type) setChat({ ...chat, mediaType: file.type });
+              }, 'Mensaje enviado 💬');
             }}
-          />
-          {chatFile && <p className="text-xs text-ink/60 dark:text-rose-50/60 md:col-span-4">Archivo adjunto: {chatFile.name}</p>}
-          <select className="input" value={chat.mediaType} onChange={(e) => setChat({ ...chat, mediaType: e.target.value })}>
-            <option value="image/jpeg">Imagen</option>
-            <option value="video/mp4">Video</option>
-          </select>
-          <button disabled={isSendingChat} className="btn-primary px-5">
-            {isSendingChat ? 'Enviando…' : 'Enviar'}
-          </button>
-        </form>
-      </section>
+          >
+            <input className="input" placeholder="Escribe un mensaje bonito…" value={chat.text} onChange={(e) => setChat({ ...chat, text: e.target.value })} />
+            <input
+              type="file"
+              accept="image/*,video/*"
+              className="input file:mr-2 file:rounded-full file:border-0 file:bg-wine file:px-3 file:py-1 file:text-xs file:font-semibold file:text-white hover:file:bg-rose"
+              onChange={(e) => {
+                const file = e.target.files?.[0] || null;
+                setChatFile(file);
+                if (file?.type) setChat({ ...chat, mediaType: file.type });
+              }}
+            />
+            {chatFile && <p className="text-xs text-ink/60 dark:text-rose-50/60 md:col-span-4">Archivo adjunto: {chatFile.name}</p>}
+            <select className="input" value={chat.mediaType} onChange={(e) => setChat({ ...chat, mediaType: e.target.value })}>
+              <option value="image/jpeg">Imagen</option>
+              <option value="video/mp4">Video</option>
+            </select>
+            <button disabled={isSendingChat} className="btn-primary px-5">
+              {isSendingChat ? 'Enviando…' : 'Enviar'}
+            </button>
+          </form>
+        </div>
+      </motion.section>
+
+      <footer className="relative z-10 pt-4 text-center" data-animate="footer">
+        <motion.div
+          variants={ruleDraw}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          style={{ transformOrigin: 'center' }}
+          className="rule-heart mx-auto max-w-xs"
+          aria-hidden="true"
+        >
+          <HeartIcon className="h-3.5 w-3.5" />
+        </motion.div>
+        <p className="mt-5 font-hand text-2xl text-wine/75 dark:text-rose-200/75">hecho con amor, para nosotros dos ♡</p>
+        <p className="mt-1 text-xs text-ink/45 dark:text-rose-50/45">Desde el 13 de marzo de 2025 · siempre</p>
+      </footer>
 
       <AnimatePresence>
         {lightbox && (
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
+            variants={overlayFade}
+            initial="hidden"
+            animate="visible"
+            exit="hidden"
             className="fixed inset-0 z-30 bg-plum/90 p-4 backdrop-blur-sm md:p-6"
             onClick={() => setLightboxId(null)}
+            data-animate="lightbox"
           >
             <motion.div
-              initial={{ scale: 0.96, y: 12 }}
-              animate={{ scale: 1, y: 0 }}
-              exit={{ scale: 0.96, y: 12 }}
+              variants={lightboxCard}
+              initial="hidden"
+              animate="visible"
+              exit="hidden"
               className="mx-auto mt-6 max-w-4xl"
               onClick={(e) => e.stopPropagation()}
             >
@@ -748,35 +942,39 @@ export default function Home() {
                 <div className="flex gap-2">
                   <button
                     aria-label="Anterior"
-                    className="rounded-full border border-white/30 px-3.5 py-1.5 transition hover:bg-white/15"
+                    className="rounded-full border border-white/25 bg-white/10 px-3.5 py-1.5 transition hover:bg-white/20"
                     onClick={() => setLightboxId(filteredMedia[(lightboxIndex - 1 + filteredMedia.length) % filteredMedia.length]?.id || null)}
                   >
                     ←
                   </button>
                   <button
                     aria-label="Siguiente"
-                    className="rounded-full border border-white/30 px-3.5 py-1.5 transition hover:bg-white/15"
+                    className="rounded-full border border-white/25 bg-white/10 px-3.5 py-1.5 transition hover:bg-white/20"
                     onClick={() => setLightboxId(filteredMedia[(lightboxIndex + 1) % filteredMedia.length]?.id || null)}
                   >
                     →
                   </button>
                   <button
                     aria-label="Cerrar"
-                    className="rounded-full border border-white/30 px-3.5 py-1.5 transition hover:bg-white/15"
+                    className="rounded-full border border-white/25 bg-white/10 px-3.5 py-1.5 transition hover:bg-white/20"
                     onClick={() => setLightboxId(null)}
                   >
                     ✕
                   </button>
                 </div>
               </div>
-              {lightbox.type.startsWith('image') ? (
-                <img src={lightbox.url} alt={lightbox.description} className="max-h-[72vh] w-full rounded-2xl object-contain" />
-              ) : (
-                <video src={lightbox.url} controls className="max-h-[72vh] w-full rounded-2xl object-contain" />
-              )}
-              {lightbox.description && (
-                <p className="mx-auto mt-4 w-fit rounded-full bg-white/90 px-5 py-2 text-center font-hand text-xl text-ink">{lightbox.description}</p>
-              )}
+              <AnimatePresence mode="wait" initial={false}>
+                <motion.div key={lightbox.id} variants={mediaSwap} initial="hidden" animate="visible" exit="hidden">
+                  {lightbox.type.startsWith('image') ? (
+                    <img src={cld(lightbox.url, 1600)} alt={lightbox.description} className="max-h-[72vh] w-full rounded-2xl object-contain" />
+                  ) : (
+                    <video src={lightbox.url} controls className="max-h-[72vh] w-full rounded-2xl object-contain" />
+                  )}
+                  {lightbox.description && (
+                    <p className="mx-auto mt-4 w-fit rounded-full bg-white/90 px-5 py-2 text-center font-hand text-xl text-ink">{lightbox.description}</p>
+                  )}
+                </motion.div>
+              </AnimatePresence>
             </motion.div>
           </motion.div>
         )}
@@ -786,20 +984,24 @@ export default function Home() {
         <AnimatePresence>
           {error && (
             <motion.p
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 16 }}
+              variants={toastPop}
+              initial="hidden"
+              animate="visible"
+              exit="hidden"
               className="pointer-events-auto rounded-full bg-wine px-5 py-2.5 text-sm font-medium text-white shadow-lg"
+              data-animate="toast"
             >
               {error}
             </motion.p>
           )}
           {notice && !error && (
             <motion.p
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 16 }}
+              variants={toastPop}
+              initial="hidden"
+              animate="visible"
+              exit="hidden"
               className="pointer-events-auto rounded-full bg-ink px-5 py-2.5 text-sm font-medium text-rose-50 shadow-lg dark:bg-rose dark:text-plum"
+              data-animate="toast"
             >
               {notice}
             </motion.p>
@@ -807,5 +1009,6 @@ export default function Home() {
         </AnimatePresence>
       </div>
     </main>
+    </MotionConfig>
   );
 }

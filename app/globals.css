@@ -6,8 +6,16 @@
   color-scheme: light;
 }
 
+::selection {
+  background: rgba(217, 106, 133, 0.35);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
 body {
-  @apply bg-paper font-sans text-ink;
+  @apply bg-paper font-sans text-ink antialiased;
 }
 
 /* Fondo fijo en pseudo-elemento: evita los bugs de background-attachment:fixed en iOS Safari */
@@ -15,11 +23,24 @@ body::before {
   content: '';
   position: fixed;
   inset: 0;
-  z-index: -1;
+  z-index: -2;
   background-image:
-    radial-gradient(60rem 40rem at 92% -12%, rgba(217, 106, 133, 0.22), transparent 60%),
-    radial-gradient(48rem 34rem at -8% 28%, rgba(201, 162, 83, 0.14), transparent 55%),
-    linear-gradient(#fbf6ef, #f6ecdf);
+    radial-gradient(70rem 46rem at 90% -14%, rgba(217, 106, 133, 0.2), transparent 62%),
+    radial-gradient(52rem 38rem at -10% 30%, rgba(201, 162, 83, 0.13), transparent 55%),
+    radial-gradient(44rem 32rem at 50% 112%, rgba(142, 44, 72, 0.1), transparent 60%),
+    linear-gradient(#fdf9f3, #f6ecdf);
+}
+
+/* Grano de película sutil sobre el fondo (bajo el contenido, sobre el degradado).
+   ANIMATION HOOK ambient-grain: candidato a parallax/drift muy lento. */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
 body.night {
@@ -29,45 +50,55 @@ body.night {
 
 body.night::before {
   background-image:
-    radial-gradient(55rem 40rem at 88% -10%, rgba(142, 44, 72, 0.32), transparent 60%),
+    radial-gradient(55rem 40rem at 88% -10%, rgba(142, 44, 72, 0.34), transparent 60%),
+    radial-gradient(40rem 30rem at 8% 100%, rgba(201, 162, 83, 0.08), transparent 55%),
     radial-gradient(circle at 18% 8%, #2a1b3d, #170f28 48%, #0a0713 100%);
+}
+
+body.night::after {
+  opacity: 0.04;
 }
 
 @layer components {
   .card {
-    @apply relative rounded-3xl border border-rose/20 bg-white/75 p-5 shadow-card backdrop-blur-md dark:border-white/10 dark:bg-white/[0.05] dark:shadow-none;
+    @apply relative rounded-[1.6rem] border border-rose/15 bg-white/75 p-5 shadow-card backdrop-blur-xl dark:border-white/10 dark:bg-white/[0.05] dark:shadow-none;
   }
 
   .input {
-    @apply w-full rounded-xl border border-ink/15 bg-white/85 px-3.5 py-2.5 text-sm text-ink outline-none transition placeholder:text-ink/40 focus:border-wine focus:ring-2 focus:ring-wine/20 dark:border-white/15 dark:bg-white/10 dark:text-rose-50 dark:placeholder:text-rose-50/40 dark:focus:border-rose dark:focus:ring-rose/25;
+    @apply w-full rounded-xl border border-ink/10 bg-white/85 px-3.5 py-2.5 text-sm text-ink outline-none transition placeholder:text-ink/40 focus:border-wine focus:ring-2 focus:ring-wine/20 dark:border-white/15 dark:bg-white/10 dark:text-rose-50 dark:placeholder:text-rose-50/40 dark:focus:border-rose dark:focus:ring-rose/25;
   }
 
   .btn-primary {
-    @apply inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-wine to-rose px-4 py-2.5 text-sm font-semibold text-white shadow-lg shadow-wine/25 transition hover:-translate-y-0.5 hover:shadow-glow active:translate-y-0 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:translate-y-0 disabled:hover:shadow-none;
+    @apply inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-wine to-rose px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-wine/25 transition hover:-translate-y-0.5 hover:shadow-glow active:translate-y-0 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:translate-y-0 disabled:hover:shadow-none;
   }
 
   .btn-ghost {
-    @apply inline-flex items-center justify-center gap-2 rounded-xl border border-ink/15 bg-white/60 px-3.5 py-2 text-sm font-medium text-ink/80 transition hover:border-wine/40 hover:text-wine active:scale-[0.97] dark:border-white/15 dark:bg-white/5 dark:text-rose-50/80 dark:hover:border-rose/60 dark:hover:text-rose-200;
+    @apply inline-flex items-center justify-center gap-2 rounded-full border border-ink/15 bg-white/60 px-4 py-2 text-sm font-medium text-ink/80 transition hover:border-wine/40 hover:text-wine active:scale-[0.97] dark:border-white/15 dark:bg-white/5 dark:text-rose-50/80 dark:hover:border-rose/60 dark:hover:text-rose-200;
   }
 
   .btn-tiny {
-    @apply rounded-lg border border-ink/15 px-2.5 py-1 text-xs font-medium text-ink/70 transition hover:border-wine/40 hover:text-wine active:scale-[0.97] dark:border-white/20 dark:text-rose-50/70 dark:hover:border-rose/60 dark:hover:text-rose-200;
+    @apply inline-flex items-center gap-1 rounded-full border border-ink/15 px-3 py-1 text-xs font-medium text-ink/70 transition hover:border-wine/40 hover:text-wine active:scale-[0.97] dark:border-white/20 dark:text-rose-50/70 dark:hover:border-rose/60 dark:hover:text-rose-200;
   }
 
   .btn-tiny-danger {
-    @apply rounded-lg border border-wine/30 px-2.5 py-1 text-xs font-medium text-wine transition hover:bg-wine hover:text-white active:scale-[0.97] dark:border-rose/40 dark:text-rose-300 dark:hover:bg-rose dark:hover:text-plum;
+    @apply inline-flex items-center gap-1 rounded-full border border-wine/30 px-3 py-1 text-xs font-medium text-wine transition hover:bg-wine hover:text-white active:scale-[0.97] dark:border-rose/40 dark:text-rose-300 dark:hover:bg-rose dark:hover:text-plum;
   }
 
   .eyebrow {
-    @apply text-[11px] font-semibold uppercase tracking-[0.24em] text-wine/80 dark:text-rose-300/90;
+    @apply text-[11px] font-semibold uppercase tracking-[0.28em] text-wine/70 dark:text-rose-300/90;
+  }
+
+  /* Numeración de capítulos: la página es la historia de ellos dos, contada por partes */
+  .chapter-num {
+    @apply text-[11px] font-semibold uppercase tracking-[0.3em] text-gold;
   }
 
   .polaroid {
-    @apply mb-4 break-inside-avoid rounded-md bg-white p-3 pb-4 shadow-polaroid ring-1 ring-black/5 dark:bg-[#241a2e] dark:ring-white/10;
+    @apply mb-4 break-inside-avoid rounded-md bg-white p-3 pb-4 shadow-polaroid ring-1 ring-black/5 transition-shadow duration-300 hover:shadow-polaroid-lift dark:bg-[#241a2e] dark:ring-white/10;
   }
 
   .keepsake {
-    @apply rounded-md bg-white p-2 pb-3 shadow-polaroid ring-1 ring-black/5 dark:bg-[#2b2036] dark:ring-white/10;
+    @apply rounded-md bg-white p-2 pb-1.5 shadow-polaroid ring-1 ring-black/5 dark:bg-[#2b2036] dark:ring-white/10;
   }
 
   .stationery {
@@ -75,7 +106,60 @@ body.night::before {
   }
 }
 
-/* --- Fototeca flotante del hero y login --- */
+/* --- Hairline con corazón al centro (masthead y footer) --- */
+.rule-heart {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: #d96a85;
+}
+
+.rule-heart::before {
+  content: '';
+  height: 1px;
+  flex: 1;
+  background: linear-gradient(to right, transparent, rgba(142, 44, 72, 0.3));
+}
+
+.rule-heart::after {
+  content: '';
+  height: 1px;
+  flex: 1;
+  background: linear-gradient(to left, transparent, rgba(142, 44, 72, 0.3));
+}
+
+body.night .rule-heart::before {
+  background: linear-gradient(to right, transparent, rgba(217, 106, 133, 0.4));
+}
+
+body.night .rule-heart::after {
+  background: linear-gradient(to left, transparent, rgba(217, 106, 133, 0.4));
+}
+
+/* --- Sello de lacre en las cartas ---
+       La rotación (8deg) vive en la variant sealStamp de lib/motion.ts:
+       framer es dueño del transform de este elemento (animación de estampado). */
+.seal {
+  position: absolute;
+  top: -0.65rem;
+  right: -0.55rem;
+  display: flex;
+  height: 2.35rem;
+  width: 2.35rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  font-family: var(--font-hand), cursive;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.92);
+  background: radial-gradient(circle at 35% 30%, #b0486a, #8e2c48 60%, #6d1f36);
+  box-shadow:
+    inset 0 0 0 2px rgba(255, 255, 255, 0.16),
+    0 4px 10px rgba(142, 44, 72, 0.35);
+}
+
+/* --- Fototeca flotante del hero y login.
+       ANIMATION HOOK photo-stack: loop CSS; la skill puede sumar parallax/drag. --- */
 .floaty {
   animation: floaty 7s ease-in-out infinite;
 }
@@ -94,7 +178,9 @@ body.night::before {
   }
 }
 
-/* --- Corazones ambientales --- */
+/* --- Corazones ambientales.
+       ANIMATION HOOK ambient-hearts: configs deterministas en app/page.tsx
+       (heartConfigs) — nunca Math.random en render SSR. --- */
 .hearts {
   position: fixed;
   inset: 0;
@@ -132,7 +218,7 @@ body.night .heart-float {
   }
 }
 
-/* --- Latido del contador --- */
+/* --- Latido del contador. ANIMATION HOOK hero-counter --- */
 .beat {
   display: inline-block;
   transform-origin: center;
@@ -156,7 +242,7 @@ body.night .heart-float {
   }
 }
 
-/* --- Cielo estrellado (modo noche) --- */
+/* --- Cielo estrellado (modo noche). ANIMATION HOOK night-stars --- */
 .stars {
   position: fixed;
   inset: 0;
@@ -191,7 +277,7 @@ body.night .heart-float {
   width: 88px;
   height: 22px;
   transform: translateX(-50%) rotate(-2deg);
-  background: linear-gradient(rgba(246, 227, 230, 0.85), rgba(232, 214, 218, 0.75));
+  background: linear-gradient(rgba(246, 227, 230, 0.85), rgba(232, 214, 218, 0.7));
   border-left: 1px dashed rgba(142, 44, 72, 0.18);
   border-right: 1px dashed rgba(142, 44, 72, 0.18);
   box-shadow: 0 2px 6px rgba(51, 32, 46, 0.12);
@@ -219,6 +305,10 @@ body.night .heart-float {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
   .heart-float,
   .floaty,
   .floaty-late,

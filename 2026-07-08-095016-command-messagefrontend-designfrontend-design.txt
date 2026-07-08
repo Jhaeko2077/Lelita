@@ -1,0 +1,2625 @@
+ ▐▛███▜▌   Claude Code v2.1.183
+▝▜█████▛▘  Fable 5 · Claude Pro
+  ▘▘ ▝▝    C:\Jeicob\TaskMove\Proyectos\lelita
+
+ ▎ Fable 5 is here! Our newest model for complex, long-running work.
+ ▎ Included in your plan limits until Jul 13, then switch to usage credits to continue.
+
+❯ /frontend-design:frontend-design en Proyectos/Lelita esta un pagina de mi     
+novia y yo. Mejorala lo maximo que puedas manteniendo la logica ya que esta     
+desplegada actualmente. Hazla lo más hermosa y moderna posible. Despues usare   
+review Animations asi que deja las bases para poder usar esa skill despues y    
+sepa donde hacer cambios y poner las animaciones. Manten la estica de moderna y 
+romantica                                                                       
+
+● Voy a mejorar la página de Lelita siguiendo el proceso de frontend-design.
+  Primero exploro el proyecto para entender su estructura y lógica actual.
+
+  Searched for 1 pattern, read 1 file, ran 1 shell command (ctrl+o to expand)
+
+● El grafo no cubre el proyecto lelita (es nuevo y no está indexado). Paso a
+  leer directamente el código fuente de la app, que necesito para modificarla.
+
+  Searched for 1 pattern, ran 1 shell command (ctrl+o to expand)
+
+● El proyecto lelita tiene su propio grafo. Lo consulto para orientarme antes de
+  leer el código.
+
+  Read 5 files, ran 2 shell commands (ctrl+o to expand)
+
+● Write(lib\motion.ts)
+  ⎿  Wrote 64 lines to lib\motion.ts
+       1 import type { Variants } from 'framer-motion';
+       2 
+       4  * ============================================================
+       5  *  BASE DE ANIMACIONES — punto de entrada para la skill de anim
+         aciones
+       7  * Todas las variants de Framer Motion viven aquí; app/page.tsx 
+         solo las
+       8  * referencia. Cada elemento animable del JSX está marcado con
+         TION-HOOKS.md.
+      10  *
+     … +72 lines (ctrl+o to expand)
+
+● Write(app\globals.css)
+  ⎿  Added 109 lines, removed 20 lines
+       6    color-scheme: light;
+       7  }
+       8  
+       9 +::selection {                                                  
+      10 +  background: rgba(217, 106, 133, 0.35);                       
+      11 +}                                                              
+      12 +                                                               
+      13 +html {                                                         
+      14 +  scroll-behavior: smooth;                                     
+      15 +}                                                              
+      16 +                                                               
+      17  body {
+      10 -  @apply bg-paper font-sans text-ink;                          
+      18 +  @apply bg-paper font-sans text-ink antialiased;              
+      19  }
+      20  
+      21  /* Fondo fijo en pseudo-elemento: evita los bugs de background-
+          attachment:fixed en iOS Safari */
+     ...
+      23    content: '';
+      24    position: fixed;
+      25    inset: 0;
+      18 -  z-index: -1;                                                 
+      26 +  z-index: -2;                                                 
+      27    background-image:
+      20 -    radial-gradient(60rem 40rem at 92% -12%, rgba(217, 106, 133
+         -, 0.22), transparent 60%),                                     
+      21 -    radial-gradient(48rem 34rem at -8% 28%, rgba(201, 162, 83, 
+         -0.14), transparent 55%),                                       
+      22 -    linear-gradient(#fbf6ef, #f6ecdf);                         
+      28 +    radial-gradient(70rem 46rem at 90% -14%, rgba(217, 106, 133
+         +, 0.2), transparent 62%),                                      
+      29 +    radial-gradient(52rem 38rem at -10% 30%, rgba(201, 162, 83,
+         + 0.13), transparent 55%),                                      
+      30 +    radial-gradient(44rem 32rem at 50% 112%, rgba(142, 44, 72, 
+         +0.1), transparent 60%),                                        
+      31 +    linear-gradient(#fdf9f3, #f6ecdf);                         
+      32  }
+      33  
+      34 +/* Grano de película sutil sobre el fondo (bajo el contenido, s
+         +obre el degradado).                                            
+      35 +   ANIMATION HOOK ambient-grain: candidato a parallax/drift muy
+         + lento. */                                                     
+      36 +body::after {                                                  
+      37 +  content: '';                                                 
+      38 +  position: fixed;                                             
+      39 +  inset: 0;                                                    
+      40 +  z-index: -1;                                                 
+      41 +  pointer-events: none;                                        
+      42 +  opacity: 0.05;                                               
+      43 +  background-image: url("data:image/svg+xml,%3Csvg xmlns='http:
+         +//www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id=
+         +'n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' 
+         +numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='s
+         +aturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' heig
+         +ht='100%25' filter='url(%23n)'/%3E%3C/svg%3E");                
+      44 +}                                                              
+      45 +                                                               
+      46  body.night {
+      47    color-scheme: dark;
+      48    @apply bg-plum text-rose-50;
+     ...
+       50  
+       51  body.night::before {
+       52    background-image:
+       32 -    radial-gradient(55rem 40rem at 88% -10%, rgba(142, 44, 72,
+          - 0.32), transparent 60%),                                     
+       53 +    radial-gradient(55rem 40rem at 88% -10%, rgba(142, 44, 72,
+          + 0.34), transparent 60%),                                     
+       54 +    radial-gradient(40rem 30rem at 8% 100%, rgba(201, 162, 83,
+          + 0.08), transparent 55%),                                     
+       55      radial-gradient(circle at 18% 8%, #2a1b3d, #170f28 48%, #0
+           a0713 100%);
+       56  }
+       57  
+       58 +body.night::after {                                           
+       59 +  opacity: 0.04;                                              
+       60 +}                                                             
+       61 +                                                              
+       62  @layer components {
+       63    .card {
+       38 -    @apply relative rounded-3xl border border-rose/20 bg-white
+          -/75 p-5 shadow-card backdrop-blur-md dark:border-white/10 dark
+          -:bg-white/[0.05] dark:shadow-none;                            
+       64 +    @apply relative rounded-[1.6rem] border border-rose/15 bg-
+          +white/75 p-5 shadow-card backdrop-blur-xl dark:border-white/10
+          + dark:bg-white/[0.05] dark:shadow-none;                       
+       65    }
+       66  
+       67    .input {
+       42 -    @apply w-full rounded-xl border border-ink/15 bg-white/85 
+          -px-3.5 py-2.5 text-sm text-ink outline-none transition placeho
+          -lder:text-ink/40 focus:border-wine focus:ring-2 focus:ring-win
+          -e/20 dark:border-white/15 dark:bg-white/10 dark:text-rose-50 d
+          -ark:placeholder:text-rose-50/40 dark:focus:border-rose dark:fo
+          -cus:ring-rose/25;                                             
+       68 +    @apply w-full rounded-xl border border-ink/10 bg-white/85 
+          +px-3.5 py-2.5 text-sm text-ink outline-none transition placeho
+          +lder:text-ink/40 focus:border-wine focus:ring-2 focus:ring-win
+          +e/20 dark:border-white/15 dark:bg-white/10 dark:text-rose-50 d
+          +ark:placeholder:text-rose-50/40 dark:focus:border-rose dark:fo
+          +cus:ring-rose/25;                                             
+       69    }
+       70  
+       71    .btn-primary {
+       46 -    @apply inline-flex items-center justify-center gap-2 round
+          -ed-xl bg-gradient-to-r from-wine to-rose px-4 py-2.5 text-sm f
+          -ont-semibold text-white shadow-lg shadow-wine/25 transition ho
+          -ver:-translate-y-0.5 hover:shadow-glow active:translate-y-0 ac
+          -tive:scale-[0.98] disabled:cursor-not-allowed disabled:opacity
+          --60 disabled:hover:translate-y-0 disabled:hover:shadow-none;  
+       72 +    @apply inline-flex items-center justify-center gap-2 round
+          +ed-full bg-gradient-to-r from-wine to-rose px-5 py-2.5 text-sm
+          + font-semibold text-white shadow-lg shadow-wine/25 transition 
+          +hover:-translate-y-0.5 hover:shadow-glow active:translate-y-0 
+          +active:scale-[0.98] disabled:cursor-not-allowed disabled:opaci
+          +ty-60 disabled:hover:translate-y-0 disabled:hover:shadow-none;
+       73    }
+       74  
+       75    .btn-ghost {
+       50 -    @apply inline-flex items-center justify-center gap-2 round
+          -ed-xl border border-ink/15 bg-white/60 px-3.5 py-2 text-sm fon
+          -t-medium text-ink/80 transition hover:border-wine/40 hover:tex
+          -t-wine active:scale-[0.97] dark:border-white/15 dark:bg-white/
+          -5 dark:text-rose-50/80 dark:hover:border-rose/60 dark:hover:te
+          -xt-rose-200;                                                  
+       76 +    @apply inline-flex items-center justify-center gap-2 round
+          +ed-full border border-ink/15 bg-white/60 px-4 py-2 text-sm fon
+          +t-medium text-ink/80 transition hover:border-wine/40 hover:tex
+          +t-wine active:scale-[0.97] dark:border-white/15 dark:bg-white/
+          +5 dark:text-rose-50/80 dark:hover:border-rose/60 dark:hover:te
+          +xt-rose-200;                                                  
+       77    }
+       78  
+       79    .btn-tiny {
+       54 -    @apply rounded-lg border border-ink/15 px-2.5 py-1 text-xs
+          - font-medium text-ink/70 transition hover:border-wine/40 hover
+          -:text-wine active:scale-[0.97] dark:border-white/20 dark:text-
+          -rose-50/70 dark:hover:border-rose/60 dark:hover:text-rose-200;
+       80 +    @apply inline-flex items-center gap-1 rounded-full border 
+          +border-ink/15 px-3 py-1 text-xs font-medium text-ink/70 transi
+          +tion hover:border-wine/40 hover:text-wine active:scale-[0.97] 
+          +dark:border-white/20 dark:text-rose-50/70 dark:hover:border-ro
+          +se/60 dark:hover:text-rose-200;                               
+       81    }
+       82  
+       83    .btn-tiny-danger {
+       58 -    @apply rounded-lg border border-wine/30 px-2.5 py-1 text-x
+          -s font-medium text-wine transition hover:bg-wine hover:text-wh
+          -ite active:scale-[0.97] dark:border-rose/40 dark:text-rose-300
+          - dark:hover:bg-rose dark:hover:text-plum;                     
+       84 +    @apply inline-flex items-center gap-1 rounded-full border 
+          +border-wine/30 px-3 py-1 text-xs font-medium text-wine transit
+          +ion hover:bg-wine hover:text-white active:scale-[0.97] dark:bo
+          +rder-rose/40 dark:text-rose-300 dark:hover:bg-rose dark:hover:
+          +text-plum;                                                    
+       85    }
+       86  
+       87    .eyebrow {
+       62 -    @apply text-[11px] font-semibold uppercase tracking-[0.24e
+          -m] text-wine/80 dark:text-rose-300/90;                        
+       88 +    @apply text-[11px] font-semibold uppercase tracking-[0.28e
+          +m] text-wine/70 dark:text-rose-300/90;                        
+       89    }
+       90  
+       91 +  /* Numeración de capítulos: la página es la historia de ello
+          +s dos, contada por partes */                                  
+       92 +  .chapter-num {                                              
+       93 +    @apply text-[11px] font-semibold uppercase tracking-[0.3em
+          +] text-gold;                                                  
+       94 +  }                                                           
+       95 +                                                              
+       96    .polaroid {
+       66 -    @apply mb-4 break-inside-avoid rounded-md bg-white p-3 pb-
+          -4 shadow-polaroid ring-1 ring-black/5 dark:bg-[#241a2e] dark:r
+          -ing-white/10;                                                 
+       97 +    @apply mb-4 break-inside-avoid rounded-md bg-white p-3 pb-
+          +4 shadow-polaroid ring-1 ring-black/5 transition-shadow durati
+          +on-300 hover:shadow-polaroid-lift dark:bg-[#241a2e] dark:ring-
+          +white/10;                                                     
+       98    }
+       99  
+      100    .keepsake {
+       70 -    @apply rounded-md bg-white p-2 pb-3 shadow-polaroid ring-1
+          - ring-black/5 dark:bg-[#2b2036] dark:ring-white/10;           
+      101 +    @apply rounded-md bg-white p-2 pb-1.5 shadow-polaroid ring
+          +-1 ring-black/5 dark:bg-[#2b2036] dark:ring-white/10;         
+      102    }
+      103  
+      104    .stationery {
+     ...
+      106    }
+      107  }
+      108  
+       78 -/* --- Fototeca flotante del hero y login --- */              
+      109 +/* --- Hairline con corazón al centro (masthead y footer) --- 
+          +*/                                                            
+      110 +.rule-heart {                                                 
+      111 +  display: flex;                                              
+      112 +  align-items: center;                                        
+      113 +  gap: 0.75rem;                                               
+      114 +  color: #d96a85;                                             
+      115 +}                                                             
+      116 +                                                              
+      117 +.rule-heart::before {                                         
+      118 +  content: '';                                                
+      119 +  height: 1px;                                                
+      120 +  flex: 1;                                                    
+      121 +  background: linear-gradient(to right, transparent, rgba(142,
+          + 44, 72, 0.3));                                               
+      122 +}                                                             
+      123 +                                                              
+      124 +.rule-heart::after {                                          
+      125 +  content: '';                                                
+      126 +  height: 1px;                                                
+      127 +  flex: 1;                                                    
+      128 +  background: linear-gradient(to left, transparent, rgba(142, 
+          +44, 72, 0.3));                                                
+      129 +}                                                             
+      130 +                                                              
+      131 +body.night .rule-heart::before {                              
+      132 +  background: linear-gradient(to right, transparent, rgba(217,
+          + 106, 133, 0.4));                                             
+      133 +}                                                             
+      134 +                                                              
+      135 +body.night .rule-heart::after {                               
+      136 +  background: linear-gradient(to left, transparent, rgba(217, 
+          +106, 133, 0.4));                                              
+      137 +}                                                             
+      138 +                                                              
+      139 +/* --- Sello de lacre en las cartas --- */                    
+      140 +.seal {                                                       
+      141 +  position: absolute;                                         
+      142 +  top: -0.65rem;                                              
+      143 +  right: -0.55rem;                                            
+      144 +  display: flex;                                              
+      145 +  height: 2.35rem;                                            
+      146 +  width: 2.35rem;                                             
+      147 +  align-items: center;                                        
+      148 +  justify-content: center;                                    
+      149 +  border-radius: 9999px;                                      
+      150 +  transform: rotate(8deg);                                    
+      151 +  font-family: var(--font-hand), cursive;                     
+      152 +  font-size: 12px;                                            
+      153 +  color: rgba(255, 255, 255, 0.92);                           
+      154 +  background: radial-gradient(circle at 35% 30%, #b0486a, #8e2
+          +c48 60%, #6d1f36);                                            
+      155 +  box-shadow:                                                 
+      156 +    inset 0 0 0 2px rgba(255, 255, 255, 0.16),                
+      157 +    0 4px 10px rgba(142, 44, 72, 0.35);                       
+      158 +}                                                             
+      159 +                                                              
+      160 +/* --- Fototeca flotante del hero y login.                    
+      161 +       ANIMATION HOOK photo-stack: loop CSS; la skill puede su
+          +mar parallax/drag. --- */                                     
+      162  .floaty {
+      163    animation: floaty 7s ease-in-out infinite;
+      164  }
+     ...
+      177    }
+      178  }
+      179  
+       97 -/* --- Corazones ambientales --- */                           
+      180 +/* --- Corazones ambientales.                                 
+      181 +       ANIMATION HOOK ambient-hearts: configs deterministas en
+          + app/page.tsx                                                 
+      182 +       (heartConfigs) — nunca Math.random en render SSR. --- *
+          +/                                                             
+      183  .hearts {
+      184    position: fixed;
+      185    inset: 0;
+     ...
+      217    }
+      218  }
+      219  
+      135 -/* --- Latido del contador --- */                             
+      220 +/* --- Latido del contador. ANIMATION HOOK hero-counter --- */
+      221  .beat {
+      222    display: inline-block;
+      223    transform-origin: center;
+     ...
+      241    }
+      242  }
+      243  
+      159 -/* --- Cielo estrellado (modo noche) --- */                   
+      244 +/* --- Cielo estrellado (modo noche). ANIMATION HOOK night-sta
+          +rs --- */                                                     
+      245  .stars {
+      246    position: fixed;
+      247    inset: 0;
+     ...
+      276    width: 88px;
+      277    height: 22px;
+      278    transform: translateX(-50%) rotate(-2deg);
+      194 -  background: linear-gradient(rgba(246, 227, 230, 0.85), rgba(
+          -232, 214, 218, 0.75));                                        
+      279 +  background: linear-gradient(rgba(246, 227, 230, 0.85), rgba(
+          +232, 214, 218, 0.7));                                         
+      280    border-left: 1px dashed rgba(142, 44, 72, 0.18);
+      281    border-right: 1px dashed rgba(142, 44, 72, 0.18);
+      282    box-shadow: 0 2px 6px rgba(51, 32, 46, 0.12);
+     ...
+      304  }
+      305  
+      306  @media (prefers-reduced-motion: reduce) {
+      307 +  html {                                                      
+      308 +    scroll-behavior: auto;                                    
+      309 +  }                                                           
+      310 +                                                              
+      311    .heart-float,
+      312    .floaty,
+      313    .floaty-late,
+
+● Write(app\layout.tsx)
+  ⎿  Added 8 lines, removed 3 lines
+       1 -import type { Metadata } from 'next';                          
+       1 +import type { Metadata, Viewport } from 'next';                
+       2  import { Fraunces, Figtree, Caveat } from 'next/font/google';
+       3  import './globals.css';
+       4  
+       5 -const fraunces = Fraunces({ subsets: ['latin'], variable: '--fo
+         -nt-display' });                                                
+       5 +// Fraunces con sus ejes ópticos: SOFT/WONK le dan el carácter 
+         +cálido del display                                             
+       6 +const fraunces = Fraunces({ subsets: ['latin'], variable: '--fo
+         +nt-display', axes: ['SOFT', 'WONK', 'opsz'] });                
+       7  const figtree = Figtree({ subsets: ['latin'], variable: '--font
+          -sans' });
+       8  const caveat = Caveat({ subsets: ['latin'], variable: '--font-h
+          and' });
+       9  
+      10  export const metadata: Metadata = {
+      10 -  title: 'Jeicob & Lelita · Nuestro rincón',                   
+      11 +  title: 'Jeicob & Lelita · El archivo de nuestra historia',   
+      12    description: 'Un archivo de recuerdos, cartas y mensajes para
+           dos.'
+      13  };
+      14  
+      15 +export const viewport: Viewport = {                            
+      16 +  themeColor: '#FBF6EF'                                        
+      17 +};                                                             
+      18 +                                                               
+      19  export default function RootLayout({ children }: { children: Re
+          act.ReactNode }) {
+      20    return (
+      21      <html lang="es">
+
+● Update(tailwind.config.ts)
+  ⎿  Added 4 lines, removed 3 lines
+      21          hand: ['var(--font-hand)', 'cursive']
+      22        },
+      23        boxShadow: {
+      24 -        card: '0 18px 44px -18px rgba(142, 44, 72, 0.22)',     
+      25 -        polaroid: '0 12px 28px -10px rgba(51, 32, 46, 0.28)',  
+      26 -        glow: '0 0 32px rgba(217, 106, 133, 0.35)'             
+      24 +        card: '0 20px 50px -24px rgba(142, 44, 72, 0.25)',     
+      25 +        polaroid: '0 14px 30px -12px rgba(51, 32, 46, 0.3)',   
+      26 +        'polaroid-lift': '0 22px 44px -14px rgba(51, 32, 46, 0.
+         +38)',                                                          
+      27 +        glow: '0 0 36px rgba(217, 106, 133, 0.35)'             
+      28        }
+      29      }
+      30    },
+
+● Write(app\page.tsx)
+  ⎿  Added 318 lines, removed 235 lines
+      2  
+      3  import { FormEvent, useEffect, useMemo, useState } from 'react';
+      4  import { AnimatePresence, motion } from 'framer-motion';
+      5 -import { AppState, Letter, MediaItem } from '@/lib/types';      
+      5 +import { AppState, Letter } from '@/lib/types';                 
+      6 +import { collapse, fadeRise, lightboxCard, overlayFade, polaroid
+        +Spring, scaleIn, toastPop } from '@/lib/motion';                
+      7  
+      8  const initial: AppState = {
+      9    users: {},
+     ...
+      34      minute: '2-digit'
+      35    });
+      36  
+      37 +// Transformación de entrega de Cloudinary (solo presentación):
+         + sirve imágenes                                                
+      38 +// optimizadas y responsivas sin tocar la URL original guardada
+         + en la BD.                                                     
+      39 +const cld = (url: string, width = 900) =>                      
+      40 +  url.includes('res.cloudinary.com') && url.includes('/upload/'
+         +)                                                              
+      41 +    ? url.replace('/upload/', `/upload/f_auto,q_auto,w_${width}
+         +/`)                                                            
+      42 +    : url;                                                     
+      43 +                                                               
+      44  const HeartIcon = ({ className }: { className?: string }) => (
+      45    <svg viewBox="0 0 24 24" fill="currentColor" className={class
+          Name} aria-hidden="true">
+      46      <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.4
+          2 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 
+          3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" 
+          />
+      47    </svg>
+      48  );
+      49  
+      50 +// Configs deterministas: evita hydration mismatch (nunca Math.
+         +random en render SSR)                                          
+      51  const heartConfigs = [
+      52    { left: '6%', d: '22s', delay: '-3s', s: 0.7, o: 0.35, sway: 
+          '40px' },
+      53    { left: '16%', d: '26s', delay: '-14s', s: 1.1, o: 0.3, sway:
+           '-30px' },
+     ...
+      60  ];
+      61  
+      62  const FloatingHearts = () => (
+      54 -  <div className="hearts" aria-hidden="true">                  
+      63 +  <div className="hearts" data-animate="ambient-hearts" aria-hi
+         +dden="true">                                                   
+      64      {heartConfigs.map((h, i) => (
+      65        <span
+      66          key={i}
+     ...
+       81  );
+       82  
+       83  const PhotoStack = ({ size = 'md' }: { size?: 'md' | 'lg' }) =
+           > {
+       75 -  const dims = size === 'lg' ? 'w-40 md:w-48' : 'w-28 md:w-32'
+          -;                                                             
+       84 +  const dims = size === 'lg' ? 'w-44 md:w-52' : 'w-28 md:w-36'
+          +;                                                             
+       85    return (
+       77 -    <div className="relative flex items-center justify-center"
+          - aria-hidden="true">                                          
+       86 +    <div className="relative flex items-center justify-center"
+          + data-animate="photo-stack" aria-hidden="true">               
+       87        <div className={`keepsake floaty ${dims} -rotate-6`} sty
+           le={{ ['--tilt' as string]: '-6deg' }}>
+       79 -        <img src="/img/imagen1.jpeg" alt="" className="aspect-
+          -[3/4] w-full rounded-sm object-cover" />                      
+       88 +        <img src="/img/imagen1.jpeg" alt="" className="aspect-
+          +[3/4] w-full rounded-[3px] object-cover" />                   
+       89 +        <p className="pt-1.5 text-center font-hand text-sm tex
+          +t-ink/60 dark:text-rose-50/60">nosotros ♡</p>                 
+       90        </div>
+       81 -      <div className={`keepsake floaty-late ${dims} -ml-8 mt-8
+          - rotate-6`} style={{ ['--tilt' as string]: '6deg' }}>         
+       82 -        <img src="/img/imagen2.jpeg" alt="" className="aspect-
+          -[3/4] w-full rounded-sm object-cover" />                      
+       91 +      <div className={`keepsake floaty-late ${dims} -ml-10 mt-
+          +10 rotate-6`} style={{ ['--tilt' as string]: '6deg' }}>       
+       92 +        <img src="/img/imagen2.jpeg" alt="" className="aspect-
+          +[3/4] w-full rounded-[3px] object-cover" />                   
+       93 +        <p className="pt-1.5 text-center font-hand text-sm tex
+          +t-ink/60 dark:text-rose-50/60">13 · 03 · 25</p>               
+       94        </div>
+       95      </div>
+       96    );
+       97  };
+       98  
+       99 +// La página es su historia contada por capítulos: la numeraci
+          +ón encabeza cada sección                                      
+      100 +const SectionHeader = ({ chapter, title, note }: { chapter: st
+          +ring; title: string; note?: string }) => (                    
+      101 +  <div data-animate="section-header">                         
+      102 +    <p className="chapter-num">Capítulo {chapter}</p>         
+      103 +    <div className="mt-1 flex flex-wrap items-baseline gap-x-3
+          +">                                                            
+      104 +      <h2 className="font-display text-2xl font-semibold text-
+          +ink dark:text-rose-50 md:text-3xl">{title}</h2>               
+      105 +      {note && <span className="font-hand text-xl text-wine/70
+          + dark:text-rose-200/70">{note}</span>}                        
+      106 +    </div>                                                    
+      107 +  </div>                                                      
+      108 +);                                                            
+      109 +                                                              
+      110  export default function Home() {
+      111    const [state, setState] = useState<AppState>(initial);
+      112    const [user, setUser] = useState('');
+     ...
+      268  
+      269    if (!user) {
+      270      return (
+      249 -      <main className="relative mx-auto flex min-h-screen max-
+          -w-5xl items-center justify-center overflow-hidden p-6">       
+      271 +      <main className="relative mx-auto flex min-h-screen max-
+          +w-5xl items-center justify-center overflow-hidden px-6 py-10">
+      272          <FloatingHearts />
+      273  
+      252 -        <div className="relative z-10 grid w-full items-center
+          - gap-10 md:grid-cols-[1fr_auto]">                             
+      274 +        <div className="relative z-10 grid w-full items-center
+          + gap-12 md:grid-cols-2">                                      
+      275 +          <motion.div                                         
+      276 +            variants={scaleIn}                                
+      277 +            initial="hidden"                                  
+      278 +            animate="visible"                                 
+      279 +            className="hidden text-center md:block"           
+      280 +            data-animate="login-cover"                        
+      281 +          >                                                   
+      282 +            <p className="eyebrow mb-3">El archivo de nuestra 
+          +historia</p>                                                  
+      283 +            <h1 className="font-display text-5xl font-semibold
+          + italic leading-tight text-wine dark:text-rose-100 lg:text-6xl
+          +">                                                            
+      284 +              Jeicob <span className="not-italic text-rose">&a
+          +mp;</span> Lelita                                             
+      285 +            </h1>                                             
+      286 +            <div className="rule-heart mx-auto my-7 max-w-sm" 
+          +aria-hidden="true">                                           
+      287 +              <HeartIcon className="h-4 w-4" />               
+      288 +            </div>                                            
+      289 +            <PhotoStack size="lg" />                          
+      290 +            <p className="mt-10 font-hand text-2xl text-wine/8
+          +0 dark:text-rose-200/80">nuestra historia favorita ♡</p>      
+      291 +          </motion.div>                                       
+      292 +                                                              
+      293            <motion.form
+      254 -            initial={{ opacity: 0, y: 24 }}                   
+      255 -            animate={{ opacity: 1, y: 0 }}                    
+      256 -            transition={{ duration: 0.6, ease: 'easeOut' }}   
+      294 +            variants={fadeRise}                               
+      295 +            initial="hidden"                                  
+      296 +            animate="visible"                                 
+      297              onSubmit={doAuth}
+      258 -            className="card w-full max-w-md space-y-4 p-7 md:j
+          -ustify-self-end"                                              
+      298 +            className="card mx-auto w-full max-w-md space-y-4 
+          +p-7"                                                          
+      299 +            data-animate="login-form"                         
+      300            >
+      301              <div className="space-y-1">
+      302                <p className="eyebrow">Desde el 13 de marzo de 2
+           025</p>
+      303                <h1 className="font-display text-4xl font-semibo
+           ld italic text-wine dark:text-rose-200">
+      263 -                Jeicob <span className="text-rose">&amp;</span
+          -> Lelita                                                      
+      304 +                Jeicob <span className="not-italic text-rose">
+          +&amp;</span> Lelita                                           
+      305                </h1>
+      306                <p className="text-sm text-ink/60 dark:text-rose
+           -50/60">
+      307                  Nuestro pequeño rincón del mundo: recuerdos, c
+           artas y mensajes solo para dos.
+     ...
+      323              </button>
+      324              <AnimatePresence>
+      325                {resetOpen && (
+      285 -                <motion.div initial={{ opacity: 0, height: 0 }
+          -} animate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0,
+          - height: 0 }} className="space-y-2 overflow-hidden">          
+      326 +                <motion.div variants={collapse} initial="hidde
+          +n" animate="visible" exit="hidden" className="space-y-2 overfl
+          +ow-hidden" data-animate="reset-panel">                        
+      327                    <input placeholder="Email" className="input"
+            value={reset.email} onChange={(e) => setReset({ ...reset, ema
+           il: e.target.value })} />
+      328                    <div className="grid grid-cols-2 items-stret
+           ch gap-2">
+      329                      <button
+     ...
+      356              {error && <p className="rounded-xl bg-wine/10 p-2.
+           5 text-sm text-wine dark:bg-rose/15 dark:text-rose-200">{error
+           }</p>}
+      357              {notice && <p className="rounded-xl bg-gold/15 p-2
+           .5 text-sm text-ink/80 dark:text-rose-50/85">{notice}</p>}
+      358            </motion.form>
+      318 -                                                              
+      319 -          <motion.div                                         
+      320 -            initial={{ opacity: 0, scale: 0.92 }}             
+      321 -            animate={{ opacity: 1, scale: 1 }}                
+      322 -            transition={{ duration: 0.8, delay: 0.2, ease: 'ea
+          -seOut' }}                                                     
+      323 -            className="hidden md:block"                       
+      324 -          >                                                   
+      325 -            <PhotoStack size="lg" />                          
+      326 -            <p className="mt-8 text-center font-hand text-2xl 
+          -text-wine/80 dark:text-rose-200/80">nuestra historia favorita 
+          -♡</p>                                                         
+      327 -          </motion.div>                                       
+      359          </div>
+      360        </main>
+      361      );
+      362    }
+      363  
+      364    return (
+      334 -    <main className="relative mx-auto min-h-screen max-w-6xl s
+          -pace-y-5 px-4 pb-24 pt-6">                                    
+      365 +    <main className="relative mx-auto min-h-screen max-w-6xl s
+          +pace-y-10 px-4 pb-24 pt-6 md:px-6">                           
+      366        <AnimatePresence>
+      367          {state.theme === 'night' && <motion.div initial={{ opa
+           city: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} clas
+           sName="stars" />}
+      368        </AnimatePresence>
+      369        <FloatingHearts />
+      370  
+      340 -      <motion.header                                          
+      341 -        initial={{ opacity: 0, y: 16 }}                       
+      342 -        animate={{ opacity: 1, y: 0 }}                        
+      343 -        transition={{ duration: 0.6, ease: 'easeOut' }}       
+      344 -        className="card z-10 overflow-hidden p-6 md:p-8"      
+      345 -      >                                                       
+      346 -        <div className="grid items-center gap-6 md:grid-cols-[
+          -1fr_auto]">                                                   
+      347 -          <div className="space-y-2">                         
+      348 -            <p className="eyebrow">Hola, {user} · nuestro rinc
+          -ón</p>                                                        
+      349 -            <p className="font-display text-5xl font-semibold 
+          -text-wine dark:text-rose-100 md:text-6xl">                    
+      350 -              {counters.days}{' '}                            
+      351 -              <span className="text-3xl font-normal italic tex
+          -t-ink/70 dark:text-rose-50/70 md:text-4xl">días juntos</span>{
+          -' '}                                                          
+      352 -              <span className="beat align-middle text-rose">  
+      371 +      {/* Capítulo I — el masthead: los nombres, el contador v
+          +ivo y la frase del día */}                                    
+      372 +      <motion.header variants={fadeRise} initial="hidden" anim
+          +ate="visible" className="relative z-10 pt-2 md:pt-6" data-anim
+          +ate="hero">                                                   
+      373 +        <div className="flex flex-wrap items-center justify-be
+          +tween gap-3">                                                 
+      374 +          <p className="eyebrow">Hola, {user} · el archivo de 
+          +nuestra historia</p>                                          
+      375 +          <div className="flex shrink-0 gap-2">               
+      376 +            <button                                           
+      377 +              className="btn-tiny"                            
+      378 +              onClick={() => safeRun(async () => {            
+      379 +                await api('setTheme', { theme: state.theme ===
+          + 'night' ? 'day' : 'night' });                                
+      380 +                await refresh();                              
+      381 +              }, `Modo ${state.theme === 'night' ? 'día' : 'no
+          +che'} activado`)}                                             
+      382 +            >                                                 
+      383 +              {state.theme === 'night' ? '☀️ Día' : '🌙 Noche'
+          +}                                                             
+      384 +            </button>                                         
+      385 +            <button                                           
+      386 +              className="btn-tiny"                            
+      387 +              onClick={() => {                                
+      388 +                setUser('');                                  
+      389 +                window.localStorage.removeItem('lelita_session
+          +_user');                                                      
+      390 +              }}                                              
+      391 +            >                                                 
+      392 +              Salir                                           
+      393 +            </button>                                         
+      394 +          </div>                                              
+      395 +        </div>                                                
+      396 +                                                              
+      397 +        <div className="mt-8 grid items-center gap-10 md:grid-
+          +cols-[1fr_auto] md:gap-14">                                   
+      398 +          <div>                                               
+      399 +            <h1 className="font-display text-5xl font-semibold
+          + italic leading-[1.05] text-wine dark:text-rose-100 md:text-7x
+          +l" data-animate="hero-title">                                 
+      400 +              Jeicob <span className="not-italic text-rose">&a
+          +mp;</span> Lelita                                             
+      401 +            </h1>                                             
+      402 +                                                              
+      403 +            <div className="rule-heart my-6 max-w-lg" aria-hid
+          +den="true">                                                   
+      404 +              <HeartIcon className="h-4 w-4" />               
+      405 +            </div>                                            
+      406 +                                                              
+      407 +            <p className="flex flex-wrap items-baseline gap-x-
+          +3" data-animate="hero-counter">                               
+      408 +              <span className="font-display text-7xl font-semi
+          +bold tabular-nums leading-none text-ink dark:text-rose-50 md:t
+          +ext-8xl">                                                     
+      409 +                {counters.days}                               
+      410 +              </span>                                         
+      411 +              <span className="font-display text-2xl italic te
+          +xt-ink/60 dark:text-rose-50/60 md:text-3xl">días juntos</span>
+      412 +              <span className="beat self-center text-rose">   
+      413                  <HeartIcon className="h-8 w-8 md:h-9 md:w-9" /
+           >
+      414                </span>
+      415              </p>
+      356 -            <p className="text-sm text-ink/60 dark:text-rose-5
+          -0/60">                                                        
+      357 -              Desde el 13 de marzo de 2025 · {counters.years} 
+          -{counters.years === 1 ? 'año' : 'años'}, {counters.months} {co
+          -unters.months === 1 ? 'mes' : 'meses'} y {counters.day} {count
+          -ers.day === 1 ? 'día' : 'días'}                               
+      416 +            <p className="mt-2 text-sm text-ink/60 dark:text-r
+          +ose-50/60">                                                   
+      417 +              Desde el 13 de marzo de 2025 · {counters.years} 
+          +{counters.years === 1 ? 'año' : 'años'}, {counters.months}{' '
+          +}                                                             
+      418 +              {counters.months === 1 ? 'mes' : 'meses'} y {cou
+          +nters.day} {counters.day === 1 ? 'día' : 'días'} escribiendo e
+          +sto juntos                                                    
+      419              </p>
+      359 -            <div className="flex gap-2 pt-2">                 
+      360 -              <button                                         
+      361 -                className="btn-ghost"                         
+      362 -                onClick={() => safeRun(async () => {          
+      363 -                  await api('setTheme', { theme: state.theme =
+          -== 'night' ? 'day' : 'night' });                              
+      364 -                  await refresh();                            
+      365 -                }, `Modo ${state.theme === 'night' ? 'día' : '
+          -noche'} activado`)}                                           
+      366 -              >                                               
+      367 -                {state.theme === 'night' ? '☀️ Día' : '🌙 Noche
+          -'}                                                            
+      420 +                                                              
+      421 +            <div className="mt-7" data-animate="phrase">      
+      422 +              <p className="font-hand text-3xl leading-snug te
+          +xt-wine dark:text-rose-100 md:text-4xl">“{state.phrase}”</p>  
+      423 +              <button className="btn-tiny mt-3" onClick={() =>
+          + setPhraseOpen((v) => !v)}>                                   
+      424 +                {phraseOpen ? 'Cerrar' : '✏️ Editar la frase de
+          + hoy'}                                                        
+      425                </button>
+      369 -              <button                                         
+      370 -                className="btn-ghost"                         
+      371 -                onClick={() => {                              
+      372 -                  setUser('');                                
+      373 -                  window.localStorage.removeItem('lelita_sessi
+          -on_user');                                                    
+      374 -                }}                                            
+      375 -              >                                               
+      376 -                Salir                                         
+      377 -              </button>                                       
+      426 +              <AnimatePresence>                               
+      427 +                {phraseOpen && (                              
+      428 +                  <motion.div variants={collapse} initial="hid
+          +den" animate="visible" exit="hidden" className="max-w-lg overf
+          +low-hidden">                                                  
+      429 +                    <textarea className="input mt-3 min-h-24" 
+          +value={state.phrase} onChange={(e) => setState({ ...state, phr
+          +ase: e.target.value })} />                                    
+      430 +                    <button                                   
+      431 +                      className="btn-primary mt-2"            
+      432 +                      onClick={() => safeRun(async () => {    
+      433 +                        await api('setPhrase', { phrase: state
+          +.phrase });                                                   
+      434 +                        await refresh();                      
+      435 +                      }, 'Frase guardada 📝')}                
+      436 +                    >                                         
+      437 +                      Guardar frase                           
+      438 +                    </button>                                 
+      439 +                  </motion.div>                               
+      440 +                )}                                            
+      441 +              </AnimatePresence>                              
+      442              </div>
+      443            </div>
+      444 +                                                              
+      445            <div className="hidden sm:block">
+      381 -            <PhotoStack />                                    
+      446 +            <PhotoStack size="lg" />                          
+      447            </div>
+      448          </div>
+      449        </motion.header>
+      450  
+      386 -      <motion.section                                         
+      387 -        initial={{ opacity: 0, y: 16 }}                       
+      388 -        animate={{ opacity: 1, y: 0 }}                        
+      389 -        transition={{ duration: 0.6, delay: 0.1, ease: 'easeOu
+          -t' }}                                                         
+      390 -        className="card z-10 p-6 text-center"                 
+      391 -      >                                                       
+      392 -        <p className="eyebrow mb-2">Frase de hoy</p>          
+      393 -        <p className="font-hand text-3xl leading-snug text-win
+          -e dark:text-rose-100 md:text-4xl">“{state.phrase}”</p>        
+      394 -        <button className="btn-tiny mt-3" onClick={() => setPh
+          -raseOpen((v) => !v)}>                                         
+      395 -          {phraseOpen ? 'Cerrar' : '✏️ Editar frase'}         
+      396 -        </button>                                             
+      397 -        <AnimatePresence>                                     
+      398 -          {phraseOpen && (                                    
+      399 -            <motion.div initial={{ opacity: 0, height: 0 }} an
+          -imate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0, hei
+          -ght: 0 }} className="overflow-hidden">                        
+      400 -              <textarea className="input mt-3 min-h-24" value=
+          -{state.phrase} onChange={(e) => setState({ ...state, phrase: e
+          -.target.value })} />                                          
+      401 -              <button                                         
+      402 -                className="btn-primary mt-2"                  
+      403 -                onClick={() => safeRun(async () => {          
+      404 -                  await api('setPhrase', { phrase: state.phras
+          -e });                                                         
+      405 -                  await refresh();                            
+      406 -                }, 'Frase guardada 📝')}                      
+      407 -              >                                               
+      408 -                Guardar frase                                 
+      409 -              </button>                                       
+      410 -            </motion.div>                                     
+      411 -          )}                                                  
+      412 -        </AnimatePresence>                                    
+      413 -      </motion.section>                                       
+      414 -                                                              
+      415 -      <div className="grid gap-5 lg:grid-cols-[1.15fr_.85fr]">
+      416 -        <section className="card z-10 space-y-4">             
+      417 -          <div className="flex flex-wrap items-end justify-bet
+          -ween gap-2">                                                  
+      418 -            <div>                                             
+      419 -              <p className="eyebrow">Galería</p>              
+      420 -              <h2 className="font-display text-2xl font-semibo
+          -ld text-ink dark:text-rose-50">Nuestros recuerdos</h2>        
+      421 -            </div>                                            
+      451 +      <div className="grid gap-10 lg:grid-cols-[1.15fr_.85fr] 
+          +lg:gap-8">                                                    
+      452 +        {/* Capítulo II — la galería como álbum de polaroids s
+          +obre el papel */}                                             
+      453 +        <motion.section                                       
+      454 +          variants={fadeRise}                                 
+      455 +          initial="hidden"                                    
+      456 +          whileInView="visible"                               
+      457 +          viewport={{ once: true, margin: '-40px' }}          
+      458 +          className="relative z-10 space-y-5"                 
+      459 +        >                                                     
+      460 +          <div className="flex flex-wrap items-end justify-bet
+          +ween gap-3">                                                  
+      461 +            <SectionHeader chapter="II" title="Nuestros recuer
+          +dos" note="lo que no queremos olvidar" />                     
+      462              <input
+      463                value={mediaFilter}
+      464                onChange={(e) => {
+     ...
+      495                  }
+      496                }, 'Recuerdo publicado 📸');
+      497              }}
+      458 -            className="space-y-2 rounded-2xl border border-das
+          -hed border-wine/30 bg-blush/40 p-4 dark:border-rose/30 dark:bg
+          --white/[0.04]"                                                
+      498 +            className="space-y-2.5 rounded-[1.4rem] border bor
+          +der-dashed border-wine/30 bg-blush/40 p-4 backdrop-blur-sm dar
+          +k:border-rose/30 dark:bg-white/[0.04]"                        
+      499 +            data-animate="upload-form"                        
+      500            >
+      460 -            <p className="text-sm font-medium text-wine dark:t
+          -ext-rose-200">✨ Guarda un nuevo recuerdo</p>                 
+      501 +            <p className="text-sm font-medium text-wine dark:t
+          +ext-rose-200">✨ Añadir al álbum</p>                          
+      502              <input
+      503                type="file"
+      504                accept="image/*,video/*"
+      464 -              className="input file:mr-3 file:rounded-lg file:
+          -border-0 file:bg-wine file:px-3 file:py-1.5 file:text-xs file:
+          -font-semibold file:text-white hover:file:bg-rose"             
+      505 +              className="input file:mr-3 file:rounded-full fil
+          +e:border-0 file:bg-wine file:px-3.5 file:py-1.5 file:text-xs f
+          +ile:font-semibold file:text-white hover:file:bg-rose"         
+      506                onChange={(e) => {
+      507                  const file = e.target.files?.[0] || null;
+      508                  setMediaFile(file);
+     ...
+      530                  animate={{ opacity: 1, y: 0, rotate: i % 2 ===
+            0 ? -1.4 : 1.4 }}
+      531                  whileHover={{ rotate: 0, scale: 1.02 }}
+      532                  whileTap={{ scale: 0.99 }}
+      492 -                transition={{ type: 'spring', stiffness: 220, 
+          -damping: 20 }}                                                
+      533 +                transition={polaroidSpring}                   
+      534                  className="polaroid relative"
+      535 +                data-animate="polaroid"                       
+      536                >
+      537                  <span className="tape" aria-hidden="true" />
+      538                  <button type="button" className="w-full" onCli
+           ck={() => setLightboxId(item.id)}>
+      539                    {item.type.startsWith('image') ? (
+      498 -                    <img src={item.url} alt={item.description}
+          - loading="lazy" className="max-h-96 w-full rounded-sm object-c
+          -over" />                                                      
+      540 +                    <img src={cld(item.url, 900)} alt={item.de
+          +scription} loading="lazy" className="max-h-96 w-full rounded-s
+          +m object-cover" />                                            
+      541                    ) : (
+      542                      <video src={item.url} className="max-h-96 
+           w-full rounded-sm object-cover" />
+      543                    )}
+     ...
+      578              ))}
+      579            </div>
+      580            {!visibleMedia.length && (
+      539 -            <p className="rounded-2xl bg-blush/50 p-6 text-cen
+          -ter text-sm text-ink/60 dark:bg-white/5 dark:text-rose-50/60">
+      581 +            <p className="rounded-[1.4rem] bg-blush/50 p-6 tex
+          +t-center text-sm text-ink/60 dark:bg-white/5 dark:text-rose-50
+          +/60">                                                         
+      582                {mediaFilter ? 'No hay recuerdos con esa descrip
+           ción.' : 'Aún no hay recuerdos: sube el primero ✨'}
+      583              </p>
+      584            )}
+      543 -        </section>                                            
+      585 +        </motion.section>                                     
+      586  
+      545 -        <section className="space-y-5">                       
+      546 -          <div className="card z-10 space-y-3">               
+      547 -            <div>                                             
+      548 -              <p className="eyebrow">Correo del corazón</p>   
+      549 -              <h2 className="font-display text-2xl font-semibo
+          -ld text-ink dark:text-rose-50">Cartas secretas</h2>           
+      550 -            </div>                                            
+      587 +        {/* Capítulo III — el correo del corazón */}          
+      588 +        <motion.section                                       
+      589 +          variants={fadeRise}                                 
+      590 +          initial="hidden"                                    
+      591 +          whileInView="visible"                               
+      592 +          viewport={{ once: true, margin: '-40px' }}          
+      593 +          className="relative z-10 space-y-5"                 
+      594 +        >                                                     
+      595 +          <SectionHeader chapter="III" title="Cartas secretas"
+          + note="correo del corazón" />                                 
+      596 +                                                              
+      597 +          <div className="card space-y-3">                    
+      598 +            <p className="text-sm font-medium text-wine dark:t
+          +ext-rose-200">💌 Escribir una carta</p>                       
+      599              <form
+      600                onSubmit={(e) => {
+      601                  e.preventDefault();
+     ...
+      613                  <option value="jeicob">Para Jeicob</option>
+      614                  <option value="lelita">Para Lelita</option>
+      615                </select>
+      568 -              <button className="btn-primary w-full">💌 Enviar
+          - carta</button>                                               
+      616 +              <button className="btn-primary w-full">Enviar ca
+          +rta</button>                                                  
+      617              </form>
+      618            </div>
+      619  
+      572 -          <div className="card z-10">                         
+      620 +          <div className="card">                              
+      621              <h3 className="mb-3 font-display text-lg font-semi
+           bold text-ink dark:text-rose-50">Para ti, Jeicob</h3>
+      574 -            <div className="space-y-3">                       
+      622 +            <div className="space-y-4">                       
+      623                {state.letters
+      624                  .filter((l: Letter) => l.to === 'jeicob' && (u
+           ser === 'jeicob' || l.author === user))
+      625                  .map((l) => (
+      578 -                  <article key={l.id} className="stationery te
+          -xt-sm">                                                       
+      579 -                    <p className="font-display text-base font-
+          -semibold text-wine dark:text-rose-200">{l.title}</p>          
+      626 +                  <article key={l.id} className="stationery te
+          +xt-sm" data-animate="letter-card">                            
+      627 +                    <span className="seal" aria-hidden="true">
+          +J♥L</span>                                                    
+      628 +                    <p className="pr-8 font-display text-base 
+          +font-semibold text-wine dark:text-rose-200">{l.title}</p>     
+      629                      <p className="mt-1 whitespace-pre-wrap tex
+           t-ink/80 dark:text-rose-50/80">{l.text}</p>
+      581 -                    <p className="mt-2 text-xs italic text-ink
+          -/50 dark:text-rose-50/50">— con amor, {l.author}</p>          
+      630 +                    <p className="mt-2 font-hand text-base tex
+          +t-ink/60 dark:text-rose-50/60">— con amor, {l.author}</p>     
+      631                      {l.author === user && (
+      632                        <button className="btn-tiny mt-2" onClic
+           k={() => editLetter(l)}>
+      633                          Editar
+     ...
+      641              </div>
+      642            </div>
+      643  
+      595 -          <div className="card z-10">                         
+      644 +          <div className="card">                              
+      645              <h3 className="mb-3 font-display text-lg font-semi
+           bold text-ink dark:text-rose-50">Para ti, Lelita</h3>
+      597 -            <div className="space-y-3">                       
+      646 +            <div className="space-y-4">                       
+      647                {state.letters
+      648                  .filter((l: Letter) => l.to === 'lelita' && (u
+           ser === 'lelita' || l.author === user))
+      649                  .map((l) => (
+      601 -                  <article key={l.id} className="stationery te
+          -xt-sm">                                                       
+      602 -                    <p className="font-display text-base font-
+          -semibold text-wine dark:text-rose-200">{l.title}</p>          
+      650 +                  <article key={l.id} className="stationery te
+          +xt-sm" data-animate="letter-card">                            
+      651 +                    <span className="seal" aria-hidden="true">
+          +J♥L</span>                                                    
+      652 +                    <p className="pr-8 font-display text-base 
+          +font-semibold text-wine dark:text-rose-200">{l.title}</p>     
+      653                      <p className="mt-1 whitespace-pre-wrap tex
+           t-ink/80 dark:text-rose-50/80">{l.text}</p>
+      604 -                    <p className="mt-2 text-xs italic text-ink
+          -/50 dark:text-rose-50/50">— con amor, {l.author}</p>          
+      654 +                    <p className="mt-2 font-hand text-base tex
+          +t-ink/60 dark:text-rose-50/60">— con amor, {l.author}</p>     
+      655                      {l.author === user && (
+      656                        <button className="btn-tiny mt-2" onClic
+           k={() => editLetter(l)}>
+      657                          Editar
+     ...
+      665              </div>
+      666            </div>
+      667  
+      618 -          <div className="card z-10 text-center">             
+      619 -            <p className="eyebrow mb-2">Llévanos contigo</p>  
+      620 -            <img src={qrUrl} alt="QR para abrir esta web en el
+          - móvil" className="mx-auto rounded-xl border border-rose/20 bg
+          --white p-2" />                                                
+      668 +          <div className="card text-center" data-animate="qr-c
+          +ard">                                                         
+      669 +            <p className="eyebrow mb-2">Colofón · llévanos con
+          +tigo</p>                                                      
+      670 +            <img src={qrUrl} alt="QR para abrir esta web en el
+          + móvil" className="mx-auto rounded-2xl border border-rose/20 b
+          +g-white p-2" />                                               
+      671              <p className="mt-2 text-xs text-ink/50 dark:text-r
+           ose-50/50">Escanéalo para abrir nuestro rincón en el móvil</p>
+      672            </div>
+      623 -        </section>                                            
+      673 +        </motion.section>                                     
+      674        </div>
+      675  
+      626 -      <section className="card z-10">                         
+      627 -        <div className="mb-3">                                
+      628 -          <p className="eyebrow">Solo para dos</p>            
+      629 -          <h2 className="font-display text-2xl font-semibold t
+          -ext-ink dark:text-rose-50">Nuestro chat</h2>                  
+      630 -        </div>                                                
+      631 -        <div className="chat-scroll mb-3 flex max-h-96 flex-co
+          -l gap-2 overflow-y-auto rounded-2xl border border-rose/15 bg-w
+          -hite/40 p-3 dark:border-white/10 dark:bg-white/[0.03]">       
+      632 -          {state.chat.map((m) => {                            
+      633 -            const own = m.author === user;                    
+      634 -            return (                                          
+      635 -              <article                                        
+      636 -                key={m.id}                                    
+      637 -                className={`max-w-[85%] rounded-2xl px-3.5 py-
+          -2.5 text-sm shadow-sm md:max-w-[70%] ${                       
+      638 -                  own                                         
+      639 -                    ? 'self-end rounded-br-md bg-gradient-to-b
+          -r from-wine to-rose text-white'                               
+      640 -                    : 'self-start rounded-bl-md bg-white text-
+          -ink ring-1 ring-rose/15 dark:bg-white/10 dark:text-rose-50 dar
+          -k:ring-white/10'                                              
+      641 -                }`}                                           
+      642 -              >                                               
+      643 -                {!own && <p className="mb-0.5 text-[11px] font
+          --semibold uppercase tracking-wide opacity-60">{m.author}</p>} 
+      644 -                {m.text && <p className="whitespace-pre-wrap">
+          -{m.text}</p>}                                                 
+      645 -                {m.mediaUrl && (                              
+      646 -                  <div className="mt-2">                      
+      647 -                    {(m.mediaType || '').startsWith('video') ?
+          - (                                                            
+      648 -                      <video src={m.mediaUrl} controls classNa
+          -me="max-h-56 w-full rounded-xl object-cover" />               
+      649 -                    ) : (                                     
+      650 -                      <img src={m.mediaUrl} alt="adjunto" load
+          -ing="lazy" className="max-h-56 w-full rounded-xl object-cover"
+          - />                                                           
+      651 -                    )}                                        
+      652 -                  </div>                                      
+      653 -                )}                                            
+      654 -                <div className={`mt-1 flex items-center gap-2 
+          -text-[11px] ${own ? 'text-white/70' : 'text-ink/45 dark:text-r
+          -ose-50/45'}`}>                                                
+      655 -                  <span>{fmtDate(m.createdAt)}</span>         
+      656 -                  {own && (                                   
+      657 -                    <button                                   
+      658 -                      className="underline-offset-2 transition
+          - hover:underline"                                             
+      659 -                      onClick={() => safeRun(async () => {    
+      660 -                        const accepted = window.confirm('¿Segu
+          -ro que deseas borrar este mensaje?');                         
+      661 -                        if (!accepted) return;                
+      662 -                        await api('deleteChat', { id: m.id, us
+          -er });                                                        
+      663 -                        await refresh();                      
+      664 -                      }, 'Mensaje eliminado 🗑️')}             
+      676 +      {/* Capítulo IV — el chat solo para dos */}             
+      677 +      <motion.section                                         
+      678 +        variants={fadeRise}                                   
+      679 +        initial="hidden"                                      
+      680 +        whileInView="visible"                                 
+      681 +        viewport={{ once: true, margin: '-40px' }}            
+      682 +        className="relative z-10 space-y-5"                   
+      683 +        data-animate="chat"                                   
+      684 +      >                                                       
+      685 +        <SectionHeader chapter="IV" title="Nuestro chat" note=
+          +"solo para dos" />                                            
+      686 +                                                              
+      687 +        <div className="card">                                
+      688 +          <div className="chat-scroll mb-3 flex max-h-96 flex-
+          +col gap-2.5 overflow-y-auto rounded-2xl border border-rose/15 
+          +bg-white/40 p-3 dark:border-white/10 dark:bg-white/[0.03]">   
+      689 +            {state.chat.map((m) => {                          
+      690 +              const own = m.author === user;                  
+      691 +              return (                                        
+      692 +                <div key={m.id} className={`flex max-w-[85%] i
+          +tems-end gap-2 md:max-w-[70%] ${own ? 'flex-row-reverse self-e
+          +nd' : 'self-start'}`}>                                        
+      693 +                  {!own && (                                  
+      694 +                    <span                                     
+      695 +                      className="grid h-7 w-7 shrink-0 place-i
+          +tems-center rounded-full bg-gradient-to-br from-rose to-wine f
+          +ont-display text-xs font-semibold text-white"                 
+      696 +                      title={m.author}                        
+      697 +                      aria-hidden="true"                      
+      698                      >
+      666 -                      Borrar                                  
+      667 -                    </button>                                 
+      699 +                      {m.author[0]?.toUpperCase()}            
+      700 +                    </span>                                   
+      701                    )}
+      702 +                  <article                                    
+      703 +                    className={`rounded-2xl px-3.5 py-2.5 text
+          +-sm shadow-sm ${                                              
+      704 +                      own                                     
+      705 +                        ? 'rounded-br-md bg-gradient-to-br fro
+          +m-wine to-rose text-white'                                    
+      706 +                        : 'rounded-bl-md bg-white text-ink rin
+          +g-1 ring-rose/15 dark:bg-white/10 dark:text-rose-50 dark:ring-
+          +white/10'                                                     
+      707 +                    }`}                                       
+      708 +                    data-animate="chat-bubble"                
+      709 +                  >                                           
+      710 +                    {m.text && <p className="whitespace-pre-wr
+          +ap">{m.text}</p>}                                             
+      711 +                    {m.mediaUrl && (                          
+      712 +                      <div className="mt-2">                  
+      713 +                        {(m.mediaType || '').startsWith('video
+          +') ? (                                                        
+      714 +                          <video src={m.mediaUrl} controls cla
+          +ssName="max-h-56 w-full rounded-xl object-cover" />           
+      715 +                        ) : (                                 
+      716 +                          <img src={cld(m.mediaUrl, 700)} alt=
+          +"adjunto" loading="lazy" className="max-h-56 w-full rounded-xl
+          + object-cover" />                                             
+      717 +                        )}                                    
+      718 +                      </div>                                  
+      719 +                    )}                                        
+      720 +                    <div className={`mt-1 flex items-center ga
+          +p-2 text-[11px] ${own ? 'text-white/70' : 'text-ink/45 dark:te
+          +xt-rose-50/45'}`}>                                            
+      721 +                      <span>{fmtDate(m.createdAt)}</span>     
+      722 +                      {own && (                               
+      723 +                        <button                               
+      724 +                          className="underline-offset-2 transi
+          +tion hover:underline"                                         
+      725 +                          onClick={() => safeRun(async () => {
+      726 +                            const accepted = window.confirm('¿
+          +Seguro que deseas borrar este mensaje?');                     
+      727 +                            if (!accepted) return;            
+      728 +                            await api('deleteChat', { id: m.id
+          +, user });                                                    
+      729 +                            await refresh();                  
+      730 +                          }, 'Mensaje eliminado 🗑️')}         
+      731 +                        >                                     
+      732 +                          Borrar                              
+      733 +                        </button>                             
+      734 +                      )}                                      
+      735 +                    </div>                                    
+      736 +                  </article>                                  
+      737                  </div>
+      670 -              </article>                                      
+      671 -            );                                                
+      672 -          })}                                                 
+      673 -          {!state.chat.length && <p className="p-4 text-center
+          - text-sm text-ink/50 dark:text-rose-50/50">Escríbanse algo bon
+          -ito para empezar 💬</p>}                                      
+      674 -        </div>                                                
+      675 -        <form                                                 
+      676 -          className="grid gap-2 md:grid-cols-[1fr_190px_130px_
+          -auto]"                                                        
+      677 -          onSubmit={(e) => {                                  
+      678 -            e.preventDefault();                               
+      679 -            safeRun(async () => {                             
+      680 -              if (isSendingChat) return;                      
+      681 -              setIsSendingChat(true);                         
+      682 -              try {                                           
+      683 -                let mediaUrl = '';                            
+      684 -                let mediaType = chat.mediaType;               
+      685 -                let mediaPublicId = '';                       
+      686 -                let mediaResourceType: 'image' | 'video' = cha
+          -t.mediaType.startsWith('video') ? 'video' : 'image';          
+      738 +              );                                              
+      739 +            })}                                               
+      740 +            {!state.chat.length && <p className="p-4 text-cent
+          +er text-sm text-ink/50 dark:text-rose-50/50">Escríbanse algo b
+          +onito para empezar 💬</p>}                                    
+      741 +          </div>                                              
+      742 +          <form                                               
+      743 +            className="grid gap-2 md:grid-cols-[1fr_190px_130p
+          +x_auto]"                                                      
+      744 +            onSubmit={(e) => {                                
+      745 +              e.preventDefault();                             
+      746 +              safeRun(async () => {                           
+      747 +                if (isSendingChat) return;                    
+      748 +                setIsSendingChat(true);                       
+      749 +                try {                                         
+      750 +                  let mediaUrl = '';                          
+      751 +                  let mediaType = chat.mediaType;             
+      752 +                  let mediaPublicId = '';                     
+      753 +                  let mediaResourceType: 'image' | 'video' = c
+          +hat.mediaType.startsWith('video') ? 'video' : 'image';        
+      754  
+      688 -                if (chatFile) {                               
+      689 -                  const uploaded = await uploadLocalFile(chatF
+          -ile, 'chat', chat.mediaType);                                 
+      690 -                  mediaUrl = uploaded.url;                    
+      691 -                  mediaType = uploaded.type;                  
+      692 -                  mediaPublicId = uploaded.publicId;          
+      693 -                  mediaResourceType = uploaded.resourceType ==
+          -= 'video' ? 'video' : 'image';                                
+      694 -                }                                             
+      755 +                  if (chatFile) {                             
+      756 +                    const uploaded = await uploadLocalFile(cha
+          +tFile, 'chat', chat.mediaType);                               
+      757 +                    mediaUrl = uploaded.url;                  
+      758 +                    mediaType = uploaded.type;                
+      759 +                    mediaPublicId = uploaded.publicId;        
+      760 +                    mediaResourceType = uploaded.resourceType 
+          +=== 'video' ? 'video' : 'image';                              
+      761 +                  }                                           
+      762  
+      696 -                await api('addChat', { text: chat.text, mediaU
+          -rl, mediaType, mediaPublicId, mediaResourceType, author: user 
+          -});                                                           
+      697 -                setChat({ text: '', mediaType: 'image/jpeg' })
+          -;                                                             
+      698 -                setChatFile(null);                            
+      699 -                await refresh();                              
+      700 -              } finally {                                     
+      701 -                setIsSendingChat(false);                      
+      702 -              }                                               
+      703 -            }, 'Mensaje enviado 💬');                         
+      704 -          }}                                                  
+      705 -        >                                                     
+      706 -          <input className="input" placeholder="Escribe un men
+          -saje bonito…" value={chat.text} onChange={(e) => setChat({ ...
+          -chat, text: e.target.value })} />                             
+      707 -          <input                                              
+      708 -            type="file"                                       
+      709 -            accept="image/*,video/*"                          
+      710 -            className="input file:mr-2 file:rounded-lg file:bo
+          -rder-0 file:bg-wine file:px-2.5 file:py-1 file:text-xs file:fo
+          -nt-semibold file:text-white hover:file:bg-rose"               
+      711 -            onChange={(e) => {                                
+      712 -              const file = e.target.files?.[0] || null;       
+      713 -              setChatFile(file);                              
+      714 -              if (file?.type) setChat({ ...chat, mediaType: fi
+          -le.type });                                                   
+      763 +                  await api('addChat', { text: chat.text, medi
+          +aUrl, mediaType, mediaPublicId, mediaResourceType, author: use
+          +r });                                                         
+      764 +                  setChat({ text: '', mediaType: 'image/jpeg' 
+          +});                                                           
+      765 +                  setChatFile(null);                          
+      766 +                  await refresh();                            
+      767 +                } finally {                                   
+      768 +                  setIsSendingChat(false);                    
+      769 +                }                                             
+      770 +              }, 'Mensaje enviado 💬');                       
+      771              }}
+      716 -          />                                                  
+      717 -          {chatFile && <p className="text-xs text-ink/60 dark:
+          -text-rose-50/60 md:col-span-4">Archivo adjunto: {chatFile.name
+          -}</p>}                                                        
+      718 -          <select className="input" value={chat.mediaType} onC
+          -hange={(e) => setChat({ ...chat, mediaType: e.target.value })}
+          ->                                                             
+      719 -            <option value="image/jpeg">Imagen</option>        
+      720 -            <option value="video/mp4">Video</option>          
+      721 -          </select>                                           
+      722 -          <button disabled={isSendingChat} className="btn-prim
+          -ary px-5">                                                    
+      723 -            {isSendingChat ? 'Enviando…' : 'Enviar'}          
+      724 -          </button>                                           
+      725 -        </form>                                               
+      726 -      </section>                                              
+      772 +          >                                                   
+      773 +            <input className="input" placeholder="Escribe un m
+          +ensaje bonito…" value={chat.text} onChange={(e) => setChat({ .
+          +..chat, text: e.target.value })} />                           
+      774 +            <input                                            
+      775 +              type="file"                                     
+      776 +              accept="image/*,video/*"                        
+      777 +              className="input file:mr-2 file:rounded-full fil
+          +e:border-0 file:bg-wine file:px-3 file:py-1 file:text-xs file:
+          +font-semibold file:text-white hover:file:bg-rose"             
+      778 +              onChange={(e) => {                              
+      779 +                const file = e.target.files?.[0] || null;     
+      780 +                setChatFile(file);                            
+      781 +                if (file?.type) setChat({ ...chat, mediaType: 
+          +file.type });                                                 
+      782 +              }}                                              
+      783 +            />                                                
+      784 +            {chatFile && <p className="text-xs text-ink/60 dar
+          +k:text-rose-50/60 md:col-span-4">Archivo adjunto: {chatFile.na
+          +me}</p>}                                                      
+      785 +            <select className="input" value={chat.mediaType} o
+          +nChange={(e) => setChat({ ...chat, mediaType: e.target.value }
+          +)}>                                                           
+      786 +              <option value="image/jpeg">Imagen</option>      
+      787 +              <option value="video/mp4">Video</option>        
+      788 +            </select>                                         
+      789 +            <button disabled={isSendingChat} className="btn-pr
+          +imary px-5">                                                  
+      790 +              {isSendingChat ? 'Enviando…' : 'Enviar'}        
+      791 +            </button>                                         
+      792 +          </form>                                             
+      793 +        </div>                                                
+      794 +      </motion.section>                                       
+      795  
+      796 +      <footer className="relative z-10 pt-4 text-center" data-
+          +animate="footer">                                             
+      797 +        <div className="rule-heart mx-auto max-w-xs" aria-hidd
+          +en="true">                                                    
+      798 +          <HeartIcon className="h-3.5 w-3.5" />               
+      799 +        </div>                                                
+      800 +        <p className="mt-5 font-hand text-2xl text-wine/75 dar
+          +k:text-rose-200/75">hecho con amor, para nosotros dos ♡</p>   
+      801 +        <p className="mt-1 text-xs text-ink/45 dark:text-rose-
+          +50/45">Desde el 13 de marzo de 2025 · siempre</p>             
+      802 +      </footer>                                               
+      803 +                                                              
+      804        <AnimatePresence>
+      805          {lightbox && (
+      806            <motion.div
+      731 -            initial={{ opacity: 0 }}                          
+      732 -            animate={{ opacity: 1 }}                          
+      733 -            exit={{ opacity: 0 }}                             
+      807 +            variants={overlayFade}                            
+      808 +            initial="hidden"                                  
+      809 +            animate="visible"                                 
+      810 +            exit="hidden"                                     
+      811              className="fixed inset-0 z-30 bg-plum/90 p-4 backd
+           rop-blur-sm md:p-6"
+      812              onClick={() => setLightboxId(null)}
+      813 +            data-animate="lightbox"                           
+      814            >
+      815              <motion.div
+      738 -              initial={{ scale: 0.96, y: 12 }}                
+      739 -              animate={{ scale: 1, y: 0 }}                    
+      740 -              exit={{ scale: 0.96, y: 12 }}                   
+      816 +              variants={lightboxCard}                         
+      817 +              initial="hidden"                                
+      818 +              animate="visible"                               
+      819 +              exit="hidden"                                   
+      820                className="mx-auto mt-6 max-w-4xl"
+      821                onClick={(e) => e.stopPropagation()}
+      822              >
+     ...
+      827                  <div className="flex gap-2">
+      828                    <button
+      829                      aria-label="Anterior"
+      751 -                    className="rounded-full border border-whit
+          -e/30 px-3.5 py-1.5 transition hover:bg-white/15"              
+      830 +                    className="rounded-full border border-whit
+          +e/25 bg-white/10 px-3.5 py-1.5 transition hover:bg-white/20"  
+      831                      onClick={() => setLightboxId(filteredMedia
+           [(lightboxIndex - 1 + filteredMedia.length) % filteredMedia.le
+           ngth]?.id || null)}
+      832                    >
+      833                      ←
+      834                    </button>
+      835                    <button
+      836                      aria-label="Siguiente"
+      758 -                    className="rounded-full border border-whit
+          -e/30 px-3.5 py-1.5 transition hover:bg-white/15"              
+      837 +                    className="rounded-full border border-whit
+          +e/25 bg-white/10 px-3.5 py-1.5 transition hover:bg-white/20"  
+      838                      onClick={() => setLightboxId(filteredMedia
+           [(lightboxIndex + 1) % filteredMedia.length]?.id || null)}
+      839                    >
+      840                      →
+      841                    </button>
+      842                    <button
+      843                      aria-label="Cerrar"
+      765 -                    className="rounded-full border border-whit
+          -e/30 px-3.5 py-1.5 transition hover:bg-white/15"              
+      844 +                    className="rounded-full border border-whit
+          +e/25 bg-white/10 px-3.5 py-1.5 transition hover:bg-white/20"  
+      845                      onClick={() => setLightboxId(null)}
+      846                    >
+      847                      ✕
+     ...
+      849                  </div>
+      850                </div>
+      851                {lightbox.type.startsWith('image') ? (
+      773 -                <img src={lightbox.url} alt={lightbox.descript
+          -ion} className="max-h-[72vh] w-full rounded-2xl object-contain
+          -" />                                                          
+      852 +                <img src={cld(lightbox.url, 1600)} alt={lightb
+          +ox.description} className="max-h-[72vh] w-full rounded-2xl obj
+          +ect-contain" />                                               
+      853                ) : (
+      854                  <video src={lightbox.url} controls className="
+           max-h-[72vh] w-full rounded-2xl object-contain" />
+      855                )}
+     ...
+      865          <AnimatePresence>
+      866            {error && (
+      867              <motion.p
+      789 -              initial={{ opacity: 0, y: 16 }}                 
+      790 -              animate={{ opacity: 1, y: 0 }}                  
+      791 -              exit={{ opacity: 0, y: 16 }}                    
+      868 +              variants={toastPop}                             
+      869 +              initial="hidden"                                
+      870 +              animate="visible"                               
+      871 +              exit="hidden"                                   
+      872                className="pointer-events-auto rounded-full bg-w
+           ine px-5 py-2.5 text-sm font-medium text-white shadow-lg"
+      873 +              data-animate="toast"                            
+      874              >
+      875                {error}
+      876              </motion.p>
+      877            )}
+      878            {notice && !error && (
+      879              <motion.p
+      799 -              initial={{ opacity: 0, y: 16 }}                 
+      800 -              animate={{ opacity: 1, y: 0 }}                  
+      801 -              exit={{ opacity: 0, y: 16 }}                    
+      880 +              variants={toastPop}                             
+      881 +              initial="hidden"                                
+      882 +              animate="visible"                               
+      883 +              exit="hidden"                                   
+      884                className="pointer-events-auto rounded-full bg-i
+           nk px-5 py-2.5 text-sm font-medium text-rose-50 shadow-lg dark
+           :bg-rose dark:text-plum"
+      885 +              data-animate="toast"                            
+      886              >
+      887                {notice}
+      888              </motion.p>
+
+● Write(docs\ANIMATION-HOOKS.md)
+  ⎿  Wrote 56 lines to docs\ANIMATION-HOOKS.md
+       1 # Mapa de animaciones — Lelita (base para la skill de animacione
+       2 
+       3 **Actualizado:** 2026-07-08 (rediseño "El archivo de nuestra his
+       4 
+       5 ## Dónde se trabaja
+       7 | Pieza | Archivo | Qué contiene |
+       8 |---|---|---|
+         ts centralizadas. La skill de animaciones edita aquí, no inline 
+         en el JSX. |
+         va `data-animate="<nombre>"` (buscar ese atributo). |
+     … +82 lines (ctrl+o to expand)
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Skill(browse)
+  ⎿  Successfully loaded skill · 3 tools allowed
+● La skill de browse está cargada. Ejecuto el preámbulo y verifico el binario:
+
+  Read 5 files, ran 5 shell commands (ctrl+o to expand)
+
+● Write(docs\REDESIGN-2026-07-08.md)
+  ⎿  Wrote 35 lines to docs\REDESIGN-2026-07-08.md
+       1 # Rediseño "El archivo de nuestra historia" — Sesión 2026-07-08
+       3 Evolución del rediseño 2026-07-04 (mismo sistema de diseño; leer
+          ese doc primero).
+       4 **Toda la lógica se conservó intacta**: auth, reset, uploads Clo
+       5 scroll infinito, filtro, lightbox con teclado, QR, toasts.
+       6 
+       8 
+       9 - **Concepto**: la página ya no es una pila de cards uniformes; 
+         es un *archivo
+          (masthead) con
+     … +45 lines (ctrl+o to expand)
+
+  Ran 3 shell commands (ctrl+o to expand)
+
+● Listo — el rediseño está completo, verificado y con las bases para la skill de
+  animaciones.
+
+  Qué hice
+
+  Rediseñé la página de Lelita como "El archivo de nuestra historia": deja de
+  ser una pila de cards uniformes y se convierte en un archivo editorial
+  romántico. La lógica quedó 100% intacta (auth, reset de contraseña, subidas a
+  Cloudinary, editar/borrar, scroll infinito, filtro, lightbox con teclado, QR,
+  toasts — todos los handlers son los mismos).
+
+  Cambios visuales principales:
+  - Masthead a sangre completa: nombres gigantes en Fraunces itálica (ahora con
+  sus ejes variables SOFT/WONK — más carácter), el contador de días como número
+  protagonista (482 en enorme, con el corazón latiendo), y la frase del día
+  integrada al hero en Caveat.
+  - Capítulos: las secciones se numeran como capítulos de su historia (II
+  Recuerdos · III Cartas · IV Chat) con numeración dorada — estructura que dice
+  algo verdadero: la página es su historia.
+  - Detalles de firma: hairlines con corazón al centro, sello de lacre "J♥L" en
+  cada carta, grano de película sutil en el fondo, botones pill, captions
+  manuscritas en las polaroids del hero, avatar con inicial en el chat, y un
+  footer de cierre ("hecho con amor, para nosotros dos ♡").
+  - Galería más scrapbook: las polaroids viven directo sobre el papel, ya no
+  dentro de una card.
+  - Bonus: las imágenes ahora se sirven optimizadas vía Cloudinary
+  (f_auto,q_auto,w_*) solo en presentación — la URL guardada en la BD no cambia.
+
+  Bases para la skill de animaciones (lo que pediste):
+  - lib/motion.ts — todas las variants de Framer Motion centralizadas, con los
+  criterios acordados comentados.
+  - Anclas data-animate="…" en cada elemento animable del JSX.
+  - docs/ANIMATION-HOOKS.md — inventario completo: cada ancla, su estado actual
+  y la animación sugerida (count-up del contador, stagger de polaroids, sobre
+  que se abre en cartas, layoutId foto→lightbox, etc.).
+
+  Verificación
+
+  - npm run build exitoso (132 kB First Load, igual que antes).
+  - Capturas headless verificadas: login, principal en día y noche, chat, y
+  móvil 375px — todo renderiza bien. Los errores 500 locales son el problema
+  conocido de DNS de MongoDB (funciona en Vercel).
+  - Grafo de conocimiento actualizado (graphify update), y sesión documentada en
+  docs/REDESIGN-2026-07-08.md.
+
+  Cuando quieras, corre la skill de animaciones — todo el mapa está en
+  docs/ANIMATION-HOOKS.md. Nota menor: gstack tiene upgrade disponible (1.58.3 →
+  1.58.5) y prompts de telemetría pendientes; los dejé sin tocar para no
+  bloquear el trabajo.
+
+✻ Cogitated for 15m 14s
+
+● Background command "Start lelita dev server on port 3011" completed (exit code
+0)
+
+● Ese es el dev server que detuve al terminar la verificación — cerró limpio
+  (exit 0). No hay nada pendiente: el rediseño quedó completo, verificado y
+  documentado.
+
+✻ Sautéed for 16s
+
+❯ /review-animations En proyectos/Lelita esta la pagina de mi novia y yo.       
+Revisa docs/ANIMATION-HOOKS.m metele animaciones a lo capo rey deja todo        
+mapeado en graphify al terminar. No solo animaciones si no todo el proyecto eso 
+lo haces con /using-superpowers                                                 
+
+● Voy a implementar las animaciones sobre las bases que dejamos y luego
+  auto-revisarlas con la vara de esta skill. Primero cargo el catálogo de
+  estándares para usar curvas y duraciones exactas:
+
+  Read 1 file (ctrl+o to expand)
+
+● Write(lib\motion.ts)
+  ⎿  Added 99 lines, removed 26 lines
+        2  
+        3  /*
+        4   * ===========================================================
+           =
+        5 - *  BASE DE ANIMACIONES — punto de entrada para la skill de an
+          -imaciones                                                     
+        5 + *  SISTEMA DE ANIMACIONES — todas las variants viven aquí    
+        6   * ===========================================================
+           =
+        7 - * Todas las variants de Framer Motion viven aquí; app/page.ts
+          -x solo las                                                    
+        8 - * referencia. Cada elemento animable del JSX está marcado con
+        7 + * app/page.tsx solo referencia estas variants; los anclajes d
+          +el JSX llevan                                                 
+        8   * data-animate="<nombre>" y el mapa completo está en docs/ANI
+           MATION-HOOKS.md.
+        9   *
+       11 - * Criterios ya acordados (docs/REDESIGN-2026-07-04.md §Animac
+          -ión):                                                         
+       12 - * - Solo transform/opacity en animaciones infinitas (GPU).   
+       13 - * - ease-out en entradas; nunca entrar desde scale(0).       
+       14 - * - Springs solo en interacciones interrumpibles (hover, drag
+          -).                                                            
+       15 - * - prefers-reduced-motion desactiva las ambientales (ver glo
+          -bals.css).                                                    
+       10 + * Criterios (animations.dev / revisión 2026-07-08):          
+       11 + * - ease-out fuerte en entradas (EASE_OUT), nunca ease-in en 
+          +UI.                                                           
+       12 + * - Interacciones < 300ms; solo las entradas de página/scroll
+          + llegan a ~500ms.                                             
+       13 + * - Nunca entrar desde scale(0); mínimo 0.94–0.96 + opacity. 
+       14 + * - Springs solo en interacciones interrumpibles (hover de po
+          +laroids).                                                     
+       15 + * - prefers-reduced-motion: MotionConfig reducedMotion="user"
+          + en page.tsx                                                  
+       16 + *   (quita movimiento, conserva opacidad) + bloque CSS para l
+          +os loops.                                                     
+       17 + * - Stagger 30–80ms entre ítems, nunca bloquea interacción.  
+       18   */
+       19  
+       20 +/** cubic-bezier(0.23, 1, 0.32, 1) — ease-out fuerte para UI *
+          +/                                                             
+       21 +export const EASE_OUT: [number, number, number, number] = [0.2
+          +3, 1, 0.32, 1];                                               
+       22 +                                                              
+       23  /** Entrada estándar de secciones y cards (usada con whileInVi
+           ew). */
+       24  export const fadeRise: Variants = {
+       20 -  hidden: { opacity: 0, y: 18 },                              
+       21 -  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ea
+          -se: 'easeOut' } }                                             
+       25 +  hidden: { opacity: 0, y: 16 },                              
+       26 +  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ea
+          +se: EASE_OUT } }                                              
+       27  };
+       28  
+       24 -/** Entrada del bloque de fotos / elementos que crecen suaveme
+          -nte. */                                                       
+       29 +/** Entrada del bloque de fotos / portada del login. */       
+       30  export const scaleIn: Variants = {
+       26 -  hidden: { opacity: 0, scale: 0.94 },                        
+       27 -  visible: { opacity: 1, scale: 1, transition: { duration: 0.7
+          -, ease: 'easeOut' } }                                         
+       31 +  hidden: { opacity: 0, scale: 0.95 },                        
+       32 +  visible: { opacity: 1, scale: 1, transition: { duration: 0.5
+          +5, ease: EASE_OUT } }                                         
+       33  };
+       34  
+       35  /** Despliegue vertical de formularios ocultos (frase, reset d
+           e contraseña). */
+       36  export const collapse: Variants = {
+       32 -  hidden: { opacity: 0, height: 0, transition: { duration: 0.2
+          -8, ease: 'easeOut' } },                                       
+       33 -  visible: { opacity: 1, height: 'auto', transition: { duratio
+          -n: 0.35, ease: 'easeOut' } }                                  
+       37 +  hidden: { opacity: 0, height: 0, transition: { duration: 0.2
+          +4, ease: EASE_OUT } },                                        
+       38 +  visible: { opacity: 1, height: 'auto', transition: { duratio
+          +n: 0.3, ease: EASE_OUT } }                                    
+       39  };
+       40  
+       36 -/** Toasts (píldoras flotantes inferiores). */                
+       41 +/** Toasts — cortos e interrumpibles (framer retarget-ea desde
+          + el estado actual). */                                        
+       42  export const toastPop: Variants = {
+       38 -  hidden: { opacity: 0, y: 16 },                              
+       39 -  visible: { opacity: 1, y: 0, transition: { duration: 0.3, ea
+          -se: 'easeOut' } }                                             
+       43 +  hidden: { opacity: 0, y: 14 },                              
+       44 +  visible: { opacity: 1, y: 0, transition: { duration: 0.22, e
+          +ase: EASE_OUT } }                                             
+       45  };
+       46  
+       47  /** Fondo del lightbox. */
+       48  export const overlayFade: Variants = {
+       49    hidden: { opacity: 0 },
+       45 -  visible: { opacity: 1, transition: { duration: 0.25, ease: '
+          -easeOut' } }                                                  
+       50 +  visible: { opacity: 1, transition: { duration: 0.2, ease: EA
+          +SE_OUT } }                                                    
+       51  };
+       52  
+       48 -/** Contenido del lightbox. */                                
+       53 +/** Contenido del lightbox (modal centrado: origen center es c
+          +orrecto). */                                                  
+       54  export const lightboxCard: Variants = {
+       50 -  hidden: { opacity: 0, scale: 0.96, y: 12 },                 
+       51 -  visible: { opacity: 1, scale: 1, y: 0, transition: { duratio
+          -n: 0.3, ease: 'easeOut' } }                                   
+       55 +  hidden: { opacity: 0, scale: 0.96, y: 10 },                 
+       56 +  visible: { opacity: 1, scale: 1, y: 0, transition: { duratio
+          +n: 0.26, ease: EASE_OUT } }                                   
+       57  };
+       58  
+       54 -/** Spring compartido de las polaroids (hover interrumpible). 
+          -*/                                                            
+       59 +/**                                                           
+       60 + * Crossfade al navegar dentro del lightbox (flechas). Blur su
+          +til para fundir                                               
+       61 + * los dos estados en una sola transformación percibida (< 20p
+          +x, barato).                                                   
+       62 + * Salida más rápida que la entrada: el sistema responde, no d
+          +elibera.                                                      
+       63 + */                                                           
+       64 +export const mediaSwap: Variants = {                          
+       65 +  hidden: { opacity: 0, filter: 'blur(6px)', transition: { dur
+          +ation: 0.1, ease: EASE_OUT } },                               
+       66 +  visible: { opacity: 1, filter: 'blur(0px)', transition: { du
+          +ration: 0.18, ease: EASE_OUT } }                              
+       67 +};                                                            
+       68 +                                                              
+       69 +/** Spring compartido de las polaroids (hover interrumpible — 
+          +mantiene velocidad). */                                       
+       70  export const polaroidSpring = { type: 'spring', stiffness: 220
+           , damping: 20 } as const;
+       71  
+       72 +/* ---------- Secuencia orquestada del hero (una vez por visit
+          +a) ---------- */                                              
+       73 +                                                              
+       74 +/** Contenedor del hero: hijos en cascada de 90ms. Decorativo 
+          +— no bloquea input. */                                        
+       75 +export const heroStagger: Variants = {                        
+       76 +  hidden: {},                                                 
+       77 +  visible: { transition: { staggerChildren: 0.09, delayChildre
+          +n: 0.05 } }                                                   
+       78 +};                                                            
+       79 +                                                              
+       80 +/** Hijo del hero con movimiento (título, contador, frase). */
+       81 +export const riseChild: Variants = {                          
+       82 +  hidden: { opacity: 0, y: 14 },                              
+       83 +  visible: { opacity: 1, y: 0, transition: { duration: 0.45, e
+          +ase: EASE_OUT } }                                             
+       84 +};                                                            
+       85 +                                                              
+       86 +/** Hijo del hero sin movimiento (fila de controles — utilidad
+          +es, solo opacidad). */                                        
+       87 +export const fadeChild: Variants = {                          
+       88 +  hidden: { opacity: 0 },                                     
+       89 +  visible: { opacity: 1, transition: { duration: 0.4, ease: EA
+          +SE_OUT } }                                                    
+       90 +};                                                            
+       91 +                                                              
+       92 +/** El hairline se dibuja desde el centro (transform-origin: c
+          +enter en el style). */                                        
+       93 +export const ruleDraw: Variants = {                           
+       94 +  hidden: { opacity: 0, scaleX: 0 },                          
+       95 +  visible: { opacity: 1, scaleX: 1, transition: { duration: 0.
+          +5, ease: EASE_OUT } }                                         
+       96 +};                                                            
+       97 +                                                              
+       98 +/** Contenedor de la frase manuscrita: palabras a 40ms. */    
+       99 +export const wordStagger: Variants = {                        
+      100 +  hidden: {},                                                 
+      101 +  visible: { transition: { staggerChildren: 0.04 } }          
+      102 +};                                                            
+      103 +                                                              
+      104 +/** Palabra individual — solo opacidad (los spans siguen inlin
+          +e, la tinta "aparece"). */                                    
+      105 +export const wordIn: Variants = {                             
+      106 +  hidden: { opacity: 0 },                                     
+      107 +  visible: { opacity: 1, transition: { duration: 0.3, ease: EA
+          +SE_OUT } }                                                    
+      108 +};                                                            
+      109 +                                                              
+      110 +/* ---------- Piezas puntuales ---------- */                  
+      111 +                                                              
+      112 +/** El sello de lacre se estampa al revelarse la carta (rara v
+          +ez visto: puede deleitar). */                                 
+      113 +export const sealStamp: Variants = {                          
+      114 +  hidden: { opacity: 0, scale: 1.35, rotate: 8 },             
+      115 +  visible: { opacity: 1, scale: 1, rotate: 8, transition: { du
+          +ration: 0.26, ease: EASE_OUT } }                              
+      116 +};                                                            
+      117 +                                                              
+      118  /**
+       58 - * Contenedor con hijos en cascada. Aún sin explotar a fondo: 
+          -la skill de                                                   
+       59 - * animaciones puede aplicarlo a la galería o a las listas de 
+          -cartas.                                                       
+      119 + * Burbuja de chat NUEVA (createdAt posterior al mount): entra
+          + desde su lado.                                               
+      120 + * Los mensajes históricos no animan (initial={false}) — nunca
+          + todo-a-la-vez.                                               
+      121   */
+      122 +export const bubbleIn: Variants = {                           
+      123 +  hidden: (own: boolean) => ({ opacity: 0, y: 6, x: own ? 10 :
+          + -10 }),                                                      
+      124 +  visible: { opacity: 1, y: 0, x: 0, transition: { duration: 0
+          +.2, ease: EASE_OUT } }                                        
+      125 +};                                                            
+      126 +                                                              
+      127 +/** Aparición corta de filas auxiliares (nombre de archivo sel
+          +eccionado). */                                                
+      128 +export const rowFade: Variants = {                            
+      129 +  hidden: { opacity: 0, y: 4 },                               
+      130 +  visible: { opacity: 1, y: 0, transition: { duration: 0.18, e
+          +ase: EASE_OUT } }                                             
+      131 +};                                                            
+      132 +                                                              
+      133 +/** Cascada genérica para grupos (galería inicial usa delays p
+          +or índice, cap 180ms). */                                     
+      134  export const staggerChildren: Variants = {
+      135    hidden: {},
+       63 -  visible: { transition: { staggerChildren: 0.08, delayChildre
+          -n: 0.05 } }                                                   
+      136 +  visible: { transition: { staggerChildren: 0.06, delayChildre
+          +n: 0.05 } }                                                   
+      137  };
+
+● Update(tailwind.config.ts)
+  ⎿  Added 2 lines
+       4  const config: Config = {
+       5    content: ['./app/**/*.{ts,tsx}', './components/**/*.{ts,tsx}'
+          ],
+       6    darkMode: ['selector', '.night'],
+       7 +  // Gatea todas las variantes hover: tras @media (hover:hover)
+         + — el touch dispara hovers falsos al tocar                     
+       8 +  future: { hoverOnlyWhenSupported: true },                    
+       9    theme: {
+      10      extend: {
+      11        colors: {
+
+● Update(app\globals.css)
+  ⎿  Added 3 lines, removed 2 lines
+      136    background: linear-gradient(to left, transparent, rgba(217, 
+           106, 133, 0.4));
+      137  }
+      138  
+      139 -/* --- Sello de lacre en las cartas --- */                    
+      139 +/* --- Sello de lacre en las cartas ---                       
+      140 +       La rotación (8deg) vive en la variant sealStamp de lib/
+          +motion.ts:                                                    
+      141 +       framer es dueño del transform de este elemento (animaci
+          +ón de estampado). */                                          
+      142  .seal {
+      143    position: absolute;
+      144    top: -0.65rem;
+     ...
+      149    align-items: center;
+      150    justify-content: center;
+      151    border-radius: 9999px;
+      150 -  transform: rotate(8deg);                                    
+      152    font-family: var(--font-hand), cursive;
+      153    font-size: 12px;
+      154    color: rgba(255, 255, 255, 0.92);
+● Ahora las ediciones a app/page.tsx. Empiezo por imports, corazones festivos y
+  los nuevos hooks de estado:
+
+● Update(app\page.tsx)
+  ⎿  Added 22 lines, removed 3 lines
+       1  'use client';
+       2  
+       3 -import { FormEvent, useEffect, useMemo, useState } from 'react'
+         -;                                                              
+       4 -import { AnimatePresence, motion } from 'framer-motion';       
+       3 +import { FormEvent, useEffect, useMemo, useRef, useState } from
+         + 'react';                                                      
+       4 +import { AnimatePresence, MotionConfig, animate, motion, useRed
+         +ucedMotion } from 'framer-motion';                             
+       5  import { AppState, Letter } from '@/lib/types';
+       6 -import { collapse, fadeRise, lightboxCard, overlayFade, polaroi
+         -dSpring, scaleIn, toastPop } from '@/lib/motion';              
+       6 +import {                                                       
+       7 +  EASE_OUT,                                                    
+       8 +  bubbleIn,                                                    
+       9 +  collapse,                                                    
+      10 +  fadeChild,                                                   
+      11 +  fadeRise,                                                    
+      12 +  heroStagger,                                                 
+      13 +  lightboxCard,                                                
+      14 +  mediaSwap,                                                   
+      15 +  overlayFade,                                                 
+      16 +  polaroidSpring,                                              
+      17 +  riseChild,                                                   
+      18 +  rowFade,                                                     
+      19 +  ruleDraw,                                                    
+      20 +  scaleIn,                                                     
+      21 +  sealStamp,                                                   
+      22 +  toastPop,                                                    
+      23 +  wordIn,                                                      
+      24 +  wordStagger                                                  
+      25 +} from '@/lib/motion';                                         
+      26  
+      27  const initial: AppState = {
+      28    users: {},
+
+● Update(app\page.tsx)
+  ⎿  Added 12 lines, removed 2 lines
+      78    { left: '91%', d: '24s', delay: '-2s', s: 0.8, o: 0.3, sway: 
+          '-38px' }
+      79  ];
+      80  
+      81 -const FloatingHearts = () => (                                 
+      81 +// Corazones extra solo los 13 de cada mes (mesiversario) — tam
+         +bién deterministas                                             
+      82 +const festiveHeartConfigs = [                                  
+      83 +  { left: '11%', d: '17s', delay: '-6s', s: 0.65, o: 0.4, sway:
+         + '28px' },                                                     
+      84 +  { left: '35%', d: '20s', delay: '-12s', s: 0.85, o: 0.35, swa
+         +y: '-34px' },                                                  
+      85 +  { left: '48%', d: '16s', delay: '-4s', s: 0.5, o: 0.45, sway:
+         + '22px' },                                                     
+      86 +  { left: '62%', d: '23s', delay: '-15s', s: 1.0, o: 0.3, sway:
+         + '30px' },                                                     
+      87 +  { left: '74%', d: '18s', delay: '-9s', s: 0.6, o: 0.4, sway: 
+         +'-26px' },                                                     
+      88 +  { left: '96%', d: '21s', delay: '-1s', s: 0.75, o: 0.35, sway
+         +: '36px' }                                                     
+      89 +];                                                             
+      90 +                                                               
+      91 +const FloatingHearts = ({ festive = false }: { festive?: boolea
+         +n }) => (                                                      
+      92    <div className="hearts" data-animate="ambient-hearts" aria-hi
+          dden="true">
+      83 -    {heartConfigs.map((h, i) => (                              
+      93 +    {(festive ? [...heartConfigs, ...festiveHeartConfigs] : hea
+         +rtConfigs).map((h, i) => (                                     
+      94        <span
+      95          key={i}
+      96          className="heart-float"
+
+● Update(app\page.tsx)
+  ⎿  Added 6 lines
+      157    const [isPublishingMedia, setIsPublishingMedia] = useState(f
+           alse);
+      158    const [isSendingChat, setIsSendingChat] = useState(false);
+      159  
+      160 +  const reduceMotion = useReducedMotion();                    
+      161 +  const [shownDays, setShownDays] = useState(0);              
+      162 +  const daysCountedUp = useRef(false);                        
+      163 +  const chatMountedAt = useRef(Date.now());                   
+      164 +  const [festiveHearts, setFestiveHearts] = useState(false);  
+      165 +                                                              
+      166    const filteredMedia = useMemo(
+      167      () => state.media.filter((item) => item.description.toLowe
+           rCase().includes(mediaFilter.toLowerCase())),
+      168      [state.media, mediaFilter]
+
+● Update(app\page.tsx)
+  ⎿  Added 22 lines
+      259      return { days, years, months, day };
+      260    }, [counterNow]);
+      261  
+      262 +  // Count-up del contador de días: una sola vez por visita (m
+          +omento firma del hero).                                       
+      263 +  // Con prefers-reduced-motion va directo al valor; los refre
+          +scos de 30 s también.                                         
+      264 +  useEffect(() => {                                           
+      265 +    if (daysCountedUp.current || reduceMotion) {              
+      266 +      daysCountedUp.current = true;                           
+      267 +      setShownDays(counters.days);                            
+      268 +      return;                                                 
+      269 +    }                                                         
+      270 +    daysCountedUp.current = true;                             
+      271 +    const controls = animate(0, counters.days, {              
+      272 +      duration: 0.9,                                          
+      273 +      ease: EASE_OUT,                                         
+      274 +      onUpdate: (v) => setShownDays(Math.round(v))            
+      275 +    });                                                       
+      276 +    return () => controls.stop();                             
+      277 +  }, [counters.days, reduceMotion]);                          
+      278 +                                                              
+      279 +  // Mesiversario: cada 13 del mes llueven más corazones (en e
+          +fecto: evita mismatch SSR)                                    
+      280 +  useEffect(() => {                                           
+      281 +    setFestiveHearts(new Date().getDate() === 13);            
+      282 +  }, []);                                                     
+      283 +                                                              
+      284    const qrUrl = useMemo(() => {
+      285      const target = typeof window !== 'undefined' ? window.loca
+           tion.href : 'http://localhost:3000';
+      286      return `https://quickchart.io/qr?size=170&text=${encodeURI
+           Component(target)}`;
+
+● Update(app\page.tsx)
+  ⎿  Added 2 lines, removed 1 line
+      325  
+      326    if (!user) {
+      327      return (
+      328 +      <MotionConfig reducedMotion="user">                     
+      329        <main className="relative mx-auto flex min-h-screen max-
+           w-5xl items-center justify-center overflow-hidden px-6 py-10">
+      329 -        <FloatingHearts />                                    
+      330 +        <FloatingHearts festive={festiveHearts} />            
+      331  
+      332          <div className="relative z-10 grid w-full items-center
+            gap-12 md:grid-cols-2">
+      333            <motion.div
+
+● Update(app\page.tsx)
+  ⎿  Added 1 line
+      416            </motion.form>
+      417          </div>
+      418        </main>
+      419 +      </MotionConfig>                                         
+      420      );
+      421    }
+      422  
+
+● Update(app\page.tsx)
+  ⎿  Added 2 lines, removed 1 line
+      421    }
+      422  
+      423    return (
+      424 +    <MotionConfig reducedMotion="user">                       
+      425      <main className="relative mx-auto min-h-screen max-w-6xl s
+           pace-y-10 px-4 pb-24 pt-6 md:px-6">
+      426        <AnimatePresence>
+      427          {state.theme === 'night' && <motion.div initial={{ opa
+           city: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} clas
+           sName="stars" />}
+      428        </AnimatePresence>
+      428 -      <FloatingHearts />                                      
+      429 +      <FloatingHearts festive={festiveHearts} />              
+      430  
+      431        {/* Capítulo I — el masthead: los nombres, el contador v
+           ivo y la frase del día */}
+      432        <motion.header variants={fadeRise} initial="hidden" anim
+           ate="visible" className="relative z-10 pt-2 md:pt-6" data-anim
+           ate="hero">
+
+● Update(app\page.tsx)
+  ⎿  Added 1 line
+      950          </AnimatePresence>
+      951        </div>
+      952      </main>
+      953 +    </MotionConfig>                                           
+      954    );
+      955  }
+
+● Update(app\page.tsx)
+  ⎿  Added 2 lines, removed 2 lines
+      429        <FloatingHearts festive={festiveHearts} />
+      430  
+      431        {/* Capítulo I — el masthead: los nombres, el contador v
+           ivo y la frase del día */}
+      432 -      <motion.header variants={fadeRise} initial="hidden" anim
+          -ate="visible" className="relative z-10 pt-2 md:pt-6" data-anim
+          -ate="hero">                                                   
+      433 -        <div className="flex flex-wrap items-center justify-be
+          -tween gap-3">                                                 
+      432 +      <motion.header variants={heroStagger} initial="hidden" a
+          +nimate="visible" className="relative z-10 pt-2 md:pt-6" data-a
+          +nimate="hero">                                                
+      433 +        <motion.div variants={fadeChild} className="flex flex-
+          +wrap items-center justify-between gap-3">                     
+      434            <p className="eyebrow">Hola, {user} · el archivo de 
+           nuestra historia</p>
+      435            <div className="flex shrink-0 gap-2">
+      436              <button
+
+● Update(app\page.tsx)
+  ⎿  Added 1 line, removed 1 line
+      452                Salir
+      453              </button>
+      454            </div>
+      455 -        </div>                                                
+      455 +        </motion.div>                                         
+      456  
+      457          <div className="mt-8 grid items-center gap-10 md:grid-
+           cols-[1fr_auto] md:gap-14">
+      458            <div>
+
+● Update(app\page.tsx)
+  ⎿  Added 21 lines, removed 11 lines
+      456  
+      457          <div className="mt-8 grid items-center gap-10 md:grid-
+           cols-[1fr_auto] md:gap-14">
+      458            <div>
+      459 -            <h1 className="font-display text-5xl font-semibold
+          - italic leading-[1.05] text-wine dark:text-rose-100 md:text-7x
+          -l" data-animate="hero-title">                                 
+      459 +            <motion.h1                                        
+      460 +              variants={riseChild}                            
+      461 +              className="font-display text-5xl font-semibold i
+          +talic leading-[1.05] text-wine dark:text-rose-100 md:text-7xl"
+      462 +              data-animate="hero-title"                       
+      463 +            >                                                 
+      464                Jeicob <span className="not-italic text-rose">&a
+           mp;</span> Lelita
+      461 -            </h1>                                             
+      465 +            </motion.h1>                                      
+      466  
+      463 -            <div className="rule-heart my-6 max-w-lg" aria-hid
+          -den="true">                                                   
+      467 +            <motion.div variants={ruleDraw} style={{ transform
+          +Origin: 'center' }} className="rule-heart my-6 max-w-lg" aria-
+          +hidden="true">                                                
+      468                <HeartIcon className="h-4 w-4" />
+      465 -            </div>                                            
+      469 +            </motion.div>                                     
+      470  
+      467 -            <p className="flex flex-wrap items-baseline gap-x-
+          -3" data-animate="hero-counter">                               
+      471 +            <motion.p variants={riseChild} className="flex fle
+          +x-wrap items-baseline gap-x-3" data-animate="hero-counter">   
+      472                <span className="font-display text-7xl font-semi
+           bold tabular-nums leading-none text-ink dark:text-rose-50 md:t
+           ext-8xl">
+      469 -                {counters.days}                               
+      473 +                {shownDays}                                   
+      474                </span>
+      475                <span className="font-display text-2xl italic te
+           xt-ink/60 dark:text-rose-50/60 md:text-3xl">días juntos</span>
+      476                <span className="beat self-center text-rose">
+      477                  <HeartIcon className="h-8 w-8 md:h-9 md:w-9" /
+           >
+      478                </span>
+      475 -            </p>                                              
+      476 -            <p className="mt-2 text-sm text-ink/60 dark:text-r
+          -ose-50/60">                                                   
+      479 +            </motion.p>                                       
+      480 +            <motion.p variants={fadeChild} className="mt-2 tex
+          +t-sm text-ink/60 dark:text-rose-50/60">                       
+      481                Desde el 13 de marzo de 2025 · {counters.years} 
+           {counters.years === 1 ? 'año' : 'años'}, {counters.months}{' '
+           }
+      482                {counters.months === 1 ? 'mes' : 'meses'} y {cou
+           nters.day} {counters.day === 1 ? 'día' : 'días'} escribiendo e
+           sto juntos
+      479 -            </p>                                              
+      483 +            </motion.p>                                       
+      484  
+      481 -            <div className="mt-7" data-animate="phrase">      
+      482 -              <p className="font-hand text-3xl leading-snug te
+          -xt-wine dark:text-rose-100 md:text-4xl">“{state.phrase}”</p>  
+      485 +            <motion.div variants={riseChild} className="mt-7" 
+          +data-animate="phrase">                                        
+      486 +              <motion.p variants={wordStagger} className="font
+          +-hand text-3xl leading-snug text-wine dark:text-rose-100 md:te
+          +xt-4xl">                                                      
+      487 +                {`“${state.phrase}”`.split(' ').map((word, i) 
+          +=> (                                                          
+      488 +                  <motion.span key={`${i}-${word}`} variants={
+          +wordIn}>                                                      
+      489 +                    {word}{' '}                               
+      490 +                  </motion.span>                              
+      491 +                ))}                                           
+      492 +              </motion.p>                                     
+      493                <button className="btn-tiny mt-3" onClick={() =>
+            setPhraseOpen((v) => !v)}>
+      494                  {phraseOpen ? 'Cerrar' : '✏️ Editar la frase de
+            hoy'}
+      495                </button>
+
+● Update(app\page.tsx)
+  ⎿  Added 3 lines, removed 3 lines
+      509                    </motion.div>
+      510                  )}
+      511                </AnimatePresence>
+      512 -            </div>                                            
+      512 +            </motion.div>                                     
+      513            </div>
+      514  
+      515 -          <div className="hidden sm:block">                   
+      515 +          <motion.div variants={scaleIn} className="hidden sm:
+          +block">                                                       
+      516              <PhotoStack size="lg" />
+      517 -          </div>                                              
+      517 +          </motion.div>                                       
+      518          </div>
+      519        </motion.header>
+      520  
+
+● Update(app\page.tsx)
+  ⎿  Added 7 lines, removed 1 line
+      597                <motion.article
+      598                  key={item.id}
+      599                  initial={{ opacity: 0, y: 20, rotate: 0 }}
+      600 -                animate={{ opacity: 1, y: 0, rotate: i % 2 ===
+          - 0 ? -1.4 : 1.4 }}                                            
+      600 +                animate={{                                    
+      601 +                  opacity: 1,                                 
+      602 +                  y: 0,                                       
+      603 +                  rotate: i % 2 === 0 ? -1.4 : 1.4,           
+      604 +                  // Cascada de 60ms solo en la entrada (cap 1
+          +80ms); el hover usa el spring sin delay                       
+      605 +                  transition: { ...polaroidSpring, delay: (i %
+          + 4) * 0.06 }                                                  
+      606 +                }}                                            
+      607                  whileHover={{ rotate: 0, scale: 1.02 }}
+      608                  whileTap={{ scale: 0.99 }}
+      609                  transition={polaroidSpring}
+
+● Update(app\page.tsx)
+  ⎿  Added 20 lines, removed 4 lines
+      699                {state.letters
+      700                  .filter((l: Letter) => l.to === 'jeicob' && (u
+           ser === 'jeicob' || l.author === user))
+      701                  .map((l) => (
+      702 -                  <article key={l.id} className="stationery te
+          -xt-sm" data-animate="letter-card">                            
+      703 -                    <span className="seal" aria-hidden="true">
+          -J♥L</span>                                                    
+      702 +                  <motion.article                             
+      703 +                    key={l.id}                                
+      704 +                    variants={fadeRise}                       
+      705 +                    initial="hidden"                          
+      706 +                    whileInView="visible"                     
+      707 +                    viewport={{ once: true, margin: '-30px' }}
+      708 +                    className="stationery text-sm"            
+      709 +                    data-animate="letter-card"                
+      710 +                  >                                           
+      711 +                    <motion.span variants={sealStamp} classNam
+          +e="seal" aria-hidden="true">J♥L</motion.span>                 
+      712                      <p className="pr-8 font-display text-base 
+           font-semibold text-wine dark:text-rose-200">{l.title}</p>
+      713                      <p className="mt-1 whitespace-pre-wrap tex
+           t-ink/80 dark:text-rose-50/80">{l.text}</p>
+      714                      <p className="mt-2 font-hand text-base tex
+           t-ink/60 dark:text-rose-50/60">— con amor, {l.author}</p>
+     ...
+      731                {state.letters
+      732                  .filter((l: Letter) => l.to === 'lelita' && (u
+           ser === 'lelita' || l.author === user))
+      733                  .map((l) => (
+      726 -                  <article key={l.id} className="stationery te
+          -xt-sm" data-animate="letter-card">                            
+      727 -                    <span className="seal" aria-hidden="true">
+          -J♥L</span>                                                    
+      734 +                  <motion.article                             
+      735 +                    key={l.id}                                
+      736 +                    variants={fadeRise}                       
+      737 +                    initial="hidden"                          
+      738 +                    whileInView="visible"                     
+      739 +                    viewport={{ once: true, margin: '-30px' }}
+      740 +                    className="stationery text-sm"            
+      741 +                    data-animate="letter-card"                
+      742 +                  >                                           
+      743 +                    <motion.span variants={sealStamp} classNam
+          +e="seal" aria-hidden="true">J♥L</motion.span>                 
+      744                      <p className="pr-8 font-display text-base 
+           font-semibold text-wine dark:text-rose-200">{l.title}</p>
+      745                      <p className="mt-1 whitespace-pre-wrap tex
+           t-ink/80 dark:text-rose-50/80">{l.text}</p>
+      746                      <p className="mt-2 font-hand text-base tex
+           t-ink/60 dark:text-rose-50/60">— con amor, {l.author}</p>
+
+● Update(app\page.tsx)
+  ⎿  Added 2 lines, removed 2 lines
+      717                          Editar
+      718                        </button>
+      719                      )}
+      720 -                  </article>                                  
+      720 +                  </motion.article>                           
+      721                  ))}
+      722                {!state.letters.filter((l: Letter) => l.to === '
+           jeicob' && (user === 'jeicob' || l.author === user)).length &&
+            (
+      723                  <p className="text-sm text-ink/50 dark:text-ro
+           se-50/50">Todavía no hay cartas aquí.</p>
+     ...
+      749                          Editar
+      750                        </button>
+      751                      )}
+      752 -                  </article>                                  
+      752 +                  </motion.article>                           
+      753                  ))}
+      754                {!state.letters.filter((l: Letter) => l.to === '
+           lelita' && (user === 'lelita' || l.author === user)).length &&
+            (
+      755                  <p className="text-sm text-ink/50 dark:text-ro
+           se-50/50">Todavía no hay cartas aquí.</p>
+
+● Update(app\page.tsx)
+  ⎿  Added 10 lines, removed 1 line
+      780            <div className="chat-scroll mb-3 flex max-h-96 flex-
+           col gap-2.5 overflow-y-auto rounded-2xl border border-rose/15 
+           bg-white/40 p-3 dark:border-white/10 dark:bg-white/[0.03]">
+      781              {state.chat.map((m) => {
+      782                const own = m.author === user;
+      783 +              // Solo animan los mensajes nuevos (posteriores 
+          +al mount) — nunca todo-a-la-vez                               
+      784 +              const isNew = m.createdAt > chatMountedAt.curren
+          +t;                                                            
+      785                return (
+      784 -                <div key={m.id} className={`flex max-w-[85%] i
+          -tems-end gap-2 md:max-w-[70%] ${own ? 'flex-row-reverse self-e
+          -nd' : 'self-start'}`}>                                        
+      786 +                <motion.div                                   
+      787 +                  key={m.id}                                  
+      788 +                  custom={own}                                
+      789 +                  variants={bubbleIn}                         
+      790 +                  initial={isNew ? 'hidden' : false}          
+      791 +                  animate="visible"                           
+      792 +                  className={`flex max-w-[85%] items-end gap-2
+          + md:max-w-[70%] ${own ? 'flex-row-reverse self-end' : 'self-st
+          +art'}`}                                                       
+      793 +                >                                             
+      794                    {!own && (
+      795                      <span
+      796                        className="grid h-7 w-7 shrink-0 place-i
+           tems-center rounded-full bg-gradient-to-br from-rose to-wine f
+           ont-display text-xs font-semibold text-white"
+
+● Update(app\page.tsx)
+  ⎿  Added 1 line, removed 1 line
+      835                        )}
+      836                      </div>
+      837                    </article>
+      838 -                </div>                                        
+      838 +                </motion.div>                                 
+      839                );
+      840              })}
+      841              {!state.chat.length && <p className="p-4 text-cent
+           er text-sm text-ink/50 dark:text-rose-50/50">Escríbanse algo b
+           onito para empezar 💬</p>}
+● Update(app\page.tsx)
+  ⎿  Added 12 lines, removed 8 lines
+      949                    </button>
+      950                  </div>
+      951                </div>
+      952 -              {lightbox.type.startsWith('image') ? (          
+      953 -                <img src={cld(lightbox.url, 1600)} alt={lightb
+          -ox.description} className="max-h-[72vh] w-full rounded-2xl obj
+          -ect-contain" />                                               
+      954 -              ) : (                                           
+      955 -                <video src={lightbox.url} controls className="
+          -max-h-[72vh] w-full rounded-2xl object-contain" />            
+      956 -              )}                                              
+      957 -              {lightbox.description && (                      
+      958 -                <p className="mx-auto mt-4 w-fit rounded-full 
+          -bg-white/90 px-5 py-2 text-center font-hand text-xl text-ink">
+          -{lightbox.description}</p>                                    
+      959 -              )}                                              
+      952 +              <AnimatePresence mode="wait" initial={false}>   
+      953 +                <motion.div key={lightbox.id} variants={mediaS
+          +wap} initial="hidden" animate="visible" exit="hidden">        
+      954 +                  {lightbox.type.startsWith('image') ? (      
+      955 +                    <img src={cld(lightbox.url, 1600)} alt={li
+          +ghtbox.description} className="max-h-[72vh] w-full rounded-2xl
+          + object-contain" />                                           
+      956 +                  ) : (                                       
+      957 +                    <video src={lightbox.url} controls classNa
+          +me="max-h-[72vh] w-full rounded-2xl object-contain" />        
+      958 +                  )}                                          
+      959 +                  {lightbox.description && (                  
+      960 +                    <p className="mx-auto mt-4 w-fit rounded-f
+          +ull bg-white/90 px-5 py-2 text-center font-hand text-xl text-i
+          +nk">{lightbox.description}</p>                                
+      961 +                  )}                                          
+      962 +                </motion.div>                                 
+      963 +              </AnimatePresence>                              
+      964              </motion.div>
+      965            </motion.div>
+      966          )}
+
+● Update(app\page.tsx)
+  ⎿  Added 7 lines, removed 1 line
+      579                  if (file?.type) setMedia({ ...media, type: fil
+           e.type });
+      580                }}
+      581              />
+      582 -            {mediaFile && <p className="text-xs text-ink/60 da
+          -rk:text-rose-50/60">Archivo seleccionado: {mediaFile.name}</p>
+          -}                                                             
+      582 +            <AnimatePresence>                                 
+      583 +              {mediaFile && (                                 
+      584 +                <motion.p variants={rowFade} initial="hidden" 
+          +animate="visible" exit="hidden" className="text-xs text-ink/60
+          + dark:text-rose-50/60">                                       
+      585 +                  Archivo seleccionado: {mediaFile.name}      
+      586 +                </motion.p>                                   
+      587 +              )}                                              
+      588 +            </AnimatePresence>                                
+      589              <div className="grid gap-2 sm:grid-cols-[130px_1fr
+           ]">
+      590                <select className="input" value={media.type} onC
+           hange={(e) => setMedia({ ...media, type: e.target.value })}>
+      591                  <option value="image/jpeg">Imagen</option>
+
+● Update(app\page.tsx)
+  ⎿  Added 10 lines, removed 2 lines
+      901        </motion.section>
+      902  
+      903        <footer className="relative z-10 pt-4 text-center" data-
+           animate="footer">
+      904 -        <div className="rule-heart mx-auto max-w-xs" aria-hidd
+          -en="true">                                                    
+      904 +        <motion.div                                           
+      905 +          variants={ruleDraw}                                 
+      906 +          initial="hidden"                                    
+      907 +          whileInView="visible"                               
+      908 +          viewport={{ once: true }}                           
+      909 +          style={{ transformOrigin: 'center' }}               
+      910 +          className="rule-heart mx-auto max-w-xs"             
+      911 +          aria-hidden="true"                                  
+      912 +        >                                                     
+      913            <HeartIcon className="h-3.5 w-3.5" />
+      906 -        </div>                                                
+      914 +        </motion.div>                                         
+      915          <p className="mt-5 font-hand text-2xl text-wine/75 dar
+           k:text-rose-200/75">hecho con amor, para nosotros dos ♡</p>
+      916          <p className="mt-1 text-xs text-ink/45 dark:text-rose-
+           50/45">Desde el 13 de marzo de 2025 · siempre</p>
+      917        </footer>
+
+  Read 3 files, ran 4 shell commands (ctrl+o to expand)
+
+● Write(docs\ANIMATION-HOOKS.md)
+  ⎿  Added 43 lines, removed 41 lines
+       1 -# Mapa de animaciones — Lelita (base para la skill de animacion
+         -es)                                                            
+       1 +# Mapa de animaciones — Lelita                                 
+       2  
+       3 -**Actualizado:** 2026-07-08 (rediseño "El archivo de nuestra hi
+         -storia")                                                       
+       3 +**Actualizado:** 2026-07-08 (implementación completa tras la re
+         +visión de motion; base del rediseño "El archivo de nuestra hist
+         +oria")                                                         
+       4  
+       5  ## Dónde se trabaja
+       6  
+       7  | Pieza | Archivo | Qué contiene |
+       8  |---|---|---|
+       9 -| Variants de Framer Motion | `lib/motion.ts` | TODAS las varia
+         -nts centralizadas. La skill de animaciones edita aquí, no inlin
+         -e en el JSX. |                                                 
+      10 -| Anclas en el JSX | `app/page.tsx` | Cada elemento animable ll
+         -eva `data-animate="<nombre>"` (buscar ese atributo). |         
+       9 +| Variants de Framer Motion | `lib/motion.ts` | TODAS las varia
+         +nts + `EASE_OUT` (cubic-bezier 0.23,1,0.32,1). Cualquier ajuste
+         + de motion se hace aquí. |                                     
+      10 +| Anclas en el JSX | `app/page.tsx` | Elementos animables con `
+         +data-animate="<nombre>"`. |                                    
+      11  | Animaciones CSS (loops ambientales) | `app/globals.css` | Key
+          frames `floaty`, `rise`, `beat`, `twinkle` + comentarios `ANIMA
+          TION HOOK`. |
+      12  
+      13 -## Criterios ya acordados (no romper)                          
+      13 +## Reglas vigentes (no romper)                                 
+      14  
+      15 -- Solo `transform`/`opacity` en animaciones infinitas (GPU, off
+         --main-thread).                                                 
+      16 -- `ease-out` en entradas; **nunca** entrar desde `scale(0)` (mí
+         -nimo 0.94–0.96).                                               
+      17 -- Springs solo en interacciones interrumpibles (hover/drag): `p
+         -olaroidSpring` (stiffness 220, damping 20).                    
+      18 -- `prefers-reduced-motion: reduce` apaga todos los loops (bloqu
+         -e al final de `globals.css`) — cualquier animación nueva debe r
+         -espetarlo.                                                     
+      19 -- Ambientales con delays negativos (el cielo ya está poblado al
+         - cargar).                                                      
+      20 -- Configs deterministas para SSR: nunca `Math.random()` en rend
+         -er (ver `heartConfigs`).                                       
+      15 +- `EASE_OUT` fuerte en toda entrada; nunca `ease-in` en UI.    
+      16 +- Interacciones < 300ms; solo entradas de página/scroll llegan 
+         +a ~500ms.                                                      
+      17 +- Nunca entrar desde `scale(0)` (mínimo 0.94–0.96 + opacity).  
+      18 +- Springs solo en interacciones interrumpibles (`polaroidSpring
+         +`).                                                            
+      19 +- **Reduced motion**: `MotionConfig reducedMotion="user"` envue
+         +lve ambas vistas (quita movimiento, conserva opacidad); los loo
+         +ps CSS se apagan en `globals.css`; el count-up se salta con `us
+         +eReducedMotion()`.                                             
+      20 +- **Hover gating**: `future.hoverOnlyWhenSupported` en `tailwin
+         +d.config.ts` — todo `hover:` queda tras `@media (hover:hover)`.
+      21 +- Stagger 30–80ms, decorativo, nunca bloquea interacción.      
+      22 +- Solo `transform`/`opacity` (excepción puntual: blur ≤6px en e
+         +l crossfade del lightbox, para fundir estados).                
+      23 +- Configs deterministas para SSR (nunca `Math.random()` en rend
+         +er).                                                           
+      24  
+      22 -## Inventario de anclas (`data-animate`)                       
+      25 +## Inventario de anclas (`data-animate`) — estado IMPLEMENTADO 
+      26  
+      24 -| Ancla | Ubicación | Estado actual | Oportunidad sugerida |   
+      25 -|---|---|---|---|                                              
+      26 -| `hero` | header principal | `fadeRise` on mount | Secuencia o
+         -rquestada de carga: título → regla → contador → frase (stagger)
+         - |                                                             
+      27 -| `hero-title` | h1 Jeicob & Lelita | estático (entra con el he
+         -ro) | Reveal por palabra/letra con Fraunces |                  
+      28 -| `hero-counter` | número gigante de días | corazón con keyfram
+         -e `beat` | Count-up del número al cargar; el latido ya existe |
+      29 -| `phrase` | frase del día (Caveat) | estático | Efecto "escrit
+         -ura a mano" o fade por palabras al cambiar |                   
+      30 -| `photo-stack` | polaroids del hero/login | loop CSS `floaty` 
+         -| Parallax con el mouse, o drag con spring de retorno |        
+      31 -| `section-header` | encabezados Capítulo II/III/IV | entra con
+         - la sección | Reveal del hairline dorado al hacer scroll |     
+      32 -| `upload-form` | formulario "Añadir al álbum" | estático | Mic
+         -ro-feedback al soltar archivo (pulse del borde punteado) |     
+      33 -| `polaroid` | cada foto de la galería | spring hover (endereza
+         -), entrada fadeRise | Stagger de entrada con `staggerChildren`;
+         - heart-burst en doble tap (idea pendiente de reacciones) |     
+      34 -| `letter-card` | cada carta (stationery + sello) | estático | 
+         -Entrada tipo "abrir sobre"; el sello puede estamparse (scale 1.
+         -2→1) |                                                         
+      35 -| `chat` | sección del chat | `fadeRise` whileInView | — |     
+      36 -| `chat-bubble` | cada burbuja | estático | Entrada slide+fade 
+         -desde el lado correspondiente (solo mensajes nuevos) |         
+      37 -| `qr-card` | colofón con QR | entra con la columna | — (dejar 
+         -quieto) |                                                      
+      38 -| `lightbox` | overlay de fotos | `overlayFade` + `lightboxCard
+         -` | Transición compartida foto→lightbox (layoutId de Framer) | 
+      39 -| `toast` | píldoras de aviso | `toastPop` | — (ya resuelto) | 
+      40 -| `footer` | cierre con hairline | estático | Reveal del hairli
+         -ne al llegar al final |                                        
+      41 -| `login-cover` | portada del login (md+) | `scaleIn` | — |    
+      42 -| `login-form` | formulario de entrada | `fadeRise` | — |      
+      43 -| `reset-panel` | panel de recuperar contraseña | `collapse` | 
+         -— (ya resuelto) |                                              
+      44 -| `ambient-hearts` | corazones flotantes (fixed) | loop CSS `ri
+         -se` | Densidad reactiva (más corazones en fechas 13 de cada mes
+         -) |                                                            
+      27 +| Ancla | Animación implementada | Variants |                  
+      28 +|---|---|---|                                                  
+      29 +| `hero` | Secuencia orquestada de carga: cascada de 90ms entre
+         + hijos | `heroStagger` |                                       
+      30 +| `hero-title` | Entra en la cascada (y:14 → 0, 450ms) | `riseC
+         +hild` |                                                        
+      31 +| `hero-counter` | **Count-up 0→días en 900ms** (una vez por vi
+         +sita, skip con reduced-motion) + latido CSS `beat` | efecto en 
+         +`page.tsx` + `riseChild` |                                     
+      32 +| (hairline del hero) | Se dibuja desde el centro (scaleX 0→1, 
+         +500ms) | `ruleDraw` |                                          
+      33 +| `phrase` | Palabras aparecen como tinta (solo opacidad, 40ms 
+         +de stagger) | `wordStagger` + `wordIn` |                       
+      34 +| `photo-stack` | Loop CSS `floaty` + entrada `scaleIn` como hi
+         +jo del hero | `scaleIn` |                                      
+      35 +| `section-header` | Entra con su sección (whileInView, once) |
+         + `fadeRise` |                                                  
+      36 +| `upload-form` | Fila "Archivo seleccionado" entra/sale (180ms
+         +) | `rowFade` + AnimatePresence |                              
+      37 +| `polaroid` | Cascada de entrada 60ms (cap 180ms, `i % 4`); ho
+         +ver spring interrumpible sin delay; whileTap 0.99 | delay en `a
+         +nimate.transition`, `polaroidSpring` |                         
+      38 +| `letter-card` | Entrada por scroll individual (whileInView, o
+         +nce, -30px) | `fadeRise` |                                     
+      39 +| (sello de lacre) | **Se estampa**: scale 1.35→1 + opacity, 26
+         +0ms, rotación 8° vive en framer (no en CSS) | `sealStamp` |    
+      40 +| `chat-bubble` | **Solo mensajes nuevos** (createdAt > mount) 
+         +entran desde su lado (±10px, 200ms); los históricos con `initia
+         +l={false}` | `bubbleIn` (custom=own) |                         
+      41 +| `lightbox` | Overlay 200ms + card 260ms; **crossfade con blur
+         + 6px al navegar** (exit 100ms < enter 180ms: el sistema respond
+         +e rápido) | `overlayFade`, `lightboxCard`, `mediaSwap` |       
+      42 +| `toast` | 220ms, interrumpible (framer retarget-ea) | `toastP
+         +op` |                                                          
+      43 +| `footer` | Hairline se dibuja al llegar al final (whileInView
+         +, once) | `ruleDraw` |                                         
+      44 +| `login-cover` / `login-form` | `scaleIn` / `fadeRise` on moun
+         +t | — |                                                        
+      45 +| `reset-panel` | Despliegue 240/300ms | `collapse` |          
+      46 +| `ambient-hearts` | Loop CSS `rise`; **cada 13 del mes se suma
+         +n 6 corazones festivos** (`festiveHeartConfigs`, estado en efec
+         +to para evitar mismatch SSR) | CSS + prop `festive` |          
+      47  
+      46 -## Hooks solo-CSS (en `globals.css`, comentados como `ANIMATION
+         - HOOK`)                                                        
+      48 +## Ideas descartadas (y por qué — no reintentar sin razón nueva
+         +)                                                              
+      49  
+      48 -- `ambient-grain` (`body::after`): grano de película estático; 
+         -candidato a drift muy lento.                                   
+      49 -- `night-stars` (`.stars`): titileo `twinkle`; podría sumar una
+         - estrella fugaz ocasional.                                     
+      50 -- `.rule-heart`: los hairlines pueden "dibujarse" desde el cent
+         -ro (scaleX) al entrar en viewport.                             
+      50 +- **layoutId foto→lightbox**: las polaroids viven en columnas C
+         +SS y rotadas ±1.4°; la animación de layout desde un padre rotad
+         +o glitchea. Se prefirió scale/fade + crossfade interno.        
+      51 +- **Animar todas las burbujas del chat al cargar**: todo-a-la-v
+         +ez en un elemento visto a diario; solo animan los nuevos.      
+      52 +- **Count-up en cada refresh de 30s**: solo la primera vez por 
+         +visita (ref `daysCountedUp`).                                  
+      53  
+      52 -## Notas técnicas                                              
+      54 +## Pendientes posibles (siguiente sesión)                      
+      55  
+      54 -- Las secciones bajo el fold usan `whileInView` + `viewport={{ 
+         -once: true, margin: '-40px' }}` — patrón listo para scroll-reve
+         -als más ricos.                                                 
+      55 -- `staggerChildren` ya está exportado en `lib/motion.ts` pero a
+         -ún sin aplicar: es el primer candidato (galería y listas de car
+         -tas).                                                          
+      56 -- El contador se actualiza cada 30 s (`counterNow`); cualquier 
+         -animación del número debe tolerar re-renders.                  
+      56 +- Reacciones con corazón (doble tap → heart burst en polaroids)
+         +: requiere action nueva en `route.ts` — es feature, no solo mot
+         +ion.                                                           
+      57 +- Estrella fugaz ocasional en modo noche (`.stars`).           
+      58 +- `@starting-style` para los toasts si algún día se quitan de f
+         +ramer.                                                         
+
+  Ran 2 shell commands (ctrl+o to expand)
+
+● Background command "Start lelita dev server on port 3011" completed (exit code
+0)
+
+● Skill(graphify)
+  ⎿  Successfully loaded skill
+
+● Ejecuto el flujo --update sobre el proyecto lelita. Cargo la referencia del
+  update incremental:
+
+  Read 1 file, ran 1 shell command (ctrl+o to expand)
+
+● Ruta del intérprete con espacios — la cito:
+
+  Read 1 file, ran 3 shell commands (ctrl+o to expand)
+
+● Extracción semántica: 4 archivos → 3 agentes en paralelo (2 docs juntos, cada
+  imagen aparte), ~45s. Despacho los tres a la vez:
+
+● 3 agents finished (ctrl+o to expand)
+   ├ Extract graph from lelita docs · 3 tool uses · 36.2k tokens
+   │ ⎿  Done
+   ├ Extract graph from imagen1 · 2 tool uses · 32.3k tokens
+   │ ⎿  Done
+   └ Extract graph from imagen2 · 2 tool uses · 32.5k tokens
+     ⎿  Done
+  Ran 6 shell commands (ctrl+o to expand)
+
+● graph.json escrito (190 nodos). El formato de comunidades es {cid: [nodos]} —
+  relisto:
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Etiqueto las comunidades y regenero el reporte:
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Cierro con el manifest, tracker de costos, diff y limpieza:
+
+  Ran 2 shell commands (ctrl+o to expand)
